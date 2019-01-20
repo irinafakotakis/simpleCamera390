@@ -1,5 +1,5 @@
 language: android
-
+jdk: oraclejdk8
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
@@ -19,6 +19,7 @@ android:
                 - extra-android-support
                 - extra-android-m2repository
 script:
+		- chmod +x ./gradlew
         - ./gradlew build
         - ./gradlew test
 before_install:
