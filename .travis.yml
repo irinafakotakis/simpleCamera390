@@ -19,7 +19,7 @@ android:
                 - add-on
                 - extra-android-support
                 - extra-android-m2repository
-                - sys-img-armeabi-v7a-android-tv-l
+                - sys-img-armeabi-v7a-android-armeabi-v7a
 script:
         - ./gradlew build
         - ./gradlew test
