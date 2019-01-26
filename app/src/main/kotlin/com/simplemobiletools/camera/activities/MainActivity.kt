@@ -563,4 +563,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             checkWhatsNew(this, BuildConfig.VERSION_CODE)
         }
     }
+
+    public fun helloWorld(name: String = "World"): String {
+        return "Hello, ${name}!"
+    }
+
 }
