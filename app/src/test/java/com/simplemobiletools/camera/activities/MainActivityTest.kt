@@ -9,5 +9,10 @@ class MainActivityTest {
         val mainActivity = MainActivity()
         assertEquals("Hello, World!", mainActivity.helloWorld())
     }
+    @org.junit.Test
+    fun incorrectHelloWorldReturnsGenericMessage() {
+        val mainActivity = MainActivity()
+        assertEquals("Hello, X World!", mainActivity.helloWorld())
+    }
 
 }
