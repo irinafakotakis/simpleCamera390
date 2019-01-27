@@ -38,10 +38,16 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
+
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
+
 }
 
 dependencies {
     implementation 'com.simplemobiletools:commons:5.1.4'
+    testImplementation 'junit:junit:4.12'
 }
 
 Properties props = new Properties()
