@@ -21,12 +21,12 @@ android:
                 - extra-android-m2repository
                 - sys-img-armeabi-v7a-android-22
 jobs:
-	include:
-	- stage: "Tests"
-	name: "Unit Tests"
-	script: ./gradlew test
-	-script: ./gradlew build
-	name: "Builds"
+  include:
+    - script: ./test 1 # uses the default stage name "test"
+    - script: ./test 2
+    - stage: deploy
+      script: ./deploy target-1
+    - script: ./deploy target-2
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
