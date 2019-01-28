@@ -23,10 +23,9 @@ android:
 jobs:
   include:
     - script: ./gradlew test # uses the default stage name "test"
-    - script: ./test 2
+  #  - script: ./test 2 (can add more tests here)
     - stage: deploy
-      script: ./deploy target-1
-    - script: ./deploy target-2
+      script: ./gradlew build
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
