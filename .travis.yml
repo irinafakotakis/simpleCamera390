@@ -20,9 +20,13 @@ android:
                 - extra-android-support
                 - extra-android-m2repository
                 - sys-img-armeabi-v7a-android-22
-script:
-        - ./gradlew build
-        - ./gradlew test
+jobs:
+	include:
+		- stage: "Tests"
+		- script: ./gradlew test
+		- stage: "Build"
+		- script: ./gradlew build
+
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
