@@ -21,8 +21,10 @@ android:
                 - extra-android-m2repository
                 - sys-img-armeabi-v7a-android-22
 script:
+	- stage: "Tests"
+	name: "Unit Tests"
+	script: ./gradlew test
         - ./gradlew build
-        - ./gradlew test
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
