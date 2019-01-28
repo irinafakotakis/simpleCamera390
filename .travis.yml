@@ -11,7 +11,7 @@ cache:
   - $HOME/.gradle/wrapper/
   - $HOME/.android/build-cache
 android:
-	components:
+        components:
                 - platform-tools
                 - tools
                 - build-tools-28.0.3
@@ -20,13 +20,9 @@ android:
                 - extra-android-support
                 - extra-android-m2repository
                 - sys-img-armeabi-v7a-android-22
-jobs:
-	include:
-		- stage: "Tests"
-		- script: ./gradlew test
-		- stage: "Build"
-		- script: ./gradlew build
-
+script:
+        - ./gradlew build
+        - ./gradlew test
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
