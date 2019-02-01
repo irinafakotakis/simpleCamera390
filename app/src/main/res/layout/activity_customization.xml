@@ -19,7 +19,7 @@
             android:paddingLeft="@dimen/activity_margin"
             android:paddingRight="@dimen/activity_margin"
             android:paddingTop="@dimen/big_margin">
-            <!-- Override the shutter text field with settings text field. -->
+            <!-- settings text field. -->
             <com.simplemobiletools.commons.views.MyTextView
                 android:id="@+id/settings_label"
                 android:layout_width="wrap_content"
@@ -184,14 +184,41 @@
                 android:clickable="false"/>
 
         </RelativeLayout>
-
+        <View
+            android:id="@+id/shutter_divider"
+            android:layout_width="match_parent"
+            android:layout_height="10px"
+            android:layout_alignBottom="@+id/customization_app_icon_color_holder"
+            android:layout_alignParentStart="true"
+            android:background="@color/divider_grey"
+            android:importantForAccessibility="no" />
+        <RelativeLayout
+            android:id="@+id/camera_preview_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/customization_app_icon_color_holder"
+            android:layout_marginBottom="@dimen/bigger_margin"
+            android:paddingBottom="@dimen/small_margin"
+            android:paddingLeft="@dimen/activity_margin"
+            android:paddingRight="@dimen/activity_margin"
+            android:paddingTop="@dimen/bigger_margin">
+            <!-- camera preview text field. -->
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/camerapreview_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/camera_preview_category"
+                android:textStyle="bold|italic"
+                android:textAllCaps="true"
+                android:textSize="@dimen/smaller_text_size" />
+        </RelativeLayout>
+        <!--DOCKER COLOR OPTION LAYOUT SHOULD BE HERE ~! -->
         <RelativeLayout
             android:id="@+id/apply_to_all_holder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/customization_app_icon_color_holder"
+            android:layout_below="@+id/camera_preview_holder"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/activity_margin"
             android:background="?attr/selectableItemBackground">
 
             <com.simplemobiletools.commons.views.MyTextView
