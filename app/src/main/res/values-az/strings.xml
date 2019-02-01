@@ -50,6 +50,8 @@
 
         Bu, böyük bir tətbiq seriyasının yalnız bir hissəsidir. Digər tətbiqləri buradan əldə edə bilərsiniz https://www.simplemobiletools.com
     </string>
+    <string name="settings_category">ayarları</string>
+    <string name="camera_preview_category">" kamera preview"</string>
 
     <!--
         Haven't found some strings? There's more at

@@ -50,6 +50,8 @@
 
         Bu uygulama, daha büyük bir uygulama serisinden sadece bir parça. Geri kalanı http://www.simplemobiletools.com adresinde bulabilirsiniz
     </string>
+    <string name="camera_preview_category">"kamera önizlemesi "</string>
+    <string name="settings_category">ayarlar</string>
 
     <!--
         Haven't found some strings? There's more at

@@ -50,6 +50,8 @@
 
         Ova je aplikacija samo dio većeg broja aplikacija. Možete pronaći ostatak na https://www.simplemobiletools.com
     </string>
+    <string name="settings_category">" postavke"</string>
+    <string name="camera_preview_category">"pregled kamere  "</string>
 
     <!--
         Haven't found some strings? There's more at

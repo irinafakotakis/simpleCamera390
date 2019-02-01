@@ -50,6 +50,8 @@
 
         이 앱은 다양한 시리즈의 모바일앱 중 하나입니다. 나머지는 https://www.simplemobiletools.com 에서 찾아 보실 수 있습니다.
     </string>
+    <string name="settings_category">설정</string>
+    <string name="camera_preview_category">"카메라 미리보기 "</string>
 
     <!--
         Haven't found some strings? There's more at

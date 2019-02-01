@@ -50,6 +50,8 @@
 
         Denna app är bara en del av en större serie appar. Du hittar resten av dem på https://www.simplemobiletools.com
     </string>
+    <string name="settings_category">inställningar</string>
+    <string name="camera_preview_category">"förhandsvisning av kameran "</string>
 
     <!--
         Haven't found some strings? There's more at
