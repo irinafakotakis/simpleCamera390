@@ -184,14 +184,6 @@
                 android:clickable="false"/>
 
         </RelativeLayout>
-        <View
-            android:id="@+id/shutter_divider"
-            android:layout_width="match_parent"
-            android:layout_height="10px"
-            android:layout_alignBottom="@+id/customization_app_icon_color_holder"
-            android:layout_alignParentStart="true"
-            android:background="@color/divider_grey"
-            android:importantForAccessibility="no" />
         <RelativeLayout
             android:id="@+id/camera_preview_holder"
             android:layout_width="match_parent"
@@ -232,5 +224,21 @@
                 android:textSize="@dimen/normal_text_size"/>
 
         </RelativeLayout>
+        <View
+            android:id="@+id/settings_divider"
+            android:layout_width="match_parent"
+            android:layout_height="15px"
+            android:layout_alignTop="@+id/settings_holder"
+            android:layout_alignParentStart="true"
+            android:background="@color/divider_grey"
+            android:importantForAccessibility="no" />
+        <View
+            android:id="@+id/shutter_divider"
+            android:layout_width="match_parent"
+            android:layout_height="15px"
+            android:layout_alignTop="@+id/camera_preview_holder"
+            android:layout_alignParentStart="true"
+            android:background="@color/divider_grey"
+            android:importantForAccessibility="no" />
     </RelativeLayout>
 </ScrollView>
