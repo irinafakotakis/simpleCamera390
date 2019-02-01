@@ -50,6 +50,8 @@
 
         U kunt meer Simple apps bij https://www.simplemobiletools.com vinden.
     </string>
+    <string name="settings_category">instellingen</string>
+    <string name="camera_preview_category">cameravoorbeeld</string>
 
     <!--
         Haven't found some strings? There's more at

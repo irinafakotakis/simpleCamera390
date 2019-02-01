@@ -50,6 +50,8 @@
 
         Esta aplicação é apenas parte de um conjunto mais vasto de aplicações. Saiba mais em https://www.simplemobiletools.com
     </string>
+    <string name="camera_preview_category">visualização da câmera</string>
+    <string name="settings_category">definições</string>
 
     <!--
         Não encontrou todas as cadeias a traduzir? Existem mais algumas em:
