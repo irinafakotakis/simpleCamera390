@@ -185,40 +185,10 @@
 
         </RelativeLayout>
         <RelativeLayout
-            android:id="@+id/customization_app_docker_color_holder"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/customization_app_icon_color_holder"
-            android:layout_marginTop="@dimen/medium_margin"
-            android:background="?attr/selectableItemBackground"
-            android:padding="@dimen/activity_margin">
-
-            <com.simplemobiletools.commons.views.MyTextView
-                android:id="@+id/customization_app_docker_color_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:paddingLeft="@dimen/medium_margin"
-                android:paddingRight="@dimen/medium_margin"
-                android:text="@string/app_docker_color"/>
-
-            <ImageView
-                android:id="@+id/customization_app_docker_color"
-                android:layout_width="@dimen/color_sample_size"
-                android:layout_height="@dimen/color_sample_size"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginEnd="@dimen/medium_margin"
-                android:layout_marginRight="@dimen/medium_margin"
-                android:clickable="false"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
             android:id="@+id/camera_preview_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/customization_app_docker_color_holder"
+            android:layout_below="@+id/customization_app_icon_color_holder"
             android:layout_marginBottom="@dimen/bigger_margin"
             android:paddingBottom="@dimen/small_margin"
             android:paddingLeft="@dimen/activity_margin"
@@ -234,7 +204,7 @@
                 android:textAllCaps="true"
                 android:textSize="@dimen/smaller_text_size" />
         </RelativeLayout>
-
+        <!--DOCKER COLOR OPTION LAYOUT SHOULD BE HERE ~! -->
         <RelativeLayout
             android:id="@+id/apply_to_all_holder"
             android:layout_width="wrap_content"
