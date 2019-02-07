@@ -39,6 +39,8 @@
     <string name="shutter">Shutter</string>
     <string name="settings_category">Settings</string>
     <string name="camera_preview_category">Camera Preview</string>
+    <string name="app_docker_color" translatable="false">App dock color</string>
+
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
     <!-- Short description has to have less than 80 chars -->
