@@ -152,6 +152,51 @@
                 app:switchPadding="@dimen/medium_margin"/>
 
         </RelativeLayout>
+        <View
+            android:id="@+id/docker_color_divider"
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/divider_grey"
+            android:importantForAccessibility="no"/>
+
+        <com.simplemobiletools.commons.views.MyTextView
+            android:id="@+id/docker_color_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/bigger_margin"
+            android:layout_marginLeft="@dimen/bigger_margin"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:text="@string/camera_preview_category"
+            android:textAllCaps="true"
+            android:textSize="@dimen/smaller_text_size"/>
+
+        <RelativeLayout
+            android:id="@+id/customization_app_docker_color_holder"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/camera_preview_holder"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="-3dp"
+            android:background="?attr/selectableItemBackground"
+            android:padding="@dimen/activity_margin">
+
+            <com.simplemobiletools.commons.views.MyTextView
+                android:id="@+id/customization_app_docker_color_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingLeft="@dimen/medium_margin"
+                android:paddingRight="@dimen/medium_margin"
+                android:text="@string/app_docker_color" />
+
+            <com.divyanshu.colorseekbar.ColorSeekBar
+                android:id="@+id/color_seek_bar"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="33dp" />
+        </RelativeLayout>
 
         <View
             android:id="@+id/shutter_divider"
