@@ -14,6 +14,9 @@ import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
+import com.divyanshu.colorseekbar.ColorSeekBar
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +27,13 @@ class SettingsActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
 
+       /* color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
+            override fun onColorChangeListener(color: Int) {
+                //view.setBackgroundColor(color)
+            }
+
+        })
+*/
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupUseEnglish()
