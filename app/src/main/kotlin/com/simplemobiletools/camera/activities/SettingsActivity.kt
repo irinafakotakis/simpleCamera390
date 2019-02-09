@@ -1,8 +1,10 @@
 package com.simplemobiletools.camera.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
 import com.simplemobiletools.camera.extensions.config
@@ -17,7 +19,9 @@ import java.util.*
 import com.divyanshu.colorseekbar.ColorSeekBar
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.logging.Logger
 
+private val TAG = "MyApp"
 class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +31,17 @@ class SettingsActivity : SimpleActivity() {
     override fun onResume() {
         super.onResume()
 
-       /* color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
+
+        Log.i(TAG, "**************************************I am logging something informational!")
+        color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
             override fun onColorChangeListener(color: Int) {
-                //view.setBackgroundColor(color)
+                ///view.setBackgroundColor(color)
+                val hexColor = String.format("#%06X", 0xFFFFFF and color)
+                Log.i(TAG, "********************************************************Message from dock color handler "+color+" and hex color value:"+ hexColor)
             }
 
         })
-*/
+
         setupPurchaseThankYou()
         setupCustomizeColors()
         setupUseEnglish()
