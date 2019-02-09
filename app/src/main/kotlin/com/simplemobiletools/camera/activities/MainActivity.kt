@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
@@ -62,15 +61,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         supportActionBar?.hide()
         checkWhatsNewDialog()
         setupOrientationEventListener()
+        val myPreference = MyPreference(this)
+        val dockerColor = myPreference.getDockerColor()
+        btn_holder.setBackgroundColor(dockerColor)
     }
 
     override fun onResume() {
         super.onResume()
-        val myPreference = MyPreference(this)
-        val loginCount = myPreference.getLoginCount()
-        btn_holder.setBackgroundColor(loginCount)
-        Log.i(TAG, "******************************************Message on MAIN"+ loginCount )
-        
         if (hasStorageAndCameraPermissions()) {
             mPreview?.onResumed()
             resumeCameraItems()
@@ -88,6 +85,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         if (hasStorageAndCameraPermissions()) {
             mOrientationEventListener.enable()
         }
+        val myPreference = MyPreference(this)
+        val dockerColor = myPreference.getDockerColor()
+        btn_holder.setBackgroundColor(dockerColor)
     }
 
     override fun onPause() {

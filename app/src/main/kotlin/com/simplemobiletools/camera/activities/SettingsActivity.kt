@@ -1,15 +1,13 @@
 package com.simplemobiletools.camera.activities
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
 import com.simplemobiletools.camera.extensions.config
+import com.simplemobiletools.camera.helpers.MyPreference
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
@@ -25,32 +23,16 @@ class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
-        val myPreference = MyPreference(this)
-        val loginCount = myPreference.getLoginCount()
-        val hexColor = String.format("#%06X", 0xFFFFFF and loginCount)
-        Log.i(TAG, "******************************************Message on create"+ loginCount +" HEx " + hexColor)
     }
 
     override fun onResume() {
         super.onResume()
 
         val myPreference = MyPreference(this)
-        val loginCount = myPreference.getLoginCount()
-
-        Log.i(TAG, "*************************Message from RESUMEE dock color handler "+loginCount)
 
         color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
             override fun onColorChangeListener(color: Int) {
-                ///view.setBackgroundColor(color)
-
-                val hexColor = String.format("#%06X", 0xFFFFFF and color)
-                myPreference.setLoginCount(color)
-                val loginCount = myPreference.getLoginCount()
-
-                Log.i(TAG, "*************************Message from HANDLE dock color handler "+color+ " HEX "+hexColor+" HANDLE "+loginCount)
-                settings_focus_before_capture_holder.setBackgroundColor(color)
-                //Context.set
+                myPreference.setDockerColor(color)
             }
         })
 
