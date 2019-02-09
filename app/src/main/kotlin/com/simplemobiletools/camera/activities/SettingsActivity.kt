@@ -1,10 +1,12 @@
 package com.simplemobiletools.camera.activities
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
 import com.simplemobiletools.camera.extensions.config
@@ -16,30 +18,40 @@ import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
-import com.divyanshu.colorseekbar.ColorSeekBar
-import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.logging.Logger
 
-private val TAG = "MyApp"
+
+val TAG = "MyApp"
 class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
+
+        val myPreference = MyPreference(this)
+        val loginCount = myPreference.getLoginCount()
+        val hexColor = String.format("#%06X", 0xFFFFFF and loginCount)
+        Log.i(TAG, "******************************************Message on create"+ loginCount +" HEx " + hexColor)
     }
 
     override fun onResume() {
         super.onResume()
 
+        val myPreference = MyPreference(this)
+        val loginCount = myPreference.getLoginCount()
 
-        Log.i(TAG, "**************************************I am logging something informational!")
+        Log.i(TAG, "*************************Message from RESUMEE dock color handler "+loginCount)
+
         color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
             override fun onColorChangeListener(color: Int) {
                 ///view.setBackgroundColor(color)
-                val hexColor = String.format("#%06X", 0xFFFFFF and color)
-                Log.i(TAG, "********************************************************Message from dock color handler "+color+" and hex color value:"+ hexColor)
-            }
 
+                val hexColor = String.format("#%06X", 0xFFFFFF and color)
+                myPreference.setLoginCount(color)
+                val loginCount = myPreference.getLoginCount()
+
+                Log.i(TAG, "*************************Message from HANDLE dock color handler "+color+ " HEX "+hexColor+" HANDLE "+loginCount)
+                settings_focus_before_capture_holder.setBackgroundColor(color)
+                //Context.set
+            }
         })
 
         setupPurchaseThankYou()
@@ -75,7 +87,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupSectionColors() {
         val adjustedPrimaryColor = getAdjustedPrimaryColor()
-        arrayListOf(shutter_label, startup_label, saving_label).forEach {
+        arrayListOf(docker_color_label,shutter_label, startup_label, saving_label).forEach {
             it.setTextColor(adjustedPrimaryColor)
         }
     }
