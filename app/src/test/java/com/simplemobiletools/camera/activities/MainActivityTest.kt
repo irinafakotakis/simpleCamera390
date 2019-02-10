@@ -41,13 +41,11 @@ class MainActivityTest {
         // verify that the colour change is applied
         //val mainActivity = MainActivity()
         val preference = MyPreference(mockContext)
-        val colour = 0xFF0000 // red
         // set docker colour
-        preference.setDockerColor(colour)
+        preference.setDockerColor(FAKE_COLOUR)
         val customColour = preference.getDockerColor()
 
-        //mainActivity.btn_holder.setBackgroundColor(customColour)
         //mainActivity.setDockerColour(preference)
-        assertEquals(colour, customColour)
+        assertEquals(0xFF0000, customColour)
     }
 }
