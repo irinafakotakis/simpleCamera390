@@ -41,6 +41,7 @@ android {
 
     testOptions {
         unitTests.includeAndroidResources = true
+        unitTests.returnDefaultValues = true
     }
 
 }
@@ -49,6 +50,7 @@ dependencies {
     implementation 'com.simplemobiletools:commons:5.1.4'
     implementation 'com.divyanshu.colorseekbar:colorseekbar:1.0.2'
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:1.10.19'
 }
 
 Properties props = new Properties()

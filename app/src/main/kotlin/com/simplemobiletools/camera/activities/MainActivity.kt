@@ -574,4 +574,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         return "Hello, ${name}!"
     }
 
+    fun setDockerColour(myPreference: MyPreference) {
+        val dockerColor = myPreference.getDockerColor()
+        btn_holder.setBackgroundColor(dockerColor)
+    }
+
 }
