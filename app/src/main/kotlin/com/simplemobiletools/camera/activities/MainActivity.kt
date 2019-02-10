@@ -61,6 +61,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         supportActionBar?.hide()
         checkWhatsNewDialog()
         setupOrientationEventListener()
+        val myPreference = MyPreference(this)
+        val dockerColor = myPreference.getDockerColor()
+        btn_holder.setBackgroundColor(dockerColor)
     }
 
     override fun onResume() {
@@ -82,6 +85,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         if (hasStorageAndCameraPermissions()) {
             mOrientationEventListener.enable()
         }
+        val myPreference = MyPreference(this)
+        val dockerColor = myPreference.getDockerColor()
+        btn_holder.setBackgroundColor(dockerColor)
     }
 
     override fun onPause() {

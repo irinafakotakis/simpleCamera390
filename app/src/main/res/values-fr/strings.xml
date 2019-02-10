@@ -50,6 +50,8 @@
 
         Cette application fait partie d\'un ensemble plus grand d\'applications. Vous pouvez trouvez les autres sur https://www.simplemobiletools.com
     </string>
+    <string name="settings_category">" réglages"</string>
+    <string name="camera_preview_category">"aperçu de la caméra "</string>
 
     <!--
         Haven't found some strings? There's more at

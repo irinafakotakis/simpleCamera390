@@ -50,6 +50,8 @@
 
         Questa è solamente una delle tante applicazioni della serie Simple Mobile Tools. Si possono trovare le altre su https://www.simplemobiletools.com      
     </string>
+    <string name="settings_category">"impostazioni "</string>
+    <string name="camera_preview_category">" anteprima della fotocamera"</string>
 
     <!--
         Haven't found some strings? There's more at
