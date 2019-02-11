@@ -25,6 +25,13 @@ class SettingsActivity : SimpleActivity() {
         setContentView(R.layout.activity_settings)
     }
 
+    //Back-door for preference testing without color listener.
+    fun testPreference(color:Int): Int{
+        val myPreference = MyPreference(this);
+        myPreference.setDockerColor(color);
+        return myPreference.getDockerColor();
+    }
+
     override fun onResume() {
         super.onResume()
 
