@@ -22,10 +22,10 @@ android:
                 - sys-img-armeabi-v7a-android-22
 jobs:
   include:
-    - script: ./gradlew test # uses the default stage name "test"
-  #  - script: ./test 2 (can add more tests here)
-    - stage: deploy
+    - stage: Build
       script: ./gradlew build
+    - stage: Test
+      script: ./gradlew test
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
