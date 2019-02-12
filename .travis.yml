@@ -24,9 +24,8 @@ jobs:
   include:
 	  - stage: Build
 	  script: ./gradlew build
-    - stage: Test
-      script: ./gradlew test
-	  #  - script: ./test 2 (can add more tests here)
+	  - stage: Test
+	  script: ./gradlew test
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
