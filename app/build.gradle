@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 28
@@ -36,8 +37,10 @@ android {
     }
 
     lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
+       htmlReport true
+       htmlOutput file("lint-report.html")
+       abortOnError true
+       warningsAsErrors true
     }
 
     testOptions {

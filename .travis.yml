@@ -26,6 +26,8 @@ jobs:
       script: ./gradlew build
     - stage: Test
       script: ./gradlew test
+    - stage: Static_Analysis
+      script: ./gradlew clean assembleDebug test lint
 before_install:
         - chmod +x ./gradlew
         - yes | sdkmanager "platforms;android-28"
