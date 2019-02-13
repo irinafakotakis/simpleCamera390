@@ -32,6 +32,7 @@ jobs:
          - ./scripts/lint_script.sh
 before_install:
         - chmod +x ./gradlew
+        - chmod +x ./scripts/lint_script.sh
         - yes | sdkmanager "platforms;android-28"
 before_script:
   - android list targets
