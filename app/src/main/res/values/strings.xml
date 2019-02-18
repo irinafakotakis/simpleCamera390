@@ -40,6 +40,7 @@
     <string name="settings_category">Settings</string>
     <string name="camera_preview_category">Camera Preview</string>
     <string name="app_docker_color" translatable="false">App dock color</string>
+    <string name="show_gridlines" translatable="false">Show gridlines</string>
     <color name="pink">#ff0054</color>
 
     <!-- Strings displayed only on Google Playstore. Optional, but good to have -->
