@@ -151,7 +151,7 @@ class SettingsActivity : SimpleActivity() {
         //settings_show_gridlines.isChecked = config.showGridlines
         settings_show_gridlines_holder.setOnClickListener {
             settings_show_gridlines.toggle()
-            gridlines.setForeground(resource.drawable.gridlines43)
+            gridlines.setForeground(context.resource.drawable.gridlines43)
         }
     }
 
