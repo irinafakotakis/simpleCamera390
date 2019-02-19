@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
+import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
@@ -88,6 +89,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
         btn_holder.setBackgroundColor(dockerColor)
+
+        val gridlinesView : RelativeLayout = findViewById(R.id.gridlines)
+        if (config.showGridlines) {
+            gridlinesView.foreground = getDrawable(R.drawable.gridlines43)
+        } else {
+            gridlinesView.foreground = null
+        }
     }
 
     override fun onPause() {
