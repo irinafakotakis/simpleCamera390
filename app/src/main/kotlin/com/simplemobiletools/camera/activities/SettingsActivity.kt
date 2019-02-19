@@ -3,9 +3,11 @@ package com.simplemobiletools.camera.activities
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
+import com.simplemobiletools.camera.R.id.gridlines
 import com.simplemobiletools.camera.extensions.config
 import com.simplemobiletools.camera.helpers.MyPreference
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
@@ -49,6 +51,7 @@ class SettingsActivity : SimpleActivity() {
         setupAvoidWhatsNew()
         setupSound()
         setupFocusBeforeCapture()
+        setupShowGridlines()
         setupVolumeButtonsAsShutter()
         setupTurnFlashOffAtStartup()
         setupFlipPhotos()
@@ -141,6 +144,14 @@ class SettingsActivity : SimpleActivity() {
         settings_focus_before_capture_holder.setOnClickListener {
             settings_focus_before_capture.toggle()
             config.focusBeforeCapture = settings_focus_before_capture.isChecked
+        }
+    }
+
+    public fun setupShowGridlines(){
+        //settings_show_gridlines.isChecked = config.showGridlines
+        settings_show_gridlines_holder.setOnClickListener {
+            settings_show_gridlines.toggle()
+            gridlines.setForeground(resource.drawable.gridlines43)
         }
     }
 
