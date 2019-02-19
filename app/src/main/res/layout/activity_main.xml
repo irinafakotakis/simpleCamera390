@@ -6,6 +6,13 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
+    <RelativeLayout
+        android:id="@+id/gridlines"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/gridlines43"
+        android:visibility="visible">
+
     <com.simplemobiletools.camera.views.AutoFitTextureView
         android:id="@+id/camera_texture_view"
         android:layout_width="wrap_content"
@@ -44,6 +51,8 @@
         android:layout_below="@+id/change_resolution"
         android:layout_alignParentRight="true"
         android:padding="@dimen/medium_margin"/>
+
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/btn_holder"
