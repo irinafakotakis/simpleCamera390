@@ -84,4 +84,8 @@ class Config(context: Context) : BaseConfig(context) {
     var photoQuality: Int
         get() = prefs.getInt(PHOTO_QUALITY, 80)
         set(photoQuality) = prefs.edit().putInt(PHOTO_QUALITY, photoQuality).apply()
+
+    var showGridlines: Boolean
+        get() = prefs.getBoolean(SHOW_GRIDLINES, false)
+        set(show) = prefs.edit().putBoolean(SHOW_GRIDLINES, show).apply()
 }
