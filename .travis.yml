@@ -7,7 +7,6 @@ addons:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
-
 cache:
   directories:
   - $HOME/.gradle/caches/
@@ -33,6 +32,7 @@ jobs:
       script: ./scripts/lint_script.sh
 after_success:
   - if [ -f /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html ]; then lynx -dump /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html; fi
+  - bash <(curl -s https://codecov.io/bash)
 before_install:
         - chmod +x ./gradlew
         - chmod +x ./scripts/lint_script.sh
@@ -43,3 +43,5 @@ before_script:
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+script:
+    - ./gradlew :lib:createDebugAndroidTestCoverageReport --info --stacktrace
