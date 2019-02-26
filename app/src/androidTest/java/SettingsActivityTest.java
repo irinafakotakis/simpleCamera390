@@ -17,13 +17,13 @@ public class SettingsActivityTest {
     public ActivityTestRule<SettingsActivity> settingsActivityActivityTestRule =
             new ActivityTestRule<>(SettingsActivity.class);
 
-    @Test
-    public void testTextOfDockerColorOption(){
-
-        String expected = "App dock color";
-        // Checking if app dock color text appears as an option in settings window
-        onView(withId(R.id.customization_app_docker_color_label)).check(matches(withText(expected)));
-    }
+//    @Test
+//    public void testTextOfDockerColorOption(){
+//
+//        String expected = "App dock color";
+//        // Checking if app dock color text appears as an option in settings window
+//        onView(withId(R.id.customization_app_docker_color_label)).check(matches(withText(expected)));
+//    }
 
     @Test
     public void testSeekBar(){
