@@ -1,0 +1,5 @@
+ignore:
+  - "src/main/kotlin/com/simplemobiletools/camera/models"
+  - "src/main/kotlin/com/simplemobiletools/camera/views"
+  - "src/main/kotlin/com/simplemobiletools/*"
+
