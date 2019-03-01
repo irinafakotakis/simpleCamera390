@@ -90,7 +90,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val dockerColor = myPreference.getDockerColor()
         btn_holder.setBackgroundColor(dockerColor)
 
-        val gridlinesView : RelativeLayout = findViewById(R.id.gridlines)
+        val gridlinesView? : RelativeLayout = findViewById(R.id.gridlines)
         if (config.showGridlines) {
             gridlinesView.foreground = getDrawable(R.drawable.gridlines43)
         } else {
