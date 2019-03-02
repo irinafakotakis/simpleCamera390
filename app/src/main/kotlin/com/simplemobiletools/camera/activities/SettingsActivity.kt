@@ -1,8 +1,11 @@
 package com.simplemobiletools.camera.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
 import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
@@ -14,6 +17,7 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_GLIDE
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -49,6 +53,7 @@ class SettingsActivity : SimpleActivity() {
         setupAvoidWhatsNew()
         setupSound()
         setupFocusBeforeCapture()
+        setupShowGridlines()
         setupVolumeButtonsAsShutter()
         setupTurnFlashOffAtStartup()
         setupFlipPhotos()
@@ -141,6 +146,14 @@ class SettingsActivity : SimpleActivity() {
         settings_focus_before_capture_holder.setOnClickListener {
             settings_focus_before_capture.toggle()
             config.focusBeforeCapture = settings_focus_before_capture.isChecked
+        }
+    }
+
+    private fun setupShowGridlines(){
+        settings_show_gridlines.isChecked = config.showGridlines
+        settings_show_gridlines_holder.setOnClickListener {
+            settings_show_gridlines.toggle()
+            config.showGridlines = settings_show_gridlines.isChecked
         }
     }
 
