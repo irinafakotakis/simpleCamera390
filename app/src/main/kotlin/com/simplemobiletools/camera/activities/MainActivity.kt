@@ -26,6 +26,15 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.Release
 import kotlinx.android.synthetic.main.activity_main.*
+import android.app.*
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.RemoteViews
+import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
@@ -45,6 +54,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var mCurrVideoRecTimer = 0
     var mLastHandledOrientation = 0
 
+    lateinit var notificationManager : NotificationManager
+    lateinit var notificationChannel : NotificationChannel
+    lateinit var builder : Notification.Builder
+    private val channelId = "com.simplemobiletools.camera.activities"
+    private val description = "Test notification"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
@@ -53,6 +69,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
+        //setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -64,6 +81,47 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
         btn_holder.setBackgroundColor(dockerColor)
+
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        shutter.setOnClickListener {
+
+            val intent = Intent(this, LauncherActivity::class.java)
+            val pendingIntent = PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.GREEN
+                notificationChannel.enableVibration(false)
+                notificationManager.createNotificationChannel(notificationChannel)
+
+                builder = Notification.Builder(this, channelId)
+                        .setContentTitle("Picture Taken")
+                        .setContentText("Saving...")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
+                        .setContentIntent(pendingIntent)
+
+                shutterPressed()
+
+            }else{
+
+                builder = Notification.Builder(this)
+                        .setContentTitle("Picture Taken")
+                        .setContentText("Saving...")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
+                        .setContentIntent(pendingIntent)
+
+                shutterPressed()
+
+            }
+
+            notificationManager.notify(1234,builder.build())
+
+        }
     }
 
     override fun onResume() {
@@ -570,7 +628,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
     }
 
-    public fun helloWorld(name: String = "World"): String {
+    fun helloWorld(name: String = "World"): String {
         return "Hello, ${name}!"
     }
 
@@ -578,5 +636,11 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val dockerColor = myPreference.getDockerColor()
         btn_holder.setBackgroundColor(dockerColor)
     }
+
+
+
+
+
+
 
 }
