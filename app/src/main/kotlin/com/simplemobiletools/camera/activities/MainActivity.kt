@@ -45,6 +45,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var mIsHardwareShutterHandled = false
     private var mCurrVideoRecTimer = 0
     var mLastHandledOrientation = 0
+    private var gridline_state = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -64,7 +65,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         setupOrientationEventListener()
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
-        btn_holder.setBackgroundColor(dockerColor)
+        btn_holder?.setBackgroundColor(dockerColor)
+        gridlines_icon.tag = R.drawable.gridlines_white
     }
 
     override fun onResume() {
@@ -88,14 +90,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
-        btn_holder.setBackgroundColor(dockerColor)
-
-        val gridlinesView : RelativeLayout = findViewById(R.id.gridlines)
-        if (config.showGridlines) {
-            gridlinesView.foreground = getDrawable(R.drawable.gridlines43)
-        } else {
-            gridlinesView.foreground = null
-        }
+        btn_holder?.setBackgroundColor(dockerColor)
     }
 
     override fun onPause() {
@@ -236,6 +231,26 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         settings.setOnClickListener { launchSettings() }
         toggle_photo_video.setOnClickListener { handleTogglePhotoVideo() }
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
+        gridlines_icon.setOnClickListener { toggleGridlines() }
+    }
+
+    private fun toggleGridlines(){
+        // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
+        if(gridline_state) {
+            gridlines.foreground = getDrawable(R.drawable.gridlines43)
+            gridlines.tag = R.drawable.gridlines43
+            gridlines_icon.setImageResource(R.drawable.gridlines_black)
+            gridlines_icon.tag = R.drawable.gridlines_black
+            gridline_state = false
+        }
+        // on toggle, foreground becomes empty, and toggle icon color reverts back to white
+        else{
+            gridlines.foreground = null
+            gridlines.tag = null
+            gridlines_icon.setImageResource(R.drawable.gridlines_white)
+            gridlines_icon.tag = R.drawable.gridlines_white
+            gridline_state = true
+        }
     }
 
     private fun toggleCamera() {
