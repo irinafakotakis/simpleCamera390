@@ -66,6 +66,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
         btn_holder?.setBackgroundColor(dockerColor)
+        gridlines_icon.tag = R.drawable.gridlines_white
     }
 
     override fun onResume() {
@@ -234,14 +235,20 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
     private fun toggleGridlines(){
+        // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
         if(gridline_state) {
             gridlines.foreground = getDrawable(R.drawable.gridlines43)
+            gridlines.tag = R.drawable.gridlines43
             gridlines_icon.setImageResource(R.drawable.gridlines_black)
+            gridlines_icon.tag = R.drawable.gridlines_black
             gridline_state = false
         }
+        // on toggle, foreground becomes empty, and toggle icon color reverts back to white
         else{
             gridlines.foreground = null
+            gridlines.tag = null
             gridlines_icon.setImageResource(R.drawable.gridlines_white)
+            gridlines_icon.tag = R.drawable.gridlines_white
             gridline_state = true
         }
     }
