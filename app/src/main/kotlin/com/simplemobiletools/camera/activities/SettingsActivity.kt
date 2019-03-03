@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
 
-val TAG = "MyApp"
+
 class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,6 @@ class SettingsActivity : SimpleActivity() {
         setupAvoidWhatsNew()
         setupSound()
         setupFocusBeforeCapture()
-        setupShowGridlines()
         setupVolumeButtonsAsShutter()
         setupTurnFlashOffAtStartup()
         setupFlipPhotos()
@@ -149,13 +148,6 @@ class SettingsActivity : SimpleActivity() {
         }
     }
 
-    private fun setupShowGridlines(){
-        settings_show_gridlines.isChecked = config.showGridlines
-        settings_show_gridlines_holder.setOnClickListener {
-            settings_show_gridlines.toggle()
-            config.showGridlines = settings_show_gridlines.isChecked
-        }
-    }
 
     private fun setupVolumeButtonsAsShutter() {
         settings_volume_buttons_as_shutter.isChecked = config.volumeButtonsAsShutter
