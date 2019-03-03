@@ -1,8 +1,13 @@
 package com.simplemobiletools.camera.activities
 
+import android.app.*
 import com.simplemobiletools.camera.helpers.MyPreference
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
+import androidx.core.content.ContextCompat.getSystemService
+import com.simplemobiletools.camera.R
 import kotlinx.android.synthetic.main.activity_main.*
 import org.junit.Test
 import org.junit.Assert.*
@@ -15,6 +20,9 @@ private const val FAKE_COLOUR = 0xFF0000
 private const val FAKE_PREFERENCE = "DockColor"
 private const val FAKE_PREFERENCE_NAME = "SharedPreferenceExample"
 private const val FAKE_PREFERENCE_MODE = Context.MODE_PRIVATE
+lateinit var notificationManager : NotificationManager
+lateinit var notificationChannel : NotificationChannel
+
 
 @RunWith(MockitoJUnitRunner::class)
 class MainActivityTest {
@@ -25,6 +33,16 @@ class MainActivityTest {
     private lateinit var mockPreferences: SharedPreferences
     @Mock
     private lateinit var mockEditor: SharedPreferences.Editor
+
+    @Mock
+    private val mockchannelId = "com.simplemobiletools.camera.activities"
+
+    @Mock
+    private val mockdescription = "Test notification"
+
+    @Mock
+    lateinit var mockBuilder : Notification.Builder
+
 
     @Test
     fun helloWorldReturnsGenericMessage() {
@@ -48,4 +66,28 @@ class MainActivityTest {
         //mainActivity.setDockerColour(preference)
         assertEquals(0xFF0000, customColour)
     }
+
+    @Test
+    fun shutterNotificationTest(){
+
+        //initialize mainActivity to access MainActivity()
+        val mainActivity = MainActivity()
+
+
+        //mocking the builder and initialize it with mockchannelID and set its values
+        mockBuilder = Notification.Builder(mainActivity, mockchannelId)
+                .setContentTitle("Picture Taken")
+                .setContentText("Saving...")
+                .setSmallIcon(R.drawable.ic_launcher_round)
+                .setLargeIcon(BitmapFactory.decodeResource(mainActivity.resources, R.drawable.ic_launcher))
+
+        //assertEquals statements to verify that our mockBuilder values equals the values of the builder in MainActivity()
+        assertEquals(mockBuilder.setContentTitle("Picture Taken"), mainActivity.builder.setContentTitle("Picture Taken"))
+        assertEquals(mockBuilder.setContentText("Saving..."), mainActivity.builder.setContentTitle("Saving..."))
+        assertEquals(mockBuilder.setSmallIcon(R.drawable.ic_launcher_round), mainActivity.builder.setSmallIcon(R.drawable.ic_launcher_round))
+        assertEquals(mockBuilder.setLargeIcon(BitmapFactory.decodeResource(mainActivity.resources, R.drawable.ic_launcher)), mainActivity.builder.setLargeIcon(BitmapFactory.decodeResource(mainActivity.resources, R.drawable.ic_launcher)))
+
+
+    }
 }
+

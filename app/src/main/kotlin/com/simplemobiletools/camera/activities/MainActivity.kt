@@ -84,44 +84,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-        shutter.setOnClickListener {
 
-            val intent = Intent(this, LauncherActivity::class.java)
-            val pendingIntent = PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
-
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
-                notificationChannel.enableLights(true)
-                notificationChannel.lightColor = Color.GREEN
-                notificationChannel.enableVibration(false)
-                notificationManager.createNotificationChannel(notificationChannel)
-
-                builder = Notification.Builder(this, channelId)
-                        .setContentTitle("Picture Taken")
-                        .setContentText("Saving...")
-                        .setSmallIcon(R.drawable.ic_launcher_round)
-                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
-                        .setContentIntent(pendingIntent)
-
-                shutterPressed()
-
-            }else{
-
-                builder = Notification.Builder(this)
-                        .setContentTitle("Picture Taken")
-                        .setContentText("Saving...")
-                        .setSmallIcon(R.drawable.ic_launcher_round)
-                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
-                        .setContentIntent(pendingIntent)
-
-                shutterPressed()
-
-            }
-
-            notificationManager.notify(1234,builder.build())
-
-        }
     }
 
     override fun onResume() {
@@ -331,8 +294,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         if (mIsInPhotoMode) {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
+            shutterNotification()
         } else {
             mPreview?.toggleRecording()
+            shutterNotification()
         }
     }
 
@@ -635,6 +600,49 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     fun setDockerColour(myPreference: MyPreference) {
         val dockerColor = myPreference.getDockerColor()
         btn_holder.setBackgroundColor(dockerColor)
+    }
+
+
+    fun shutterNotification(){
+
+        shutter.setOnClickListener {
+
+            val intent = Intent(this, LauncherActivity::class.java)
+            val pendingIntent = PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.GREEN
+                notificationChannel.enableVibration(false)
+                notificationManager.createNotificationChannel(notificationChannel)
+
+                builder = Notification.Builder(this, channelId)
+                        .setContentTitle("Picture Taken")
+                        .setContentText("Saving...")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
+                        .setContentIntent(pendingIntent)
+
+                shutterPressed()
+
+            }else{
+
+                builder = Notification.Builder(this)
+                        .setContentTitle("Picture Taken")
+                        .setContentText("Saving...")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
+                        .setContentIntent(pendingIntent)
+
+                shutterPressed()
+
+            }
+
+            notificationManager.notify(1234,builder.build())
+
+        }
     }
 
 
