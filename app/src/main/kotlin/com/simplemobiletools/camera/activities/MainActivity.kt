@@ -34,6 +34,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.RemoteViews
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
 
@@ -81,9 +82,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         setupOrientationEventListener()
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
-        btn_holder.setBackgroundColor(dockerColor)
 
+        
         notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        btn_holder.setBackgroundColor(dockerColor)
+        color_seek_bar?.visibility = View.INVISIBLE
 
 
     }
