@@ -1,6 +1,9 @@
 language: android
 jdk: oraclejdk8
-
+addons:
+  apt:
+    packages:
+      - lynx
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
@@ -26,8 +29,13 @@ jobs:
       script: ./gradlew build
     - stage: Test
       script: ./gradlew test
+    - stage: Static Analysis
+      script: ./scripts/lint_script.sh
+after_success:
+  - if [ -f /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html ]; then lynx -dump /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html; fi
 before_install:
         - chmod +x ./gradlew
+        - chmod +x ./scripts/lint_script.sh
         - yes | sdkmanager "platforms;android-28"
 before_script:
   - android list targets

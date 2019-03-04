@@ -1,6 +1,8 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply from: 'lint-checks.gradle'
+
 
 android {
     compileSdkVersion 28
@@ -8,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.simplemobiletools.camera"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 28
         versionCode 64
         versionName "5.0.0"
@@ -36,8 +38,11 @@ android {
     }
 
     lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
+       htmlReport true
+       htmlOutput file("lint-report.html")
+       abortOnError false
+       warningsAsErrors true
+       check lintchecks
     }
 
     testOptions {
@@ -52,9 +57,13 @@ dependencies {
     implementation 'com.divyanshu.colorseekbar:colorseekbar:1.0.2'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.mockito:mockito-core:1.10.19'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     androidTestImplementation 'com.android.support.test:rules:1.0.2'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    implementation 'com.android.support:support-compat:28.0.0'
+    implementation "com.android.support:appcompat-v7:28.0.0"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.1.1'
 }
 
 Properties props = new Properties()

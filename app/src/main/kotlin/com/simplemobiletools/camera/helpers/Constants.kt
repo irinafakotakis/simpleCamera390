@@ -22,6 +22,7 @@ const val KEEP_SETTINGS_VISIBLE = "keep_settings_visible"
 const val ALWAYS_OPEN_BACK_CAMERA = "always_open_back_camera"
 const val SAVE_PHOTO_METADATA = "save_photo_metadata"
 const val PHOTO_QUALITY = "photo_quality"
+const val SHOW_GRIDLINES = "show"
 
 const val FLASH_OFF = 0
 const val FLASH_ON = 1
