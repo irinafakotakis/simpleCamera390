@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
+import androidx.test.espresso.action.ViewActions.doubleClick
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
@@ -32,20 +33,26 @@ class ShutterNotificationsTest {
     @JvmField
     var mGrantPermissionRule =
             GrantPermissionRule.grant(
-                    "android.permission.CAMERA")
+                    "android.permission.CAMERA",
+                    "android.permission.WRITE_EXTERNAL_STORAGE")
 
     @Test
     fun shutterNotificationsTest() {
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
+        Thread.sleep(5000)
         val appCompatImageView = onView(
                 allOf(withId(R.id.shutter),
                         childAtPosition(
                                 allOf(withId(R.id.btn_holder),
                                         childAtPosition(
                                                 withId(R.id.view_holder),
-                                                5)),
+                                                1)),
                                 1),
                         isDisplayed()))
-        appCompatImageView.perform(click())
+        appCompatImageView.perform(doubleClick())
+        Thread.sleep(5000)
 
     }
 
