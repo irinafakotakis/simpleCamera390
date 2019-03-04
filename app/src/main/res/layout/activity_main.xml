@@ -25,6 +25,14 @@
             android:src="@drawable/gridlines_white"
             />
 
+        <Switch
+            android:id="@+id/seekbar_switch"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="50dp"
+            android:padding="@dimen/normal_margin" />
+
         <ImageView
             android:id="@+id/settings"
             android:layout_width="@dimen/icon_size"
@@ -59,7 +67,15 @@
             android:layout_alignParentRight="true"
             android:padding="@dimen/medium_margin" />
 
+        <com.divyanshu.colorseekbar.ColorSeekBar
+            android:id="@+id/color_seek_bar"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="500dp"
+            android:layout_marginStart="100dp"
+            />
     </RelativeLayout>
+
 
     <LinearLayout
         android:id="@+id/btn_holder"
@@ -68,6 +84,7 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_horizontal|bottom"
         android:background="@color/pink">
+
 
         <ImageView
             android:id="@+id/toggle_camera"
