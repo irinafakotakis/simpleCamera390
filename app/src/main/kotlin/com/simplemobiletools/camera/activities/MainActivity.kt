@@ -27,6 +27,17 @@ import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.*
 import com.simplemobiletools.commons.models.Release
 import kotlinx.android.synthetic.main.activity_main.*
+import android.app.*
+import android.content.Context
+import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.RemoteViews
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_settings.*
+import java.util.*
+
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
@@ -48,6 +59,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var gridline_state = true
     private var docker_color_state = true
 
+    lateinit var notificationManager : NotificationManager
+    lateinit var notificationChannel : NotificationChannel
+    lateinit var builder : Notification.Builder
+    private val channelId = "com.simplemobiletools.camera.activities"
+    private val description = "Test notification"
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED or
@@ -56,6 +74,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
         useDynamicTheme = false
         super.onCreate(savedInstanceState)
+        //setContentView(R.layout.activity_main)
         appLaunched(BuildConfig.APPLICATION_ID)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
 
@@ -66,6 +85,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         setupOrientationEventListener()
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
+
+        notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
         btn_holder?.setBackgroundColor(dockerColor)
         color_seek_bar?.visibility = View.INVISIBLE
     }
@@ -326,8 +348,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         if (mIsInPhotoMode) {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
+            shutterNotification()
         } else {
             mPreview?.toggleRecording()
+            shutterNotification()
         }
     }
 
@@ -623,8 +647,59 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
     }
 
-    public fun helloWorld(name: String = "World"): String {
+    fun helloWorld(name: String = "World"): String {
         return "Hello, ${name}!"
     }
 
+    fun setDockerColour(myPreference: MyPreference) {
+        val dockerColor = myPreference.getDockerColor()
+        btn_holder.setBackgroundColor(dockerColor)
+    }
+
+
+    fun shutterNotification(){
+
+        shutter.setOnClickListener {
+
+            val intent = Intent(this, LauncherActivity::class.java)
+            val pendingIntent = PendingIntent.getActivities(this, 0, arrayOf(intent), PendingIntent.FLAG_UPDATE_CURRENT)
+
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                notificationChannel = NotificationChannel(channelId, description, NotificationManager.IMPORTANCE_HIGH)
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.GREEN
+                notificationChannel.enableVibration(false)
+                notificationManager.createNotificationChannel(notificationChannel)
+
+                builder = Notification.Builder(this, channelId)
+                        .setContentTitle("Picture Taken")
+                        .setContentText("Saving...")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
+                        .setContentIntent(pendingIntent)
+
+                shutterPressed()
+
+            }else{
+
+                builder = Notification.Builder(this)
+                        .setContentTitle("Picture Taken")
+                        .setContentText("Saving...")
+                        .setSmallIcon(R.drawable.ic_launcher_round)
+                        .setLargeIcon(BitmapFactory.decodeResource(this.resources, R.drawable.ic_launcher))
+                        .setContentIntent(pendingIntent)
+
+                shutterPressed()
+
+            }
+
+            //generating unique notification numbers, now every photo taken will generate a notification, no need to clear
+            //notifications before another one comes in
+            var Unique_Integer_Number = ((Date().getTime() / 1000L) % Integer.MAX_VALUE).toInt()
+
+            notificationManager.notify(Unique_Integer_Number,builder.build())
+
+        }
+    }
 }
