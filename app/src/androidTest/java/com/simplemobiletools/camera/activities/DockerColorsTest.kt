@@ -109,10 +109,7 @@ class DockerColorsTest {
         // final values
         val final_docker_color = color
         val final_saved_color = myPreference.getDockerColor()
-
-        // confirm seek-bar position has changed from its initial black color
-        assertNotSame(Color.BLACK, color_seek_bar.getColor())
-
+        
         /*
          * Characterization of the behaviour of seek-bar thumb:
          * Seek-bar thumb never remains constant; therefore, we can't retrieve its final color.
