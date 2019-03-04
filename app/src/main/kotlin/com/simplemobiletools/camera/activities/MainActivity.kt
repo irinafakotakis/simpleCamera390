@@ -34,6 +34,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.RemoteViews
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
@@ -640,7 +641,11 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
             }
 
-            notificationManager.notify(1234,builder.build())
+            //generating unique notification numbers, now every photo taken will generate a notification, no need to clear
+            //notifications before another one comes in
+            var Unique_Integer_Number = ((Date().getTime() / 1000L) % Integer.MAX_VALUE).toInt()
+
+            notificationManager.notify(Unique_Integer_Number,builder.build())
 
         }
     }

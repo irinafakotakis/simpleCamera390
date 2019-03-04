@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
@@ -23,7 +22,7 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ShutterNotificationTest {
+class ShutterNotificationsTest {
 
     @Rule
     @JvmField
@@ -36,7 +35,7 @@ class ShutterNotificationTest {
                     "android.permission.CAMERA")
 
     @Test
-    fun shutterNotificationTest() {
+    fun shutterNotificationsTest() {
         val appCompatImageView = onView(
                 allOf(withId(R.id.shutter),
                         childAtPosition(
@@ -48,16 +47,6 @@ class ShutterNotificationTest {
                         isDisplayed()))
         appCompatImageView.perform(click())
 
-        val imageView = onView(
-                allOf(withId(R.id.shutter),
-                        childAtPosition(
-                                allOf(withId(R.id.btn_holder),
-                                        childAtPosition(
-                                                withId(R.id.view_holder),
-                                                7)),
-                                0),
-                        isDisplayed()))
-        imageView.check(matches(isDisplayed()))
     }
 
     private fun childAtPosition(
