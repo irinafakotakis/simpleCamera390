@@ -7,13 +7,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.MediaStore
-import android.util.Log
 import android.view.*
 import android.widget.RelativeLayout
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
 import com.simplemobiletools.camera.extensions.config
@@ -46,6 +46,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var mCurrVideoRecTimer = 0
     var mLastHandledOrientation = 0
     private var gridline_state = true
+    private var docker_color_state = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -66,7 +67,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val myPreference = MyPreference(this)
         val dockerColor = myPreference.getDockerColor()
         btn_holder?.setBackgroundColor(dockerColor)
-        gridlines_icon.tag = R.drawable.gridlines_white
+        color_seek_bar?.visibility = View.INVISIBLE
     }
 
     override fun onResume() {
@@ -232,7 +233,36 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_photo_video.setOnClickListener { handleTogglePhotoVideo() }
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
         gridlines_icon.setOnClickListener { toggleGridlines() }
+        gridlines_icon.tag = R.drawable.gridlines_white
+
+        seekbar_switch.setOnClickListener{ enableColorSeekBar() }
+
+        color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
+            override fun onColorChangeListener(color: Int) {
+                btn_holder.setBackgroundColor(color)
+                savePreference(color)
+            }
+        })
     }
+
+    private fun savePreference(color: Int) {
+        val myPreference = MyPreference(this)
+        myPreference.setDockerColor(color)
+    }
+
+    private fun enableColorSeekBar(){
+        // on toggle, color-seekbar becomes visible
+        if(docker_color_state){
+            color_seek_bar?.visibility = View.VISIBLE
+            docker_color_state = false
+        }
+        // on toggle, color-seekbar becomes invisible
+        else{
+            color_seek_bar?.visibility = View.INVISIBLE
+            docker_color_state = true
+        }
+    }
+
 
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
@@ -595,11 +625,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     public fun helloWorld(name: String = "World"): String {
         return "Hello, ${name}!"
-    }
-
-    fun setDockerColour(myPreference: MyPreference) {
-        val dockerColor = myPreference.getDockerColor()
-        btn_holder.setBackgroundColor(dockerColor)
     }
 
 }

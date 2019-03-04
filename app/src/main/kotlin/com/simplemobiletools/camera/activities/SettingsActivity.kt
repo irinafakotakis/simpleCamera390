@@ -1,23 +1,18 @@
 package com.simplemobiletools.camera.activities
 
 import android.os.Bundle
-import android.util.Log
+
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
-import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
 import com.simplemobiletools.camera.extensions.config
-import com.simplemobiletools.camera.helpers.MyPreference
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
 import com.simplemobiletools.commons.helpers.LICENSE_GLIDE
 import com.simplemobiletools.commons.models.FAQItem
 import com.simplemobiletools.commons.models.RadioItem
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
@@ -29,23 +24,8 @@ class SettingsActivity : SimpleActivity() {
         setContentView(R.layout.activity_settings)
     }
 
-    //Back-door for preference testing without color listener.
-    fun testPreference(color:Int): Int{
-        val myPreference = MyPreference(this);
-        myPreference.setDockerColor(color);
-        return myPreference.getDockerColor();
-    }
-
     override fun onResume() {
         super.onResume()
-
-        val myPreference = MyPreference(this)
-
-        color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
-            override fun onColorChangeListener(color: Int) {
-                myPreference.setDockerColor(color)
-            }
-        })
 
         setupPurchaseThankYou()
         setupCustomizeColors()
@@ -80,7 +60,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupSectionColors() {
         val adjustedPrimaryColor = getAdjustedPrimaryColor()
-        arrayListOf(docker_color_label,shutter_label, startup_label, saving_label).forEach {
+        arrayListOf(shutter_label, startup_label, saving_label).forEach {
             it.setTextColor(adjustedPrimaryColor)
         }
     }
