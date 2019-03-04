@@ -1,13 +1,12 @@
 package com.simplemobiletools.camera.activities
 
 import android.os.Bundle
+
 import android.view.Menu
 import android.view.MenuItem
-import com.divyanshu.colorseekbar.ColorSeekBar
 import com.simplemobiletools.camera.BuildConfig
 import com.simplemobiletools.camera.R
 import com.simplemobiletools.camera.extensions.config
-import com.simplemobiletools.camera.helpers.MyPreference
 import com.simplemobiletools.commons.dialogs.FilePickerDialog
 import com.simplemobiletools.commons.dialogs.RadioGroupDialog
 import com.simplemobiletools.commons.extensions.*
@@ -18,30 +17,15 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 
 
-val TAG = "MyApp"
+
 class SettingsActivity : SimpleActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
     }
 
-    //Back-door for preference testing without color listener.
-    fun testPreference(color:Int): Int{
-        val myPreference = MyPreference(this);
-        myPreference.setDockerColor(color);
-        return myPreference.getDockerColor();
-    }
-
     override fun onResume() {
         super.onResume()
-
-        val myPreference = MyPreference(this)
-
-        color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
-            override fun onColorChangeListener(color: Int) {
-                myPreference.setDockerColor(color)
-            }
-        })
 
         setupPurchaseThankYou()
         setupCustomizeColors()
@@ -76,7 +60,7 @@ class SettingsActivity : SimpleActivity() {
 
     private fun setupSectionColors() {
         val adjustedPrimaryColor = getAdjustedPrimaryColor()
-        arrayListOf(docker_color_label,shutter_label, startup_label, saving_label).forEach {
+        arrayListOf(shutter_label, startup_label, saving_label).forEach {
             it.setTextColor(adjustedPrimaryColor)
         }
     }
@@ -143,6 +127,7 @@ class SettingsActivity : SimpleActivity() {
             config.focusBeforeCapture = settings_focus_before_capture.isChecked
         }
     }
+
 
     private fun setupVolumeButtonsAsShutter() {
         settings_volume_buttons_as_shutter.isChecked = config.volumeButtonsAsShutter
