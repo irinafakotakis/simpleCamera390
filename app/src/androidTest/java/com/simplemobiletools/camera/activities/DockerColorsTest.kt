@@ -64,10 +64,10 @@ class DockerColorsTest {
         val initial_docker_color = color
         val initial_saved_color = myPreference.getDockerColor()
 
-         // assert the starting position of the color-seek-bar remains constant.
+         // confirm the starting position of the color-seek-bar remains constant.
         assertEquals(initial_docker_color, initial_saved_color)
 
-        // assert that docker color will only be visibility on switch
+        // confirm that docker color will only be visibility on switch
         assertEquals(color_seek_bar.visibility, View.INVISIBLE)
 
         // Added a sleep statement to match the app's execution delay.
@@ -86,9 +86,11 @@ class DockerColorsTest {
         switch_.perform(click())
         // -------------------------------------------------
 
-
         // assert that seek bar has become visible
         assertEquals(color_seek_bar.visibility, View.VISIBLE)
+
+        // confirm starting position of seek-bar thumb
+        assertEquals(Color.BLACK, color_seek_bar.getColor())
 
         // Sleep once more to visually confirm seek-bar visibility
         Thread.sleep(3000)
@@ -107,6 +109,14 @@ class DockerColorsTest {
         // final values
         val final_docker_color = color
         val final_saved_color = myPreference.getDockerColor()
+        
+        /*
+         * Characterization of the behaviour of seek-bar thumb:
+         * Seek-bar thumb never remains constant; therefore, we can't retrieve its final color.
+         * The saved color is always a couple color gradients away from the final position of the
+         * color bar. We can only assert that its color changed from its initial black color.
+         */
+        assertNotSame(Color.BLACK, color_seek_bar.getColor())
 
         // confirm that the docker color has changed post-swipe
         assertEquals(final_docker_color, final_saved_color)
