@@ -48,7 +48,7 @@ android {
        check lintchecks
     }
 
-    testOptions {
+    android.testOptions {
         unitTests.includeAndroidResources = true
         unitTests.returnDefaultValues = true
         unitTests.all {
