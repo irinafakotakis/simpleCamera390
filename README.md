@@ -1,6 +1,9 @@
 # Simple Camera
 <img alt="Logo" src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="80" />
 
+[![codecov](https://codecov.io/gh/g82005/simpleCamera390/branch/master/graph/badge.svg)](https://codecov.io/gh/g82005/simpleCamera390)
+[![Build Status](https://travis-ci.com/irinafakotakis/simpleCamera390.svg?branch=master)](https://travis-ci.com/irinafakotakis/simpleCamera390)
+
 A camera with flash, zoom and no ads.
 
 The camera is usable for both photo taking and video recording. You can switch between front and rear camera, modify the save path and limit the resolution. The flash can be turned on and off or used as a flashlight. You can pinch to zoom in and out.

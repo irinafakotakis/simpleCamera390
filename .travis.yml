@@ -7,7 +7,6 @@ addons:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
-
 cache:
   directories:
   - $HOME/.gradle/caches/
@@ -18,20 +17,23 @@ android:
                 - platform-tools
                 - tools
                 - build-tools-28.0.3
-                - android-22
+                - android-24
                 - add-on
                 - extra-android-support
                 - extra-android-m2repository
-                - sys-img-armeabi-v7a-android-22
+                - sys-img-armeabi-v7a-android-24
 jobs:
   include:
     - stage: Build
       script: ./gradlew build
     - stage: Test
-      script: ./gradlew test
+      script:
+        - ./gradlew test
+        - ./gradlew createDebugAndroidTestCoverageReport --info --stacktrace
     - stage: Static Analysis
       script: ./scripts/lint_script.sh
 after_success:
+  - bash <(curl -s https://codecov.io/bash) -t 2cf485b3-0716-4c03-8366-bd40dac67fac
   - if [ -f /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html ]; then lynx -dump /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html; fi
 before_install:
         - chmod +x ./gradlew
@@ -39,7 +41,8 @@ before_install:
         - yes | sdkmanager "platforms;android-28"
 before_script:
   - android list targets
-  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
+  - echo no | android create avd --force -n test -t android-24 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
+
