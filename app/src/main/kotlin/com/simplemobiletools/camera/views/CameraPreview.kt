@@ -772,8 +772,10 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
         // reset camera
-        closeCamera()
-        openCamera(mTextureView.width, mTextureView.height)
+        Thread {
+            closeCamera()
+            openCamera(mTextureView.width, mTextureView.height)
+        }.start()
     }
 
     private fun getCameraManager() = mActivity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
