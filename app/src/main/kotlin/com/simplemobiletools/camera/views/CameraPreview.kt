@@ -377,6 +377,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                 }
                 mActivity.setFlashAvailable(mIsFlashSupported)
                 mActivity.updateCameraIcon(mUseFrontCamera)
+
                 return
             }
         } catch (e: Exception) {
@@ -445,6 +446,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                 mCaptureSession = cameraCaptureSession
                 try {
                     mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
+                    mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set preview to selected filter
                     if (mIsInVideoMode) {
                         mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
                         mCaptureSession!!.setRepeatingRequest(mPreviewRequestBuilder!!.build(), null, mBackgroundHandler)
@@ -575,7 +577,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                 setFlashAndExposure(this)
                 set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
                 set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation)
-                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter captured image/video
+                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter to captured image
                 set(CaptureRequest.CONTROL_CAPTURE_INTENT, CaptureRequest.CONTROL_CAPTURE_INTENT_STILL_CAPTURE)
                 set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
                 if (mZoomRect != null) {
@@ -639,7 +641,6 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
 
             set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
             set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_AUTO)
-            set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter to camera preview
             set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START)
             setTag(FOCUS_TAG)
             mCaptureSession!!.capture(build(), captureCallbackHandler, mBackgroundHandler)
@@ -757,7 +758,6 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     }
 
     override fun setCameraEffect(cameraEffect: String) {
-
         setCameraEffect(cameraEffect, mPreviewRequestBuilder!!)
     }
 
@@ -771,10 +771,9 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
-        // apply selected filter to camera
-        builder.apply {
-            set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect)
-        }
+        // reset camera
+        closeCamera()
+        openCamera(mTextureView.width, mTextureView.height)
     }
 
     private fun getCameraManager() = mActivity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
@@ -832,6 +831,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         texture.setDefaultBufferSize(mPreviewSize!!.width, mPreviewSize!!.height)
         mPreviewRequestBuilder = mCameraDevice!!.createCaptureRequest(CameraDevice.TEMPLATE_RECORD).apply {
             set(CaptureRequest.CONTROL_CAPTURE_INTENT, CaptureRequest.CONTROL_CAPTURE_INTENT_VIDEO_RECORD)
+            set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter captured video
             set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
         }
 
