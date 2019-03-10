@@ -58,12 +58,14 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     var mLastHandledOrientation = 0
     private var gridline_state = true
     private var docker_color_state = true
+    private var filterOn = false
 
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
     lateinit var builder : Notification.Builder
     private val channelId = "com.simplemobiletools.camera.activities"
     private val description = "Test notification"
+    private var cameraEffect = ""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -226,7 +228,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         (btn_holder.layoutParams as RelativeLayout.LayoutParams).setMargins(0, 0, 0, (navBarHeight + resources.getDimension(R.dimen.activity_margin)).toInt())
 
         checkVideoCaptureIntent()
-        mPreview = CameraPreview(this, camera_texture_view, mIsInPhotoMode)
+        mPreview = CameraPreview(this, camera_texture_view, mIsInPhotoMode, cameraEffect)
         view_holder.addView(mPreview as ViewGroup)
         checkImageCaptureIntent()
         mPreview?.setIsImageCaptureIntent(isImageCaptureIntent())
@@ -256,6 +258,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
         gridlines_icon.setOnClickListener { toggleGridlines() }
         gridlines_icon.tag = R.drawable.gridlines_white
+        filter_icon.setOnClickListener{ enableFilter() }
 
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
 
@@ -270,6 +273,19 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun savePreference(color: Int) {
         val myPreference = MyPreference(this)
         myPreference.setDockerColor(color)
+    }
+
+    private fun enableFilter() {
+        if(filterOn) {
+            cameraEffect = ""
+            filter_icon.setImageResource(R.drawable.ic_star_off)
+            filterOn = false
+        } else {
+            cameraEffect = "black_and_white"
+            filter_icon.setImageResource(R.drawable.ic_star_on)
+            filterOn = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
     }
 
     private fun enableColorSeekBar(){
