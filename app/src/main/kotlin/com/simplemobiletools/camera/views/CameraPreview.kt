@@ -105,13 +105,12 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     private val mCameraOpenCloseLock = Semaphore(1)
     private val mMediaActionSound = MediaActionSound()
     private var mZoomRect: Rect? = null
-    private var mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // sets camera colour effect
+    private var mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // sets camera colour effect; default is normal colours
 
     constructor(context: Context) : super(context)
 
     @SuppressLint("ClickableViewAccessibility")
-    //constructor(activity: MainActivity, textureView: AutoFitTextureView, initPhotoMode: Boolean, cameraEffect: Int) : super(activity) {
-    constructor(activity: MainActivity, textureView: AutoFitTextureView, initPhotoMode: Boolean, cameraEffect: String) : super(activity) {
+    constructor(activity: MainActivity, textureView: AutoFitTextureView, initPhotoMode: Boolean) : super(activity) {
         mActivity = activity
         mTextureView = textureView
         val cameraCharacteristics = try {
@@ -576,7 +575,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                 setFlashAndExposure(this)
                 set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
                 set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation)
-                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect)
+                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter captured image/video
                 set(CaptureRequest.CONTROL_CAPTURE_INTENT, CaptureRequest.CONTROL_CAPTURE_INTENT_STILL_CAPTURE)
                 set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
                 if (mZoomRect != null) {
@@ -640,7 +639,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
 
             set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
             set(CaptureRequest.CONTROL_AF_MODE, CameraMetadata.CONTROL_AF_MODE_AUTO)
-            set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect)
+            set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter to camera preview
             set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata.CONTROL_AF_TRIGGER_START)
             setTag(FOCUS_TAG)
             mCaptureSession!!.capture(build(), captureCallbackHandler, mBackgroundHandler)
@@ -758,10 +757,12 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     }
 
     override fun setCameraEffect(cameraEffect: String) {
+
         setCameraEffect(cameraEffect, mPreviewRequestBuilder!!)
     }
 
     private fun setCameraEffect(cameraEffect: String, builder: CaptureRequest.Builder) {
+        // set cameraEffect to selected filter
         if(cameraEffect.equals("black_and_white")) {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_MONO // black and white
 //        uncomment to add more filters
@@ -770,7 +771,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
-
+        // apply selected filter to camera
         builder.apply {
             set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect)
         }

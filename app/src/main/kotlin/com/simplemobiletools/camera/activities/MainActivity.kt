@@ -228,7 +228,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         (btn_holder.layoutParams as RelativeLayout.LayoutParams).setMargins(0, 0, 0, (navBarHeight + resources.getDimension(R.dimen.activity_margin)).toInt())
 
         checkVideoCaptureIntent()
-        mPreview = CameraPreview(this, camera_texture_view, mIsInPhotoMode, cameraEffect)
+        mPreview = CameraPreview(this, camera_texture_view, mIsInPhotoMode)
         view_holder.addView(mPreview as ViewGroup)
         checkImageCaptureIntent()
         mPreview?.setIsImageCaptureIntent(isImageCaptureIntent())
@@ -276,11 +276,14 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
     private fun enableFilter() {
+        // tap icon to disable filter
         if(filterOn) {
             cameraEffect = ""
             filter_icon.setImageResource(R.drawable.ic_star_off)
             filterOn = false
-        } else {
+        }
+        // tap icon to enable filter
+        else {
             cameraEffect = "black_and_white"
             filter_icon.setImageResource(R.drawable.ic_star_on)
             filterOn = true
