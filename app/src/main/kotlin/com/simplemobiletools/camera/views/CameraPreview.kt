@@ -445,8 +445,8 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
 
                 mCaptureSession = cameraCaptureSession
                 try {
-                    mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
                     mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set preview to selected filter
+                    mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
                     if (mIsInVideoMode) {
                         mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
                         mCaptureSession!!.setRepeatingRequest(mPreviewRequestBuilder!!.build(), null, mBackgroundHandler)
@@ -459,6 +459,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                         mCaptureSession!!.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler)
                     }
                     mCameraState = STATE_PREVIEW
+                    mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set preview to selected filter
                 } catch (e: Exception) {
                 }
             }
@@ -771,11 +772,19 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
-        // reset camera
-        Thread {
-            closeCamera()
-            openCamera(mTextureView.width, mTextureView.height)
-        }.start()
+        // temporary workaround
+        // bug: when resetting camera using rear-facing camera, boxy blemishes appear in the preview (B&W filter only)
+        if(!mUseFrontCamera) {
+            builder.apply {
+                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // sets filter
+            }
+        } else {
+            // reset camera to apply filter
+            Thread {
+                closeCamera()
+                openCamera(mTextureView.width, mTextureView.height)
+            }.start()
+        }
     }
 
     private fun getCameraManager() = mActivity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
