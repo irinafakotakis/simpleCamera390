@@ -1,9 +1,6 @@
 ignore:
-  - "app/src/main/kotlin/com/simplemobiletools/camera/models"
-  - "app/src/main/kotlin/com/simplemobiletools/camera/views"
-  - "app/src/main/kotlin/com/simplemobiletools/camera/extensions"
+  - "app/src/main/kotlin/com/simplemobiletools/camera/*"
   - "app/src/main/kotlin/com/simplemobiletools/camera/dialogs"
-  - "app/src/main/kotlin/com/simplemobiletools/camera/implementations"
   - "app/src/main/kotlin/com/simplemobiletools/camera/receivers"
 
 
