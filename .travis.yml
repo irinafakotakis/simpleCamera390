@@ -29,7 +29,6 @@ jobs:
       script:
         - ./gradlew test
         - ./gradlew build jacocoTestReport assembleAndroidTest
-        - ./gradlew connectedCheck
     - stage: Static Analysis
       script: ./scripts/lint_script.sh
 after_success:
