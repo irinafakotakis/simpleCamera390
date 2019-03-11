@@ -28,6 +28,7 @@ jobs:
     - stage: Test
       script:
         - ./gradlew test
+        - ./gradlew createDebugAndroidTestCoverageReport --info --stacktrace
     - stage: Static Analysis
       script: ./scripts/lint_script.sh
 after_success:
