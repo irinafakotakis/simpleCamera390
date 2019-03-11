@@ -18,6 +18,7 @@ buildscript {
     }
 }
 
+
 allprojects {
     repositories {
         google()
@@ -28,11 +29,4 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
-}
-
-jacocoTestReport {
-    reports{
-        xml.enabled = true
-        html.enabled = true
-    }
 }
