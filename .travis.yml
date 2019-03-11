@@ -28,7 +28,8 @@ jobs:
     - stage: Test
       script:
         - ./gradlew test
-        - ./gradlew createDebugAndroidTestCoverageReport --info --stacktrace
+        - ./gradlew build jacocoTestReport assembleAndroidTest
+        - ./gradlew connectedCheck
     - stage: Static Analysis
       script: ./scripts/lint_script.sh
 after_success:
