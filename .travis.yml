@@ -7,6 +7,7 @@ addons:
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+
 cache:
   directories:
   - $HOME/.gradle/caches/
@@ -16,8 +17,9 @@ android:
         components:
                 - platform-tools
                 - tools
-                - add-on
+                - build-tools-28.0.3
                 - android-22
+                - add-on
                 - extra-android-support
                 - extra-android-m2repository
                 - sys-img-armeabi-v7a-android-22
@@ -27,8 +29,7 @@ jobs:
       script: ./gradlew build
     - stage: Test
       script:
-        - ./gradlew test
-        - ./gradlew build jacocoTestReport assembleAndroidTest
+      - ./gradlew test
     - stage: Static Analysis
       script: ./scripts/lint_script.sh
 after_success:
@@ -38,11 +39,9 @@ before_install:
         - chmod +x ./gradlew
         - chmod +x ./scripts/lint_script.sh
         - yes | sdkmanager "platforms;android-28"
-        - yes | sdkmanager "build-tools;28.0.3"
 before_script:
   - android list targets
   - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
   - emulator -avd test -no-audio -no-window &
   - android-wait-for-emulator
   - adb shell input keyevent 82 &
-
