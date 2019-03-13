@@ -15,7 +15,11 @@
         <com.simplemobiletools.camera.views.AutoFitTextureView
             android:id="@+id/camera_texture_view"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp" />
 
         <ImageView
             android:id="@+id/gridlines_icon"
@@ -41,7 +45,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="95dp"
             android:padding="12dp"
-            android:src="@drawable/ic_star_off" />
+            android:src="@drawable/ic_star_off"
+            android:visibility="gone" />
+
 
         <ImageView
             android:id="@+id/settings"
@@ -81,11 +87,58 @@
             android:id="@+id/color_seek_bar"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="500dp"
             android:layout_marginStart="100dp"
-            />
+            android:layout_marginTop="500dp" />
     </RelativeLayout>
 
+    <ImageView
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="97dp"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="358dp"
+        android:layout_marginTop="401dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="145dp"
+        android:padding="@dimen/normal_margin"
+        android:src="@drawable/ic_filter" />
+
+    <ImageView
+        android:id="@+id/solar"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="51dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_solar"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/bw"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginLeft="-170dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="112dp"
+        android:layout_marginBottom="-457dp"
+        android:src="@drawable/ic_shortcut_bw"
+        android:visibility="gone"/>
+
+    <ImageView
+        android:id="@+id/no_filter"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="171dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_nomal"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/btn_holder"

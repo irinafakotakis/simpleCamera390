@@ -766,9 +766,8 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         // set cameraEffect to selected filter
         if(cameraEffect.equals("black_and_white")) {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_MONO // black and white
-//        uncomment to add more filters
-//        } else if(cameraEffect.equals("something_else")) {
-//            CameraMetadata.CONTROL_EFFECT_MODE_blah // some other effect
+        } else if(cameraEffect.equals("solarize")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE // solarize
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
