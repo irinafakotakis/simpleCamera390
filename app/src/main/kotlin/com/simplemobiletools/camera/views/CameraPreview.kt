@@ -105,6 +105,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     private val mCameraOpenCloseLock = Semaphore(1)
     private val mMediaActionSound = MediaActionSound()
     private var mZoomRect: Rect? = null
+    private var mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // sets camera colour effect; default is normal colours
 
     constructor(context: Context) : super(context)
 
@@ -376,6 +377,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                 }
                 mActivity.setFlashAvailable(mIsFlashSupported)
                 mActivity.updateCameraIcon(mUseFrontCamera)
+
                 return
             }
         } catch (e: Exception) {
@@ -443,6 +445,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
 
                 mCaptureSession = cameraCaptureSession
                 try {
+                    mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set preview to selected filter
                     mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
                     if (mIsInVideoMode) {
                         mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_MODE, CameraMetadata.CONTROL_MODE_AUTO)
@@ -456,6 +459,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                         mCaptureSession!!.setRepeatingRequest(mPreviewRequest, mCaptureCallback, mBackgroundHandler)
                     }
                     mCameraState = STATE_PREVIEW
+                    mPreviewRequestBuilder!!.set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set preview to selected filter
                 } catch (e: Exception) {
                 }
             }
@@ -574,6 +578,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
                 setFlashAndExposure(this)
                 set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
                 set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation)
+                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter to captured image
                 set(CaptureRequest.CONTROL_CAPTURE_INTENT, CaptureRequest.CONTROL_CAPTURE_INTENT_STILL_CAPTURE)
                 set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
                 if (mZoomRect != null) {
@@ -753,6 +758,34 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         }
     }
 
+    override fun setCameraEffect(cameraEffect: String) {
+        setCameraEffect(cameraEffect, mPreviewRequestBuilder!!)
+    }
+
+    private fun setCameraEffect(cameraEffect: String, builder: CaptureRequest.Builder) {
+        // set cameraEffect to selected filter
+        if(cameraEffect.equals("black_and_white")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_MONO // black and white
+        } else if(cameraEffect.equals("solarize")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE // solarize
+        } else {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
+        }
+        // temporary workaround
+        // bug: when resetting camera using rear-facing camera, boxy blemishes appear in the preview (B&W filter only)
+        if(!mUseFrontCamera) {
+            builder.apply {
+                set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // sets filter
+            }
+        } else {
+            // reset camera to apply filter
+            Thread {
+                closeCamera()
+                openCamera(mTextureView.width, mTextureView.height)
+            }.start()
+        }
+    }
+
     private fun getCameraManager() = mActivity.getSystemService(Context.CAMERA_SERVICE) as CameraManager
 
     private fun getCameraCharacteristics(cameraId: String = mCameraId) = getCameraManager().getCameraCharacteristics(cameraId)
@@ -808,6 +841,7 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
         texture.setDefaultBufferSize(mPreviewSize!!.width, mPreviewSize!!.height)
         mPreviewRequestBuilder = mCameraDevice!!.createCaptureRequest(CameraDevice.TEMPLATE_RECORD).apply {
             set(CaptureRequest.CONTROL_CAPTURE_INTENT, CaptureRequest.CONTROL_CAPTURE_INTENT_VIDEO_RECORD)
+            set(CaptureRequest.CONTROL_EFFECT_MODE, mCameraEffect) // set filter captured video
             set(CaptureRequest.CONTROL_AE_TARGET_FPS_RANGE, getFrameRange())
         }
 
