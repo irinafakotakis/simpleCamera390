@@ -27,6 +27,7 @@ private val mockdescription = "Test notification"
 lateinit var mockBuilder : Notification.Builder
 
 
+
 @RunWith(MockitoJUnitRunner::class)
 class shutterNotificationTest {
 
@@ -36,6 +37,8 @@ class shutterNotificationTest {
     private lateinit var mockPreferences: SharedPreferences
     @Mock
     private lateinit var mockEditor: SharedPreferences.Editor
+
+
 
 
 
