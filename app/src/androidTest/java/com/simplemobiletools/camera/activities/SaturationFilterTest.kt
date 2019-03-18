@@ -48,7 +48,6 @@ class SaturationFilterTest {
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         Thread.sleep(5000)
-
         val appCompatImageView = onView(
                 allOf(withId(R.id.filter),
                         childAtPosition(
@@ -59,19 +58,27 @@ class SaturationFilterTest {
                                 1),
                         isDisplayed()))
         appCompatImageView.perform(click())
-
-        val imageView = onView(
-                allOf(withId(R.id.solar),
+        val appCompatImageView2 = onView(
+                allOf(withId(R.id.bw),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
                                         childAtPosition(
                                                 withId(android.R.id.content),
                                                 0)),
-                                5),
+                                3),
                         isDisplayed()))
-        imageView.check(matches(isDisplayed()))
-
-        val appCompatImageView2 = onView(
+        appCompatImageView2.perform(click())
+        val appCompatImageView3 = onView(
+                allOf(withId(R.id.no_filter),
+                        childAtPosition(
+                                allOf(withId(R.id.view_holder),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                4),
+                        isDisplayed()))
+        appCompatImageView3.perform(click())
+        val appCompatImageView4 = onView(
                 allOf(withId(R.id.solar),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
@@ -80,61 +87,17 @@ class SaturationFilterTest {
                                                 0)),
                                 2),
                         isDisplayed()))
-        appCompatImageView2.perform(click())
-
-        val appCompatImageView3 = onView(
-                allOf(withId(R.id.settings),
-                        childAtPosition(
-                                allOf(withId(R.id.gridlines),
-                                        childAtPosition(
-                                                withId(R.id.view_holder),
-                                                0)),
-                                4),
-                        isDisplayed()))
-        appCompatImageView3.perform(click())
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        Thread.sleep(5000)
-
-        val appCompatImageView4 = onView(
-                allOf(withId(R.id.settings),
-                        childAtPosition(
-                                allOf(withId(R.id.gridlines),
-                                        childAtPosition(
-                                                withId(R.id.view_holder),
-                                                0)),
-                                4),
-                        isDisplayed()))
         appCompatImageView4.perform(click())
-
-        val appCompatImageButton = onView(
-                allOf(withContentDescription("Navigate up"),
+        val appCompatImageView5 = onView(
+                allOf(withId(R.id.no_filter),
                         childAtPosition(
-                                allOf(withId(R.id.action_bar),
+                                allOf(withId(R.id.view_holder),
                                         childAtPosition(
-                                                withId(R.id.action_bar_container),
+                                                withId(android.R.id.content),
                                                 0)),
-                                1),
+                                4),
                         isDisplayed()))
-        appCompatImageButton.perform(click())
-
-        // Added a sleep statement to match the app's execution delay.
-        // The recommended way to handle such scenarios is to use Espresso idling resources:
-        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        Thread.sleep(5000)
-
-        val view = onView(
-                allOf(withId(R.id.camera_texture_view),
-                        childAtPosition(
-                                allOf(withId(R.id.gridlines),
-                                        childAtPosition(
-                                                withId(R.id.view_holder),
-                                                2)),
-                                0),
-                        isDisplayed()))
-        view.check(matches(isDisplayed()))
+        appCompatImageView5.perform(click())
     }
 
     private fun childAtPosition(
