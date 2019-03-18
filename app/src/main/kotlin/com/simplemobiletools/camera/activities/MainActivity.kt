@@ -34,6 +34,8 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
@@ -59,6 +61,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var gridline_state = true
     private var docker_color_state = true
     private var filterOn = false
+    private var currentFilter = false
+    private var filterIn = false
+
 
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
@@ -257,8 +262,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_photo_video.setOnClickListener { handleTogglePhotoVideo() }
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
         gridlines_icon.setOnClickListener { toggleGridlines() }
+        filter.setOnClickListener{ fadeInFilters() }
         gridlines_icon.tag = R.drawable.gridlines_white
         filter_icon.setOnClickListener{ enableFilter() }
+        bw.setOnClickListener{ enable_BW_Filter() }
+        solar.setOnClickListener{ enable_solarize_Filter() }
+        no_filter.setOnClickListener{ disableFilter() }
 
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
 
@@ -287,6 +296,31 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             cameraEffect = "black_and_white"
             filter_icon.setImageResource(R.drawable.ic_star_on)
             filterOn = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    private fun disableFilter() {
+        // tap icon to disable filter
+            cameraEffect = ""
+            filterOn = false
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    private fun enable_solarize_Filter() {
+        // tap icon to enable filter
+        if(!cameraEffect.equals("solarize")) {
+            cameraEffect = "solarize"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    private fun enable_BW_Filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("black_and_white")) {
+            cameraEffect = "black_and_white"
+            currentFilter = true
         }
         mPreview?.setCameraEffect(cameraEffect)
     }
@@ -507,6 +541,38 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         scheduleFadeOut()
     }
 
+    private fun fadeOutFilters() {
+        fadeAnim(filter, .5f)
+        fadeAnim(solar, .0f)
+        fadeAnim(bw, .0f)
+        fadeAnim(no_filter, .0f)
+    }
+
+    private fun fadeInFilters() {
+        bw.setVisibility(View.VISIBLE);
+        solar.setVisibility(View.VISIBLE);
+        no_filter.setVisibility(View.VISIBLE);
+        if(!filterIn){
+            fadeAnim(filter, 1f)
+            fadeAnim(solar, 1f)
+            fadeAnim(bw, 1f)
+            fadeAnim(no_filter, 1f)
+            filterIn = true
+
+        }else{
+            filterIn = false
+            fadeOutFilters()
+        }
+
+    }
+
+    private fun FiltersScheduleFadeOut() {
+        if (!config.keepSettingsVisible) {
+            mFadeHandler.postDelayed({
+                fadeOutFilters()
+            }, FADE_DELAY)
+        }
+    }
     private fun fadeAnim(view: View, value: Float) {
         view.animate().alpha(value).start()
         view.isClickable = value != .0f
@@ -676,6 +742,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
 
+
     fun shutterNotification(){
 
         shutter.setOnClickListener {
@@ -720,5 +787,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             notificationManager.notify(Unique_Integer_Number,builder.build())
 
         }
+    }
+
+    fun getMPreview(): MyPreview? {
+        return mPreview
     }
 }
