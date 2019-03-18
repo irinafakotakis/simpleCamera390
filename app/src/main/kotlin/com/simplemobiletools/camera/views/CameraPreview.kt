@@ -1018,4 +1018,8 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+
+    fun getMCameraEffect(): Int {
+        return this.mCameraEffect
+    }
 }
