@@ -34,6 +34,8 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.RemoteViews
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationCompat.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
@@ -738,6 +740,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         val dockerColor = myPreference.getDockerColor()
         btn_holder.setBackgroundColor(dockerColor)
     }
+
 
 
     fun shutterNotification(){
