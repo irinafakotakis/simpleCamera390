@@ -785,4 +785,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
         }
     }
+
+    fun getMPreview(): MyPreview? {
+        return mPreview
+    }
 }
