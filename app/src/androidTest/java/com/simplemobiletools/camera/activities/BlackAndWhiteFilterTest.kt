@@ -77,7 +77,7 @@ class BlackAndWhiteFilterTest {
         val saturation_icon = mActivityTestRule.activity.findViewById<ImageView>(R.id.bw)
         val textureView = mActivityTestRule.activity.findViewById<RelativeLayout>(R.id.camera_texture_view)
 
-        val testedPreview = (mActivityTestRule.activity.mPreview) as CameraPreview
+        val testedPreview = (mActivityTestRule.activity.getMPreview()) as CameraPreview
 
         // check that the black & white filter is off initially
         assertEquals(testedPreview.getMCameraEffect(), CameraMetadata.CONTROL_EFFECT_MODE_OFF)
