@@ -1019,6 +1019,10 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
 
+    override fun isUsingFrontCamera(): Boolean {
+        return this.mUseFrontCamera
+    }
+
     fun getMCameraEffect(): Int {
         return this.mCameraEffect
     }
