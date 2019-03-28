@@ -36,8 +36,9 @@ after_success:
   - if [ -f /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html ]; then lynx -dump /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html; fi
 after_failure:
   - cat ./scripts/build.failure.txt
-    script:
-    - ./scripts/error_log_script.sh
+  - echo test
+  - grep -A 20 FAILURE build.failure.txt
+
 before_install:
         - chmod +x ./gradlew
         - chmod +x ./scripts/lint_script.sh
