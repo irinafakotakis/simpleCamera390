@@ -35,10 +35,7 @@ after_success:
   - bash <(curl -s https://codecov.io/bash) -t 2cf485b3-0716-4c03-8366-bd40dac67fac
   - if [ -f /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html ]; then lynx -dump /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html; fi
 after_failure:
-  - cat ./scripts/build.failure.txt
-  - echo test
-  - grep -A 20 FAILURE build.failure.txt
-
+  - ls
 before_install:
         - chmod +x ./gradlew
         - chmod +x ./scripts/lint_script.sh
