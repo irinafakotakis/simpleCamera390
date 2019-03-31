@@ -25,7 +25,7 @@ android:
 jobs:
   include:
     - stage: Build
-      script: ./gradlew build
+      script: ./gradlew build 2>&1 | tee build.txt
     - stage: Test
       script:
       - ./gradlew test
@@ -35,7 +35,7 @@ after_success:
   - bash <(curl -s https://codecov.io/bash) -t 2cf485b3-0716-4c03-8366-bd40dac67fac
   - if [ -f /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html ]; then lynx -dump /home/travis/build/irinafakotakis/simpleCamera390/app/lint-report.html; fi
 after_failure:
-  - ls
+  - grep -A 20 FAILURE build.txt
 before_install:
         - chmod +x ./gradlew
         - chmod +x ./scripts/lint_script.sh
