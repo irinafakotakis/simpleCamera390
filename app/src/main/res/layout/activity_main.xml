@@ -149,7 +149,7 @@
         android:layout_marginTop="0dp"
         android:layout_marginRight="230dp"
         android:layout_marginBottom="0dp"
-        android:src="@drawable/ic_shortcut_nomal"
+        android:src="@drawable/ic_shortcut_normal"
         android:visibility="gone" />
 
     <LinearLayout
