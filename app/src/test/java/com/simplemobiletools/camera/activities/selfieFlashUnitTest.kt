@@ -29,8 +29,8 @@ open class selfieFlashUnitTest {
 
 //@get:Rule
 //public final var environmentVariables = EnvironmentVariables()
-//@Test
-//fun selfieFlashUnitTest() {
+@Test
+fun selfieFlashUnitTest() {
 //    environmentVariables.set("EMULATED_STORAGE_TARGET", "VALUE")
 //
 //    val controller = Robolectric.buildActivity(MainActivity::class.java)
