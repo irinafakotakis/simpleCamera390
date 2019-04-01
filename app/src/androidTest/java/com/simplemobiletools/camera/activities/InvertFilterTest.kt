@@ -1,8 +1,11 @@
 package com.simplemobiletools.camera.activities
 
 
+import android.hardware.camera2.CameraMetadata
 import android.view.View
 import android.view.ViewGroup
+import com.simplemobiletools.camera.views.CameraPreview
+import junit.framework.Assert
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -58,6 +61,18 @@ class InvertFilterTest {
                                 2),
                         isDisplayed()))
         appCompatImageView2.perform(click())
+    }
+
+    @Test
+    fun testInvertFilter() {
+
+        val testedPreview = (mainActivityTestRule.activity.getMPreview()) as CameraPreview
+
+        Assert.assertEquals(testedPreview.getMCameraEffect(), CameraMetadata.CONTROL_EFFECT_MODE_OFF)
+
+        testedPreview.setCameraEffect("invert")
+
+        Assert.assertEquals(testedPreview.getMCameraEffect(), CameraMetadata.CONTROL_EFFECT_MODE_NEGATIVE)
     }
 
     private fun childAtPosition(
