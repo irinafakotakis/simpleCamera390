@@ -63,6 +63,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var filterOn = false
     private var currentFilter = false
     private var filterIn = false
+    private var selfieFlashOn = false
 
 
     lateinit var notificationManager : NotificationManager
@@ -382,8 +383,15 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
     private fun toggleFlash() {
-        if (checkCameraAvailable()) {
+        if (checkCameraAvailable() && mPreview?.isUsingFrontCamera()== false ) {
             mPreview?.toggleFlashlight()
+        } else if(mPreview?.isUsingFrontCamera()==true && selfieFlashOn == true){
+            toggle_flash.setImageResource(R.drawable.ic_flash_off)
+            selfieFlashOn = false
+        } else if(mPreview?.isUsingFrontCamera()==true && selfieFlashOn == false){
+            toggle_flash.setImageResource(R.drawable.ic_flash_on)
+            selfieFlashOn = true
+
         }
     }
 
@@ -411,12 +419,16 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         if (mIsInPhotoMode) {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
+            if( mPreview?.isUsingFrontCamera() == true && selfieFlashOn == true){
+                selfieFlash()
+            }
             shutterNotification()
         } else {
             mPreview?.toggleRecording()
             shutterNotification()
         }
     }
+
 
     fun toggleBottomButtons(hide: Boolean) {
         runOnUiThread {
@@ -675,6 +687,17 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         return mIsCameraAvailable
     }
 
+    fun displaySelfieFlash(){
+        if( mPreview?.isUsingFrontCamera() == true ) {
+            toggle_flash.beVisible()
+            if(selfieFlashOn == false)
+                toggle_flash.setImageResource(R.drawable.ic_flash_off)
+            else
+                toggle_flash.setImageResource(R.drawable.ic_flash_on)
+}
+    }
+
+
     fun setFlashAvailable(available: Boolean) {
         if (available) {
             toggle_flash.beVisible()
@@ -682,6 +705,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             toggle_flash.beInvisible()
             toggle_flash.setImageResource(R.drawable.ic_flash_off)
             mPreview?.setFlashlightState(FLASH_OFF)
+        }
+        if (mPreview?.isUsingFrontCamera() == true){
+            displaySelfieFlash()
         }
     }
 
@@ -754,8 +780,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         btn_holder.setBackgroundColor(dockerColor)
     }
 
+    private fun selfieFlash() {
+        selfie_flash.setVisibility(View.VISIBLE)
+        mFadeHandler.postDelayed(
+                { selfie_flash.setVisibility(View.GONE) }
+                , 500)
 
-
+    }
     fun shutterNotification(){
 
         shutter.setOnClickListener {
