@@ -269,6 +269,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         bw.setOnClickListener{ enable_BW_Filter() }
         solar.setOnClickListener{ enable_solarize_Filter() }
         no_filter.setOnClickListener{ disableFilter() }
+        invert.setOnClickListener{ enable_invert_filter() }
 
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
 
@@ -321,6 +322,15 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         // tap icon to disable filter
         if(!cameraEffect.equals("black_and_white")) {
             cameraEffect = "black_and_white"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    private fun enable_invert_filter(){
+        // tap icon to enable filter
+        if(!cameraEffect.equals("invert")){
+            cameraEffect = "invert"
             currentFilter = true
         }
         mPreview?.setCameraEffect(cameraEffect)
@@ -558,17 +568,20 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         fadeAnim(solar, .0f)
         fadeAnim(bw, .0f)
         fadeAnim(no_filter, .0f)
+        fadeAnim(invert, .0f)
     }
 
     private fun fadeInFilters() {
-        bw.setVisibility(View.VISIBLE);
-        solar.setVisibility(View.VISIBLE);
-        no_filter.setVisibility(View.VISIBLE);
+        bw.setVisibility(View.VISIBLE)
+        solar.setVisibility(View.VISIBLE)
+        no_filter.setVisibility(View.VISIBLE)
+        invert.setVisibility(View.VISIBLE)
         if(!filterIn){
             fadeAnim(filter, 1f)
             fadeAnim(solar, 1f)
             fadeAnim(bw, 1f)
             fadeAnim(no_filter, 1f)
+            fadeAnim(invert, 1f)
             filterIn = true
 
         }else{

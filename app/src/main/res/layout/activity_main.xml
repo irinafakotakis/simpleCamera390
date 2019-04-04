@@ -115,13 +115,25 @@
         android:src="@drawable/ic_filter" />
 
     <ImageView
+        android:id="@+id/invert"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="170dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_invert"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/solar"
         android:layout_width="59dp"
         android:layout_height="97dp"
         android:layout_alignTop="@id/filter"
         android:layout_alignRight="@id/filter"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="51dp"
+        android:layout_marginRight="50dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/ic_shortcut_solar"
         android:visibility="gone" />
@@ -134,7 +146,7 @@
         android:layout_alignRight="@id/filter"
         android:layout_marginLeft="-170dp"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="112dp"
+        android:layout_marginRight="110dp"
         android:layout_marginBottom="-457dp"
         android:src="@drawable/ic_shortcut_bw"
         android:visibility="gone"/>
@@ -146,9 +158,9 @@
         android:layout_alignTop="@id/filter"
         android:layout_alignRight="@id/filter"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="171dp"
+        android:layout_marginRight="230dp"
         android:layout_marginBottom="0dp"
-        android:src="@drawable/ic_shortcut_nomal"
+        android:src="@drawable/ic_shortcut_normal"
         android:visibility="gone" />
 
     <LinearLayout
