@@ -32,6 +32,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -420,7 +421,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
             if( mPreview?.isUsingFrontCamera() == true && selfieFlashOn == true){
-                selfieFlash()
+                selfieFlash(selfie_flash, mFadeHandler)
             }
             shutterNotification()
         } else {
@@ -687,14 +688,17 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         return mIsCameraAvailable
     }
 
-    fun displaySelfieFlash(){
-        if( mPreview?.isUsingFrontCamera() == true ) {
-            toggle_flash.beVisible()
+    fun displaySelfieFlash(preview: MyPreview, toggle: ImageView){
+
+        if( preview.isUsingFrontCamera() == true ) {
+
+            toggle.beVisible()
+
             if(selfieFlashOn == false)
-                toggle_flash.setImageResource(R.drawable.ic_flash_off)
+                toggle.setImageResource(R.drawable.ic_flash_off)
             else
-                toggle_flash.setImageResource(R.drawable.ic_flash_on)
-}
+                toggle.setImageResource(R.drawable.ic_flash_on)
+        }
     }
 
 
@@ -707,7 +711,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             mPreview?.setFlashlightState(FLASH_OFF)
         }
         if (mPreview?.isUsingFrontCamera() == true){
-            displaySelfieFlash()
+            displaySelfieFlash(mPreview!!, toggle_flash)
         }
     }
 
@@ -780,10 +784,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         btn_holder.setBackgroundColor(dockerColor)
     }
 
-    private fun selfieFlash() {
-        selfie_flash.setVisibility(View.VISIBLE)
-        mFadeHandler.postDelayed(
-                { selfie_flash.setVisibility(View.GONE) }
+    open fun selfieFlash(selfie: ImageView, fade_handler: Handler) {
+
+        selfie.setVisibility(View.VISIBLE)
+
+        fade_handler.postDelayed(
+                { selfie.setVisibility(View.GONE) }
                 , 500)
 
     }
@@ -843,5 +849,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getCurrentFilter(): Boolean{
         return currentFilter
+    }
+
+    fun getSelfieFlashOn(): Boolean{
+        return selfieFlashOn
     }
 }
