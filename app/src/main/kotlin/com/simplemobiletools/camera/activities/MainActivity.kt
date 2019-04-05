@@ -327,7 +327,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_invert_filter(){
+    open fun enable_invert_filter(){
         // tap icon to enable filter
         if(!cameraEffect.equals("invert")){
             cameraEffect = "invert"
@@ -835,5 +835,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getMPreview(): MyPreview? {
         return mPreview
+    }
+
+    fun getCameraEffect(): String {
+        return cameraEffect
+    }
+
+    fun getCurrentFilter(): Boolean{
+        return currentFilter
     }
 }
