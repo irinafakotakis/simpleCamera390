@@ -768,6 +768,8 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_MONO // black and white
         } else if(cameraEffect.equals("solarize")) {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE // solarize
+        } else if(cameraEffect.equals("invert")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_NEGATIVE // invert
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
@@ -1018,6 +1020,10 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+
+    override fun isUsingFrontCamera(): Boolean {
+        return this.mUseFrontCamera
+    }
 
     fun getMCameraEffect(): Int {
         return this.mCameraEffect

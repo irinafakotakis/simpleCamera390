@@ -34,4 +34,6 @@ interface MyPreview {
     fun initVideoMode(): Boolean
 
     fun checkFlashlight()
+
+    fun isUsingFrontCamera(): Boolean
 }

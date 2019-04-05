@@ -68,7 +68,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var currentFilter = false
     private var filterIn = false
     private var mIsBurstMode = false
-
+    private var selfieFlashOn = false
 
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
@@ -286,6 +286,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         bw.setOnClickListener{ enable_BW_Filter() }
         solar.setOnClickListener{ enable_solarize_Filter() }
         no_filter.setOnClickListener{ disableFilter() }
+        invert.setOnClickListener{ enable_invert_filter() }
 
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
 
@@ -343,6 +344,15 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
+    private fun enable_invert_filter(){
+        // tap icon to enable filter
+        if(!cameraEffect.equals("invert")){
+            cameraEffect = "invert"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
     private fun enableColorSeekBar(){
         // on toggle, color-seekbar becomes visible
         if(docker_color_state){
@@ -390,8 +400,15 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
     private fun toggleFlash() {
-        if (checkCameraAvailable()) {
+        if (checkCameraAvailable() && mPreview?.isUsingFrontCamera()== false ) {
             mPreview?.toggleFlashlight()
+        } else if(mPreview?.isUsingFrontCamera()==true && selfieFlashOn == true){
+            toggle_flash.setImageResource(R.drawable.ic_flash_off)
+            selfieFlashOn = false
+        } else if(mPreview?.isUsingFrontCamera()==true && selfieFlashOn == false){
+            toggle_flash.setImageResource(R.drawable.ic_flash_on)
+            selfieFlashOn = true
+
         }
     }
 
@@ -464,12 +481,16 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         } else if (mIsInPhotoMode) {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
+            if( mPreview?.isUsingFrontCamera() == true && selfieFlashOn == true){
+                selfieFlash()
+            }
             shutterNotification()
         } else {
             mPreview?.toggleRecording()
             shutterNotification()
         }
     }
+
 
     fun toggleBottomButtons(hide: Boolean) {
         runOnUiThread {
@@ -609,17 +630,20 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         fadeAnim(solar, .0f)
         fadeAnim(bw, .0f)
         fadeAnim(no_filter, .0f)
+        fadeAnim(invert, .0f)
     }
 
     private fun fadeInFilters() {
-        bw.setVisibility(View.VISIBLE);
-        solar.setVisibility(View.VISIBLE);
-        no_filter.setVisibility(View.VISIBLE);
+        bw.setVisibility(View.VISIBLE)
+        solar.setVisibility(View.VISIBLE)
+        no_filter.setVisibility(View.VISIBLE)
+        invert.setVisibility(View.VISIBLE)
         if(!filterIn){
             fadeAnim(filter, 1f)
             fadeAnim(solar, 1f)
             fadeAnim(bw, 1f)
             fadeAnim(no_filter, 1f)
+            fadeAnim(invert, 1f)
             filterIn = true
 
         }else{
@@ -725,6 +749,17 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         return mIsCameraAvailable
     }
 
+    fun displaySelfieFlash(){
+        if( mPreview?.isUsingFrontCamera() == true ) {
+            toggle_flash.beVisible()
+            if(selfieFlashOn == false)
+                toggle_flash.setImageResource(R.drawable.ic_flash_off)
+            else
+                toggle_flash.setImageResource(R.drawable.ic_flash_on)
+}
+    }
+
+
     fun setFlashAvailable(available: Boolean) {
         if (available) {
             toggle_flash.beVisible()
@@ -732,6 +767,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             toggle_flash.beInvisible()
             toggle_flash.setImageResource(R.drawable.ic_flash_off)
             mPreview?.setFlashlightState(FLASH_OFF)
+        }
+        if (mPreview?.isUsingFrontCamera() == true){
+            displaySelfieFlash()
         }
     }
 
@@ -804,8 +842,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         btn_holder.setBackgroundColor(dockerColor)
     }
 
+    private fun selfieFlash() {
+        selfie_flash.setVisibility(View.VISIBLE)
+        mFadeHandler.postDelayed(
+                { selfie_flash.setVisibility(View.GONE) }
+                , 500)
 
-
+    }
     fun shutterNotification(){
 
         shutter.setOnClickListener {
