@@ -43,12 +43,16 @@ import java.util.*
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
+    private val BURST_INTERVAL = 1000L // 1000 milliseconds -> burst + flash 1 picture/second
 
     lateinit var mTimerHandler: Handler
     private lateinit var mOrientationEventListener: OrientationEventListener
     private lateinit var mFocusCircleView: FocusCircleView
     private lateinit var mFadeHandler: Handler
     private lateinit var mCameraImpl: MyCameraImpl
+    private lateinit var mBurstModeRunnable: Runnable
+    private lateinit var mEnableBurstMode: Runnable
+    private lateinit var mBurstModeHandler: Handler
 
     private var mPreview: MyPreview? = null
     private var mPreviewUri: Uri? = null
@@ -63,6 +67,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var filterOn = false
     private var currentFilter = false
     private var filterIn = false
+    private var mIsBurstMode = false
 
 
     lateinit var notificationManager : NotificationManager
@@ -248,6 +253,19 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mFadeHandler = Handler()
         setupPreviewImage(true)
 
+        // burst mode
+        mBurstModeHandler = Handler()
+        mEnableBurstMode = object : Runnable {
+            override fun run() {
+                enableBurstMode()
+            }
+        }
+        mBurstModeRunnable = object : Runnable {
+            override fun run() {
+                burstMode(this)
+            }
+        }
+
         val initialFlashlightState = if (config.turnFlashOffAtStartup) FLASH_OFF else config.flashlightState
         mPreview!!.setFlashlightState(initialFlashlightState)
         updateFlashlightState(initialFlashlightState)
@@ -257,7 +275,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_camera.setOnClickListener { toggleCamera() }
         last_photo_video_preview.setOnClickListener { showLastMediaPreview() }
         toggle_flash.setOnClickListener { toggleFlash() }
-        shutter.setOnClickListener { shutterPressed() }
+        shutter.setOnTouchListener{ v: View, m: MotionEvent -> shutterPressed(v, m) }
         settings.setOnClickListener { launchSettings() }
         toggle_photo_video.setOnClickListener { handleTogglePhotoVideo() }
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
@@ -397,8 +415,53 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
     }
 
+    private fun shutterPressed(v: View, m: MotionEvent) : Boolean {
+        if(m.action == MotionEvent.ACTION_DOWN) {
+            // call mEnableBurstMode to enter burst mode if shutter button is held for more than a second
+            mBurstModeHandler.postDelayed(mEnableBurstMode, 1500)
+            return true
+        } else if(m.action == MotionEvent.ACTION_UP) {
+            mBurstModeHandler.removeCallbacks(mBurstModeRunnable)
+            mBurstModeHandler.removeCallbacks(mEnableBurstMode)
+            if (!mIsBurstMode) {
+                // normal picture if burst mode is not activated
+                shutterPressed()
+            }
+            mIsBurstMode = false
+
+            return true
+        } else {
+            return false
+        }
+    }
+
+    private fun enableBurstMode() {
+        // called if shutter button is held for more than 1 second to enable burst mode
+        if(mIsInPhotoMode) {
+            mIsBurstMode = true
+            handleShutter()
+        }
+    }
+
+    private fun burstMode(r : Runnable) {
+        mPreview?.tryTakePicture()
+        mBurstModeHandler.postDelayed(r, BURST_INTERVAL) // delay
+        // flash screen to indicate a picture was captured
+        burst_flash.setVisibility(View.VISIBLE)
+        mFadeHandler.postDelayed({ burst_flash.setVisibility(View.GONE) }, 500) // 500ms delay to fade
+        // burstFlash()
+    }
+
+    private fun burstFlash() {
+        burst_flash.setVisibility(View.VISIBLE)
+        mFadeHandler.postDelayed({ burst_flash.setVisibility(View.GONE) }, 500) // 500ms delay
+    }
+
     private fun handleShutter() {
-        if (mIsInPhotoMode) {
+        if(mIsBurstMode && mIsInPhotoMode) {
+            mBurstModeHandler.post(mBurstModeRunnable)
+            shutterNotification()
+        } else if (mIsInPhotoMode) {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
             shutterNotification()
