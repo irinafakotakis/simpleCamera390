@@ -289,6 +289,14 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         clockStamp.setOnClickListener{ enableDayStamp() }
         no_sticker.setOnClickListener{ removeSticker() }
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
+        sunday.setOnClickListener{ hideAll() }
+        monday.setOnClickListener{ hideAll() }
+        tuesday.setOnClickListener{ hideAll() }
+        wednesday.setOnClickListener{ hideAll() }
+        thursday.setOnClickListener{ hideAll() }
+        friday.setOnClickListener{ hideAll() }
+        saturday.setOnClickListener{ hideAll() }
+        smileyFace.setOnClickListener{ hideAll() }
 
         color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
             override fun onColorChangeListener(color: Int) {
@@ -303,6 +311,16 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         myPreference.setDockerColor(color)
     }
 
+    private fun hideAll(){
+        if(!hidingIconToggle){
+            hidingIconToggle = true
+            makeDisappearAllIcons()
+        }
+        else{
+            hidingIconToggle = false
+            makeAppearAllIcons()
+        }
+    }
     private fun makeDisappearAllIcons(){
         Log.i(TAG, "******************************************Disable ALL ICONS")
         gridlines_icon.setVisibility(View.GONE)
@@ -315,6 +333,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_camera.setVisibility(View.GONE)
         shutter.setVisibility(View.GONE)
         toggle_flash.setVisibility(View.GONE)
+        smiley.setVisibility(View.GONE)
+        clockStamp.setVisibility(View.GONE)
+        no_sticker.setVisibility(View.GONE)
+        solar.setVisibility(View.GONE)
+        bw.setVisibility(View.GONE)
+        invert.setVisibility(View.GONE)
+        no_filter.setVisibility(View.GONE)
     }
 
     private fun makeAppearAllIcons(){
