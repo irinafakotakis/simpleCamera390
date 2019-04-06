@@ -907,6 +907,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     fun getMPreview(): MyPreview? {
         return mPreview
     }
+
     fun isInPhotoMode() : Boolean {
         return mIsInPhotoMode
     }
