@@ -67,6 +67,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var filterIn = false
     private var selfieFlashOn = false
 
+
     private val TAG = "MyActivity"
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
@@ -75,6 +76,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val description = "Test notification"
     private var cameraEffect = ""
     private var stickerIn = false
+    private var smileyFaceToggle = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -382,7 +384,19 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
     private fun enableSmiley() {
-        Log.i(TAG, "******************************************Enable Smiley")
+        Log.i(TAG, "******************************************Smiley LISTENER")
+        if(!smileyFaceToggle){
+            smileyFaceToggle = true
+            smileyFace.setVisibility(View.VISIBLE)
+            fadeAnim(smileyFace, 1f)
+            Log.i(TAG, "******************************************Enable Smiley")
+        }
+        else{
+            smileyFaceToggle = false
+            smileyFace.setVisibility(View.GONE)
+            fadeAnim(smileyFace, 1f)
+            Log.i(TAG, "******************************************Disable Smiley")
+        }
     }
 
 
