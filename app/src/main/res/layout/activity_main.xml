@@ -107,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="97dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="358dp"
+        android:layout_marginStart="328dp"
         android:layout_marginTop="401dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="145dp"
