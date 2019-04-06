@@ -382,7 +382,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
     private fun enableDayStamp() {
         Log.i(TAG, "******************************************Enable DayStamp")
-
+        disableSmiley()
         val c = Calendar.getInstance()
         val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
         Log.i(TAG, "******************************************DAY value : "+ dayOfWeek)
@@ -397,7 +397,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
         if(!dayStampToggle){
             dayStampToggle = true
-            
+
             when(dayOfWeek) {
                 1 -> sunday.setVisibility(View.VISIBLE)
                 2 -> monday.setVisibility(View.VISIBLE)
@@ -411,21 +411,31 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             Log.i(TAG, "******************************************Enable DayStamp")
         }
         else{
-            dayStampToggle = false
-            saturday.setVisibility(View.GONE)
-            monday.setVisibility(View.GONE)
-            tuesday.setVisibility(View.GONE)
-            wednesday.setVisibility(View.GONE)
-            thursday.setVisibility(View.GONE)
-            friday.setVisibility(View.GONE)
-            sunday.setVisibility(View.GONE)
+            disableDayStamp()
             Log.i(TAG, "******************************************Disable DayStamp")
         }
 
     }
 
+    private fun disableDayStamp() {
+        dayStampToggle = false
+        saturday.setVisibility(View.GONE)
+        monday.setVisibility(View.GONE)
+        tuesday.setVisibility(View.GONE)
+        wednesday.setVisibility(View.GONE)
+        thursday.setVisibility(View.GONE)
+        friday.setVisibility(View.GONE)
+        sunday.setVisibility(View.GONE)
+    }
+
+    private fun disableSmiley(){
+        smileyFaceToggle = false
+        smileyFace.setVisibility(View.GONE)
+    }
+
     private fun enableSmiley() {
         Log.i(TAG, "******************************************Smiley LISTENER")
+        disableDayStamp()
         if(!smileyFaceToggle){
             smileyFaceToggle = true
             smileyFace.setVisibility(View.VISIBLE)
@@ -443,6 +453,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     private fun removeSticker() {
         Log.i(TAG, "******************************************Remove Stickers")
+        disableDayStamp()
+        disableSmiley()
     }
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
