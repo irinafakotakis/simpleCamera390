@@ -272,7 +272,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         solar.setOnClickListener{ enable_solarize_Filter() }
         no_filter.setOnClickListener{ disableFilter() }
         invert.setOnClickListener{ enable_invert_filter() }
-
+        sticker.setOnClickListener{ fadeInStickers() }
+        smiley.setOnClickListener{ enableSmiley() }
+        clockStamp.setOnClickListener{ enableDayStamp() }
+        no_sticker.setOnClickListener{ removeSticker() }
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
 
         color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
@@ -374,7 +377,18 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
 
     }
+    private fun enableDayStamp() {
+        Log.i(TAG, "******************************************Enable DayStamp")
+    }
 
+    private fun enableSmiley() {
+        Log.i(TAG, "******************************************Enable Smiley")
+    }
+
+
+    private fun removeSticker() {
+        Log.i(TAG, "******************************************Remove Stickers")
+    }
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
         if(gridline_state) {
