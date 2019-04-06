@@ -590,8 +590,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
                 val width = displayMetrics.widthPixels
 
                 Log.i(TAG, "****************************************** CAPTURING id = "+height +" " + width)
-                val bitmap = loadBitmapFromView(findViewById(R.id.camera_texture_view), width, height)
-                Log.i(TAG, "****************************************** CAPTURING id = "+R.id.camera_texture_view + " "+findViewById(R.id.view_holder) )
+                val bitmap = loadBitmapFromView(findViewById(R.id.view_holder), width, height)
+                Log.i(TAG, "****************************************** CAPTURING id = "+R.id.view_holder + " "+findViewById(R.id.view_holder) )
                 saveImage(bitmap)
 
                 ///makeAppearAllIcons()
