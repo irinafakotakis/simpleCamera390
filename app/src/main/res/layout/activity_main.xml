@@ -112,6 +112,85 @@
             android:layout_marginTop="0dp"
             app:srcCompat="@drawable/smileysticker"
             android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/saturday"
+            android:layout_width="231dp"
+            android:layout_height="165dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="103dp"
+            android:layout_marginTop="309dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/saturday" />
+
+        <ImageView
+            android:id="@+id/sunday"
+            android:layout_width="224dp"
+            android:layout_height="82dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-44dp"
+            android:layout_marginTop="52dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/sunday" />
+
+        <ImageView
+            android:id="@+id/monday"
+            android:layout_width="221dp"
+            android:layout_height="84dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="359dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/monday" />
+
+        <ImageView
+            android:id="@+id/tuesday"
+            android:layout_width="wrap_content"
+            android:layout_height="83dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="116dp"
+            android:layout_marginTop="359dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/tuesday" />
+
+        <ImageView
+            android:id="@+id/wednesday"
+            android:layout_width="279dp"
+            android:layout_height="77dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="105dp"
+            android:layout_marginTop="382dp"
+            android:layout_marginEnd="-334dp"
+            app:srcCompat="@drawable/wednesday"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/thursday"
+            android:layout_width="match_parent"
+            android:layout_height="85dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="364dp"
+            app:srcCompat="@drawable/thursday"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/friday"
+            android:layout_width="161dp"
+            android:layout_height="67dp"
+            android:layout_below="@+id/gridlines_icon"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="326dp"
+            android:layout_toEndOf="@+id/filter_icon"
+            android:visibility="gone"
+            app:srcCompat="@drawable/friday" />
+
     </RelativeLayout>
 
     <ImageView

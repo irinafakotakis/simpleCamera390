@@ -397,12 +397,28 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
         if(!dayStampToggle){
             dayStampToggle = true
+            
+            when(dayOfWeek) {
+                1 -> sunday.setVisibility(View.VISIBLE)
+                2 -> monday.setVisibility(View.VISIBLE)
+                3 -> tuesday.setVisibility(View.VISIBLE)
+                4 -> wednesday.setVisibility(View.VISIBLE)
+                5 -> thursday.setVisibility(View.VISIBLE)
+                6 -> friday.setVisibility(View.VISIBLE)
+                7 -> saturday.setVisibility(View.VISIBLE)
+            }
 
             Log.i(TAG, "******************************************Enable DayStamp")
         }
         else{
             dayStampToggle = false
-
+            saturday.setVisibility(View.GONE)
+            monday.setVisibility(View.GONE)
+            tuesday.setVisibility(View.GONE)
+            wednesday.setVisibility(View.GONE)
+            thursday.setVisibility(View.GONE)
+            friday.setVisibility(View.GONE)
+            sunday.setVisibility(View.GONE)
             Log.i(TAG, "******************************************Disable DayStamp")
         }
 
