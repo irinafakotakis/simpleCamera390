@@ -294,6 +294,34 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         myPreference.setDockerColor(color)
     }
 
+    private fun makeDisappearAllIcons(){
+        Log.i(TAG, "******************************************Disable ALL ICONS")
+        gridlines_icon.setVisibility(View.GONE)
+        seekbar_switch.setVisibility(View.GONE)
+        sticker.setVisibility(View.GONE)
+        settings.setVisibility(View.GONE)
+        toggle_photo_video.setVisibility(View.GONE)
+        change_resolution.setVisibility(View.GONE)
+        filter.setVisibility(View.GONE)
+        toggle_camera.setVisibility(View.GONE)
+        shutter.setVisibility(View.GONE)
+        toggle_flash.setVisibility(View.GONE)
+    }
+
+    private fun makeAppearAllIcons(){
+        Log.i(TAG, "******************************************Enable ALL ICONS")
+        gridlines_icon.setVisibility(View.VISIBLE)
+        seekbar_switch.setVisibility(View.VISIBLE)
+        sticker.setVisibility(View.VISIBLE)
+        settings.setVisibility(View.VISIBLE)
+        toggle_photo_video.setVisibility(View.VISIBLE)
+        change_resolution.setVisibility(View.VISIBLE)
+        filter.setVisibility(View.VISIBLE)
+        toggle_camera.setVisibility(View.VISIBLE)
+        shutter.setVisibility(View.VISIBLE)
+        toggle_flash.setVisibility(View.VISIBLE)
+    }
+
     private fun enableFilter() {
         // tap icon to disable filter
         if(filterOn) {
