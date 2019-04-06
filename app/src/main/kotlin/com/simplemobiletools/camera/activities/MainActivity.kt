@@ -40,6 +40,7 @@ import androidx.core.app.NotificationCompat.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
+import android.util.Log
 
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
@@ -66,14 +67,14 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var filterIn = false
     private var selfieFlashOn = false
 
-
+    private val TAG = "MyActivity"
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
     lateinit var builder : Notification.Builder
     private val channelId = "com.simplemobiletools.camera.activities"
     private val description = "Test notification"
     private var cameraEffect = ""
-
+    private var stickerIn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -350,6 +351,29 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
     }
 
+    private fun fadeOutStickers() {
+        fadeAnim(sticker, .5f)
+        fadeAnim(smiley, .0f)
+        fadeAnim(clockStamp, .0f)
+        fadeAnim(no_sticker, .0f)
+    }
+    private fun fadeInStickers() {
+        smiley.setVisibility(View.VISIBLE);
+        clockStamp.setVisibility(View.VISIBLE);
+        no_sticker.setVisibility(View.VISIBLE);
+        if(!stickerIn){
+            fadeAnim(sticker, 1f)
+            fadeAnim(smiley, 1f)
+            fadeAnim(clockStamp, 1f)
+            fadeAnim(no_sticker, 1f)
+            stickerIn = true
+
+        }else{
+            stickerIn = false
+            fadeOutStickers()
+        }
+
+    }
 
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
