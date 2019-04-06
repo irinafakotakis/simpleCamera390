@@ -107,7 +107,7 @@
         android:layout_width="wrap_content"
         android:layout_height="97dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="131dp"
+        android:layout_marginStart="336dp"
         android:layout_marginTop="401dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="145dp"
@@ -164,7 +164,7 @@
         android:visibility="gone" />
     <ImageView
         android:id="@+id/sticker"
-        android:layout_width="56dp"
+        android:layout_width="32dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_marginStart="328dp"
@@ -174,8 +174,8 @@
         android:src="@drawable/ic_sticker" />
     <ImageView
         android:id="@+id/smiley"
-        android:layout_width="59dp"
-        android:layout_height="97dp"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
         android:layout_alignTop="@id/sticker"
         android:layout_alignRight="@id/sticker"
         android:layout_marginTop="0dp"
@@ -186,8 +186,8 @@
 
     <ImageView
         android:id="@+id/clockStamp"
-        android:layout_width="59dp"
-        android:layout_height="97dp"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
         android:layout_alignTop="@id/sticker"
         android:layout_alignRight="@id/sticker"
         android:layout_marginLeft="-170dp"
@@ -199,8 +199,8 @@
 
     <ImageView
         android:id="@+id/no_sticker"
-        android:layout_width="59dp"
-        android:layout_height="97dp"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
         android:layout_alignTop="@id/sticker"
         android:layout_alignRight="@id/sticker"
         android:layout_marginTop="0dp"
