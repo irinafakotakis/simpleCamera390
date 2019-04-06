@@ -32,6 +32,7 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
@@ -68,6 +69,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var currentFilter = false
     private var filterIn = false
     private var mIsBurstMode = false
+    private var shutterFlashOn = false
     private var selfieFlashOn = false
 
     lateinit var notificationManager : NotificationManager
@@ -408,7 +410,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         } else if(mPreview?.isUsingFrontCamera()==true && selfieFlashOn == false){
             toggle_flash.setImageResource(R.drawable.ic_flash_on)
             selfieFlashOn = true
-
         }
     }
 
@@ -426,7 +427,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_camera.setImageResource(if (isUsingFrontCamera) R.drawable.ic_camera_rear else R.drawable.ic_camera_front)
     }
 
-    private fun shutterPressed() {
+    open fun shutterPressed() {
         if (checkCameraAvailable()) {
             handleShutter()
         }
@@ -460,24 +461,27 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
     }
 
+    open fun enableBurstMode(h : Handler, r : Runnable) { // for testing
+        mBurstModeHandler = h
+        mBurstModeRunnable = r
+        enableBurstMode()
+    }
+
     private fun burstMode(r : Runnable) {
         mPreview?.tryTakePicture()
         mBurstModeHandler.postDelayed(r, BURST_INTERVAL) // delay
         // flash screen to indicate a picture was captured
-        burst_flash.setVisibility(View.VISIBLE)
-        mFadeHandler.postDelayed({ burst_flash.setVisibility(View.GONE) }, 500) // 500ms delay to fade
-        // burstFlash()
+        burstFlash(burst_flash, mFadeHandler)
     }
 
-    private fun burstFlash() {
+    open fun burstFlash(burst_flash : ImageView, fade_handler : Handler) {
         burst_flash.setVisibility(View.VISIBLE)
-        mFadeHandler.postDelayed({ burst_flash.setVisibility(View.GONE) }, 500) // 500ms delay
+        fade_handler.postDelayed({ burst_flash.setVisibility(View.GONE) }, 500) // 500ms delay to fade
     }
 
     private fun handleShutter() {
         if(mIsBurstMode && mIsInPhotoMode) {
             mBurstModeHandler.post(mBurstModeRunnable)
-            shutterNotification()
         } else if (mIsInPhotoMode) {
             toggleBottomButtons(true)
             mPreview?.tryTakePicture()
@@ -897,5 +901,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getMPreview(): MyPreview? {
         return mPreview
+    }
+
+    fun isInPhotoMode() : Boolean {
+        return mIsInPhotoMode
+    }
+
+    fun isBurstModeEnabled() : Boolean {
+        return mIsBurstMode
     }
 }
