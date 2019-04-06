@@ -41,7 +41,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import android.util.Log
-
+import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Random
+import android.os.Environment
+import android.util.DisplayMetrics
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
@@ -78,6 +86,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var stickerIn = false
     private var smileyFaceToggle = false
     private var dayStampToggle = false
+    private var hidingIconToggle = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -545,7 +554,28 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     private fun shutterPressed() {
         if (checkCameraAvailable()) {
-            handleShutter()
+            if(smileyFaceToggle || dayStampToggle){
+                Log.i(TAG, "****************************************** CAPTURING WITH STICKER")
+                // makeDisappearAllIcons()
+
+                //get metrics of each system
+                val displayMetrics = DisplayMetrics()
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+                val height = displayMetrics.heightPixels
+                val width = displayMetrics.widthPixels
+
+                Log.i(TAG, "****************************************** CAPTURING id = "+height +" " + width)
+                val bitmap = loadBitmapFromView(findViewById(R.id.camera_texture_view), width, height)
+                Log.i(TAG, "****************************************** CAPTURING id = "+R.id.camera_texture_view + " "+findViewById(R.id.view_holder) )
+                saveImage(bitmap)
+
+                ///makeAppearAllIcons()
+            }
+            else{
+
+                Log.i(TAG, "****************************************** HANDLE SHUTTER")
+                handleShutter()
+            }
         }
     }
 
@@ -986,5 +1016,48 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getSelfieFlashOn(): Boolean{
         return selfieFlashOn
+    }
+
+    companion object {
+
+        fun saveImage(bitmap: Bitmap) {
+            val root = Environment.getExternalStorageDirectory().toString()
+
+            Log.i(TAG, "******************************************SAVING root = "+ root)
+            val myDir = File(root + "/req_images")
+            Log.i(TAG, "******************************************SAVING mydir= "+ myDir)
+            myDir.mkdirs()
+            val generator = Random()
+            var n = 10000
+            n = generator.nextInt(n)
+            Log.i(TAG, "******************************************SAVING random number= "+ n)
+            val fname = "Image-"+n+".jpg"
+            Log.i(TAG, "******************************************SAVING file name= "+ fname)
+            val file = File(myDir, fname)
+            Log.i(TAG, "******************************************SAVING file = "+ file.toString())
+            //  Log.i(TAG, "" + file);
+            if (file.exists())
+                file.delete()
+            try {
+                val out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.flush()
+                out.close()
+                Log.i(TAG, "******************************************SAVING CLOSE STREAM")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+        }
+
+        fun loadBitmapFromView(v: View, width: Int, height: Int): Bitmap {
+            Log.i(TAG, "******************************************LOADING ")
+            val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val c = Canvas(b)
+            v.layout(0, 0, v.layoutParams.width, v.layoutParams.height)
+            v.draw(c)
+            return b
+        }
     }
 }

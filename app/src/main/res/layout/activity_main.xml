@@ -253,16 +253,19 @@
         android:layout_marginBottom="0dp"
         android:src="@drawable/ic_shortcut_normal"
         android:visibility="gone" />
+
     <ImageView
         android:id="@+id/sticker"
         android:layout_width="37dp"
         android:layout_height="39dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="319dp"
-        android:layout_marginTop="401dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="322dp"
+        android:layout_marginTop="232dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="145dp"
         android:src="@drawable/ic_star_on" />
+
     <ImageView
         android:id="@+id/smiley"
         android:layout_width="39dp"
