@@ -77,6 +77,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var cameraEffect = ""
     private var stickerIn = false
     private var smileyFaceToggle = false
+    private var dayStampToggle = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -381,6 +382,30 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
     private fun enableDayStamp() {
         Log.i(TAG, "******************************************Enable DayStamp")
+
+        val c = Calendar.getInstance()
+        val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
+        Log.i(TAG, "******************************************DAY value : "+ dayOfWeek)
+        when(dayOfWeek) {
+            1 -> Log.i(TAG, "******************************************DAY STAMP SUNDAY")
+            2 -> Log.i(TAG, "******************************************DAY STAMP MONDAY ")
+            3 -> Log.i(TAG, "******************************************DAY STAMP TUESDAY")
+            4 -> Log.i(TAG, "******************************************DAY STAMP WEDNESDAY")
+            5 -> Log.i(TAG, "******************************************DAY STAMP THURSDAY")
+            6 -> Log.i(TAG, "******************************************DAY STAMP FRIDAY")
+            7 -> Log.i(TAG, "******************************************DAY STAMP SATURDAY")
+        }
+        if(!dayStampToggle){
+            dayStampToggle = true
+
+            Log.i(TAG, "******************************************Enable DayStamp")
+        }
+        else{
+            dayStampToggle = false
+
+            Log.i(TAG, "******************************************Disable DayStamp")
+        }
+
     }
 
     private fun enableSmiley() {
