@@ -10,7 +10,9 @@
     <RelativeLayout
         android:id="@+id/gridlines"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <com.simplemobiletools.camera.views.AutoFitTextureView
             android:id="@+id/camera_texture_view"
@@ -94,6 +96,17 @@
             android:layout_alignParentRight="true"
             android:padding="@dimen/medium_margin" />
 
+        <ImageView
+            android:id="@+id/last_photo_video_preview2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="0dp"
+            android:visibility="gone"
+            android:padding="@dimen/medium_margin" />
+
         <com.divyanshu.colorseekbar.ColorSeekBar
             android:id="@+id/color_seek_bar"
             android:layout_width="300dp"
@@ -110,8 +123,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="224dp"
             android:layout_marginTop="0dp"
-            app:srcCompat="@drawable/smileysticker"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:srcCompat="@drawable/smileysticker" />
 
         <ImageView
             android:id="@+id/saturday"
@@ -166,8 +179,8 @@
             android:layout_marginStart="105dp"
             android:layout_marginTop="382dp"
             android:layout_marginEnd="-334dp"
-            app:srcCompat="@drawable/wednesday"
-            android:visibility="gone" />
+            android:visibility="gone"
+            app:srcCompat="@drawable/wednesday" />
 
         <ImageView
             android:id="@+id/thursday"
@@ -177,8 +190,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="0dp"
             android:layout_marginTop="364dp"
-            app:srcCompat="@drawable/thursday"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:srcCompat="@drawable/thursday" />
 
         <ImageView
             android:id="@+id/friday"
