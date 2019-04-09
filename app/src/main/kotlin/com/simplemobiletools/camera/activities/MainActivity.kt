@@ -81,6 +81,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var mIsBurstMode = false
     private var shutterFlashOn = false
     private var selfieFlashOn = false
+    private var photoWithSticker = false
 
 
 
@@ -367,6 +368,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         bw.setVisibility(View.GONE)
         invert.setVisibility(View.GONE)
         no_filter.setVisibility(View.GONE)
+        btn_holder.setVisibility(View.INVISIBLE)
     }
 
     private fun makeAppearAllIcons(){
@@ -381,6 +383,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_camera.setVisibility(View.VISIBLE)
         shutter.setVisibility(View.VISIBLE)
         toggle_flash.setVisibility(View.VISIBLE)
+        btn_holder.setVisibility(View.VISIBLE)
     }
 
     private fun enableFilter() {
@@ -561,6 +564,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun enableSmiley() {
         Log.i(TAG, "******************************************Smiley LISTENER")
         disableDayStamp()
+
         if(!smileyFaceToggle){
             smileyFaceToggle = true
             smileyFace.setVisibility(View.VISIBLE)
@@ -641,6 +645,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     open fun shutterPressed() {
         if (checkCameraAvailable()) {
+
             if(smileyFaceToggle || dayStampToggle){
                 Log.i(TAG, "****************************************** CAPTURING WITH STICKER")
                 // makeDisappearAllIcons()
@@ -662,6 +667,26 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
                 Log.i(TAG, "****************************************** HANDLE SHUTTER")
                 handleShutter()
+
+                if(smileyFaceToggle || dayStampToggle){
+                    setupPreviewImage(true)
+
+                    val displayMetrics = DisplayMetrics()
+                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+                    val height = displayMetrics.heightPixels
+                    val width = displayMetrics.widthPixels
+
+                    last_photo_video_preview2.setVisibility(View.VISIBLE)
+                    makeDisappearAllIcons()
+
+                    val bitmap = loadBitmapFromView(findViewById(R.id.view_holder), width, height)
+                    saveImage(bitmap)
+
+                    makeAppearAllIcons()
+                    last_photo_video_preview2.setVisibility(View.INVISIBLE)
+
+                }
+
             }
         }
     }
@@ -835,6 +860,17 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
                         .apply(options)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(last_photo_video_preview)
+
+                last_photo_video_preview2.setVisibility(View.VISIBLE)
+                Glide.with(this)
+                        .load(mPreviewUri)
+                        .apply(options)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(last_photo_video_preview2)
+                last_photo_video_preview2.setVisibility(View.INVISIBLE)
+
+
+
             }
         }
     }
