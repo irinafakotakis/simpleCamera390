@@ -341,7 +341,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_BW_Filter() {
+    open fun enable_BW_Filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("black_and_white")) {
             cameraEffect = "black_and_white"
@@ -359,7 +359,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_sepia_filter() {
+    open fun enable_sepia_filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("sepia")) {
             cameraEffect = "sepia"
@@ -368,7 +368,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_posterize_filter() {
+    open fun enable_posterize_filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("posterize")) {
             cameraEffect = "posterize"
@@ -377,7 +377,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_blackboard_filter() {
+    open fun enable_blackboard_filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("blackboard")) {
             cameraEffect = "blackboard"
@@ -386,7 +386,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_aqua_filter() {
+    open fun enable_aqua_filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("aqua")) {
             cameraEffect = "aqua"
