@@ -770,6 +770,14 @@ open class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPrev
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE // solarize
         } else if(cameraEffect.equals("invert")) {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_NEGATIVE // invert
+        } else if(cameraEffect.equals("sepia")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SEPIA // sepia
+        } else if(cameraEffect.equals("posterize")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_POSTERIZE // posterize
+        } else if(cameraEffect.equals("blackboard")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_BLACKBOARD // blackboard
+        } else if(cameraEffect.equals("aqua")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_AQUA // aqua
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
