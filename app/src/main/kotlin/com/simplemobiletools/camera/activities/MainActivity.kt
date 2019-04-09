@@ -50,6 +50,7 @@ import java.io.FileOutputStream
 import java.util.Random
 import android.os.Environment
 import android.util.DisplayMetrics
+import kotlin.collections.ArrayList
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
@@ -95,6 +96,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var smileyFaceToggle = false
     private var dayStampToggle = false
     private var hidingIconToggle = false
+    private var isUnderTest = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -298,7 +300,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_photo_video.setOnClickListener { handleTogglePhotoVideo() }
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
         gridlines_icon.setOnClickListener { toggleGridlines() }
-        filter.setOnClickListener{ fadeInFilters() }
+        filter.setOnClickListener{ fadeInFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia) }
         gridlines_icon.tag = R.drawable.gridlines_white
         filter_icon.setOnClickListener{ enableFilter() }
         bw.setOnClickListener{ enable_BW_Filter() }
@@ -860,7 +862,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         scheduleFadeOut()
     }
 
-    private fun fadeOutFilters() {
+    open fun fadeOutFilters(filter : ImageView, aqua : ImageView, bw : ImageView, solar : ImageView, no_filter : ImageView,
+                            invert : ImageView, blackboard : ImageView, posterize : ImageView, sepia : ImageView) {
         fadeAnim(filter, .5f)
         fadeAnim(solar, .0f)
         fadeAnim(bw, .0f)
@@ -872,7 +875,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         fadeAnim(posterize, .0f)
     }
 
-    private fun fadeInFilters() {
+    open fun fadeInFilters(filter : ImageView, aqua : ImageView, bw : ImageView, solar : ImageView, no_filter : ImageView,
+                           invert : ImageView, blackboard : ImageView, posterize : ImageView, sepia : ImageView) {
         bw.setVisibility(View.VISIBLE)
         solar.setVisibility(View.VISIBLE)
         no_filter.setVisibility(View.VISIBLE)
@@ -881,7 +885,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         blackboard.setVisibility(View.VISIBLE)
         posterize.setVisibility(View.VISIBLE)
         sepia.setVisibility(View.VISIBLE)
-        if(!filterIn){
+        if(!filterIn && !isUnderTest){
             fadeAnim(filter, 1f)
             fadeAnim(solar, 1f)
             fadeAnim(bw, 1f)
@@ -895,7 +899,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
         }else{
             filterIn = false
-            fadeOutFilters()
+            if(!isUnderTest) {
+                fadeOutFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia)
+            }
         }
 
     }
@@ -903,7 +909,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun FiltersScheduleFadeOut() {
         if (!config.keepSettingsVisible) {
             mFadeHandler.postDelayed({
-                fadeOutFilters()
+                fadeOutFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia)
             }, FADE_DELAY)
         }
     }
@@ -1169,6 +1175,34 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getSelfieFlashOn(): Boolean{
         return selfieFlashOn
+    }
+
+    fun getFilters(): ArrayList<ImageView>{
+
+        val filters = ArrayList<ImageView>()
+
+        filters.add(bw)
+        filters.add(solar)
+        filters.add(no_filter)
+        filters.add(invert)
+        filters.add(aqua)
+        filters.add(blackboard)
+        filters.add(posterize)
+        filters.add(sepia)
+
+        return filters
+    }
+
+    fun getFilterToggle() : Boolean{
+        return filterIn
+    }
+
+    fun getTestToggle(): Boolean{
+        return isUnderTest
+    }
+
+    fun setTestToggle(bool : Boolean){
+        isUnderTest = bool
     }
 
     companion object {

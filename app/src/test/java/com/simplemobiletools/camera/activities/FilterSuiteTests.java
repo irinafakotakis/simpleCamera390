@@ -1,10 +1,16 @@
 package com.simplemobiletools.camera.activities;
 
+import android.view.View;
+import android.widget.ImageView;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
+
+import java.util.ArrayList;
 
 @RunWith(RobolectricTestRunner.class)
 public class FilterSuiteTests {
@@ -133,4 +139,34 @@ public class FilterSuiteTests {
         assert(activity.getCurrentFilter());
     }
 
+    @Test
+    public void testFadeInFilters(){
+
+        ImageView aqua = Mockito.mock(ImageView.class);
+        ImageView bw = Mockito.mock(ImageView.class);
+        ImageView solar = Mockito.mock(ImageView.class);
+        ImageView no_filter = Mockito.mock(ImageView.class);
+        ImageView invert = Mockito.mock(ImageView.class);
+        ImageView blackboard = Mockito.mock(ImageView.class);
+        ImageView posterize = Mockito.mock(ImageView.class);
+        ImageView sepia = Mockito.mock(ImageView.class);
+        ImageView filter = Mockito.mock(ImageView.class);
+
+        // toggle testing to true, needed to test function without hard dependency on fadeAnim
+        activity.setTestToggle(true);
+
+        // call function to test
+        activity.fadeInFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia);
+
+        Mockito.verify(aqua).setVisibility(View.VISIBLE);
+        Mockito.verify(bw).setVisibility(View.VISIBLE);
+        Mockito.verify(solar).setVisibility(View.VISIBLE);
+        Mockito.verify(no_filter).setVisibility(View.VISIBLE);
+        Mockito.verify(invert).setVisibility(View.VISIBLE);
+        Mockito.verify(blackboard).setVisibility(View.VISIBLE);
+        Mockito.verify(sepia).setVisibility(View.VISIBLE);
+
+        // toggle testing to false
+        activity.setTestToggle(false);
+    }
 }
