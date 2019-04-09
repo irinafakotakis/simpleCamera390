@@ -309,6 +309,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         smiley.setOnClickListener{ enableSmiley() }
         clockStamp.setOnClickListener{ enableDayStamp() }
         no_sticker.setOnClickListener{ removeSticker() }
+        blackboard.setOnClickListener{ enable_blackboard_filter() }
+        sepia.setOnClickListener{ enable_sepia_filter() }
+        aqua.setOnClickListener{ enable_aqua_filter() }
+        posterize.setOnClickListener{ enable_posterize_filter() }
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
         sunday.setOnClickListener{ hideAll() }
         monday.setOnClickListener{ hideAll() }
@@ -409,7 +413,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_BW_Filter() {
+    open fun enable_BW_Filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("black_and_white")) {
             cameraEffect = "black_and_white"
@@ -422,6 +426,42 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         // tap icon to enable filter
         if(!cameraEffect.equals("invert")){
             cameraEffect = "invert"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_sepia_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("sepia")) {
+            cameraEffect = "sepia"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_posterize_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("posterize")) {
+            cameraEffect = "posterize"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_blackboard_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("blackboard")) {
+            cameraEffect = "blackboard"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_aqua_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("aqua")) {
+            cameraEffect = "aqua"
             currentFilter = true
         }
         mPreview?.setCameraEffect(cameraEffect)
@@ -826,6 +866,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         fadeAnim(bw, .0f)
         fadeAnim(no_filter, .0f)
         fadeAnim(invert, .0f)
+        fadeAnim(sepia, .0f)
+        fadeAnim(aqua, .0f)
+        fadeAnim(blackboard, .0f)
+        fadeAnim(posterize, .0f)
     }
 
     private fun fadeInFilters() {
@@ -833,12 +877,20 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         solar.setVisibility(View.VISIBLE)
         no_filter.setVisibility(View.VISIBLE)
         invert.setVisibility(View.VISIBLE)
+        aqua.setVisibility(View.VISIBLE)
+        blackboard.setVisibility(View.VISIBLE)
+        posterize.setVisibility(View.VISIBLE)
+        sepia.setVisibility(View.VISIBLE)
         if(!filterIn){
             fadeAnim(filter, 1f)
             fadeAnim(solar, 1f)
             fadeAnim(bw, 1f)
             fadeAnim(no_filter, 1f)
             fadeAnim(invert, 1f)
+            fadeAnim(sepia, 1f)
+            fadeAnim(aqua, 1f)
+            fadeAnim(blackboard, 1f)
+            fadeAnim(posterize, 1f)
             filterIn = true
 
         }else{
@@ -1106,7 +1158,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     fun isBurstModeEnabled() : Boolean {
         return mIsBurstMode
     }
-  
+
     fun getCameraEffect(): String {
         return cameraEffect
     }
