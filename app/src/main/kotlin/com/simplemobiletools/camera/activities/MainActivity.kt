@@ -33,15 +33,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Build
 import android.widget.ImageView
-import androidx.appcompat.app.AppCompatActivity
-import android.widget.RemoteViews
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationCompat.*
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
 import android.util.Log
-import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -50,6 +43,8 @@ import java.io.FileOutputStream
 import java.util.Random
 import android.os.Environment
 import android.util.DisplayMetrics
+import android.widget.LinearLayout
+import android.widget.Switch
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
@@ -315,14 +310,24 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun hideAll(){
         if(!hidingIconToggle){
             hidingIconToggle = true
-            makeDisappearAllIcons()
+            makeDisappearAllIcons(gridlines_icon, seekbar_switch,
+                    sticker, settings, toggle_photo_video,
+                    change_resolution, filter, toggle_camera,
+                    shutter, toggle_flash, smiley,
+                    clockStamp, no_sticker, solar,
+                    bw, invert, no_filter, btn_holder)
         }
         else{
             hidingIconToggle = false
             makeAppearAllIcons()
         }
     }
-    private fun makeDisappearAllIcons(){
+    public fun makeDisappearAllIcons(gridlines_icon: ImageView, seekbar_switch: Switch,
+                                      sticker: ImageView, settings: ImageView, toggle_photo_video: ImageView,
+                                      change_resolution: ImageView, filter: ImageView, toggle_camera: ImageView,
+                                      shutter: ImageView, toggle_flash: ImageView, smiley: ImageView,
+                                      clockStamp: ImageView, no_sticker: ImageView, solar: ImageView,
+                                      bw: ImageView, invert: ImageView, no_filter: ImageView, btn_holder: LinearLayout){
         Log.i(TAG, "******************************************Disable ALL ICONS")
         gridlines_icon.setVisibility(View.GONE)
         seekbar_switch.setVisibility(View.GONE)
@@ -447,7 +452,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
     private fun enableDayStamp() {
         Log.i(TAG, "******************************************Enable DayStamp")
-        disableSmiley()
+        disableSmiley(smileyFace)
         val c = Calendar.getInstance()
         val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
         Log.i(TAG, "******************************************DAY value : "+ dayOfWeek)
@@ -476,13 +481,14 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             Log.i(TAG, "******************************************Enable DayStamp")
         }
         else{
-            disableDayStamp()
+            disableDayStamp(saturday, monday, tuesday, wednesday, thursday, friday, sunday)
             Log.i(TAG, "******************************************Disable DayStamp")
         }
 
     }
 
-    private fun disableDayStamp() {
+    fun disableDayStamp(saturday: ImageView, monday: ImageView, tuesday: ImageView, wednesday: ImageView, thursday: ImageView,
+    friday: ImageView, sunday: ImageView) {
         dayStampToggle = false
         saturday.setVisibility(View.GONE)
         monday.setVisibility(View.GONE)
@@ -493,14 +499,14 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         sunday.setVisibility(View.GONE)
     }
 
-    private fun disableSmiley(){
+     fun disableSmiley(smileyFace: ImageView){
         smileyFaceToggle = false
         smileyFace.setVisibility(View.GONE)
     }
 
     private fun enableSmiley() {
         Log.i(TAG, "******************************************Smiley LISTENER")
-        disableDayStamp()
+        disableDayStamp(saturday, monday, tuesday, wednesday, thursday, friday, sunday)
 
         if(!smileyFaceToggle){
             smileyFaceToggle = true
@@ -519,8 +525,8 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     private fun removeSticker() {
         Log.i(TAG, "******************************************Remove Stickers")
-        disableDayStamp()
-        disableSmiley()
+        disableDayStamp(saturday, monday, tuesday, wednesday, thursday, friday, sunday)
+        disableSmiley(smileyFace)
     }
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
@@ -596,7 +602,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
                     val width = displayMetrics.widthPixels
 
                     last_photo_video_preview2.setVisibility(View.VISIBLE)
-                    makeDisappearAllIcons()
+                    makeDisappearAllIcons(gridlines_icon, seekbar_switch,
+                            sticker, settings, toggle_photo_video,
+                            change_resolution, filter, toggle_camera,
+                            shutter, toggle_flash, smiley,
+                            clockStamp, no_sticker, solar,
+                            bw, invert, no_filter, btn_holder)
 
                     val bitmap = loadBitmapFromView(findViewById(R.id.view_holder), width, height)
                     saveImage(bitmap)
