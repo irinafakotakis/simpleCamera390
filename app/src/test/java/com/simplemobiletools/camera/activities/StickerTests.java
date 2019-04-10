@@ -153,6 +153,9 @@ public class StickerTests {
     @Test
     public void disableSmileyTest(){
 
+        //asserting that the smileyFaceToggle is false (it should be false be default)
+        assert(!activity.getSmileToggle());
+
         ImageView smileyFace = Mockito.mock(ImageView.class);
 
         //calling the function under test
@@ -160,6 +163,9 @@ public class StickerTests {
 
         //verifying that the values called are gone
         Mockito.verify(smileyFace).setVisibility(View.GONE);
+
+        //asserting that it is false after running the function
+        assert(!activity.getSmileToggle());
 
     }
 }
