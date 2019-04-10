@@ -43,7 +43,7 @@ import java.util.concurrent.TimeUnit
 
 // based on the Android Camera2 photo sample at https://github.com/googlesamples/android-Camera2Basic
 // and video sample at https://github.com/googlesamples/android-Camera2Video
-class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
+open class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     private val FOCUS_TAG = "focus_tag"
     private val MAX_PREVIEW_WIDTH = 1920
     private val MAX_PREVIEW_HEIGHT = 1080
@@ -768,6 +768,16 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_MONO // black and white
         } else if(cameraEffect.equals("solarize")) {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SOLARIZE // solarize
+        } else if(cameraEffect.equals("invert")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_NEGATIVE // invert
+        } else if(cameraEffect.equals("sepia")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_SEPIA // sepia
+        } else if(cameraEffect.equals("posterize")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_POSTERIZE // posterize
+        } else if(cameraEffect.equals("blackboard")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_BLACKBOARD // blackboard
+        } else if(cameraEffect.equals("aqua")) {
+            mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_AQUA // aqua
         } else {
             mCameraEffect = CameraMetadata.CONTROL_EFFECT_MODE_OFF // normal
         }
@@ -1018,6 +1028,10 @@ class CameraPreview : ViewGroup, TextureView.SurfaceTextureListener, MyPreview {
     }
 
     override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {}
+
+    override fun isUsingFrontCamera(): Boolean {
+        return this.mUseFrontCamera
+    }
 
     fun getMCameraEffect(): Int {
         return this.mCameraEffect
