@@ -281,9 +281,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         no_filter.setOnClickListener{ disableFilter() }
         invert.setOnClickListener{ enable_invert_filter() }
         sticker.setOnClickListener{ fadeInStickers() }
-        smiley.setOnClickListener{ enableSmiley() }
-        clockStamp.setOnClickListener{ enableDayStamp() }
-        no_sticker.setOnClickListener{ removeSticker() }
+        smiley.setOnClickListener{ enableSmiley(smileyFace, saturday, monday, tuesday, wednesday, thursday, friday, sunday) }
+        clockStamp.setOnClickListener{ enableDayStamp(smileyFace, sunday, monday, tuesday,
+                wednesday, thursday, friday, saturday) }
+        no_sticker.setOnClickListener{ removeSticker(smileyFace, saturday, monday, tuesday, wednesday, thursday, friday, sunday) }
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
         sunday.setOnClickListener{ hideAll() }
         monday.setOnClickListener{ hideAll() }
@@ -456,7 +457,9 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
 
     }
-    private fun enableDayStamp() {
+    public fun enableDayStamp(smileyFace: ImageView, sunday: ImageView, monday: ImageView, tuesday: ImageView,
+                              wednesday: ImageView, thursday: ImageView, friday: ImageView,
+                              saturday: ImageView) {
         Log.i(TAG, "******************************************Enable DayStamp")
         disableSmiley(smileyFace)
         val c = Calendar.getInstance()
@@ -510,7 +513,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         smileyFace.setVisibility(View.GONE)
     }
 
-    private fun enableSmiley() {
+    public fun enableSmiley(smileyFace: ImageView, saturday: ImageView, monday: ImageView, tuesday: ImageView, wednesday: ImageView, thursday: ImageView, friday: ImageView, sunday: ImageView) {
         Log.i(TAG, "******************************************Smiley LISTENER")
         disableDayStamp(saturday, monday, tuesday, wednesday, thursday, friday, sunday)
 
@@ -529,7 +532,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     }
 
 
-    private fun removeSticker() {
+    public fun removeSticker(smileyFace: ImageView, saturday: ImageView, monday: ImageView, tuesday: ImageView, wednesday: ImageView, thursday: ImageView, friday: ImageView, sunday: ImageView) {
         Log.i(TAG, "******************************************Remove Stickers")
         disableDayStamp(saturday, monday, tuesday, wednesday, thursday, friday, sunday)
         disableSmiley(smileyFace)
@@ -823,7 +826,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             }, FADE_DELAY)
         }
     }
-    private fun fadeAnim(view: View, value: Float) {
+    public fun fadeAnim(view: View, value: Float) {
         view.animate().alpha(value).start()
         view.isClickable = value != .0f
     }
@@ -1081,6 +1084,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getSmileToggle(): Boolean{
         return smileyFaceToggle
+    }
+
+    fun getDayStampToggle(): Boolean{
+        return dayStampToggle;
     }
 
     companion object {

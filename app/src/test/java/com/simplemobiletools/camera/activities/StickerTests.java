@@ -9,10 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import static org.mockito.Mockito.when;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+
+import static org.checkerframework.checker.nullness.Opt.get;
 
 @RunWith(RobolectricTestRunner.class)
 public class StickerTests {
@@ -122,6 +126,63 @@ public class StickerTests {
 
     }
 
+    @Test
+    public void enableDayStampTest(){
+
+        Calendar c = Calendar.getInstance();
+        int dayofWeek = c.get(Calendar.DAY_OF_WEEK);
+
+
+        //asserting that the smileyFaceToggle and dayStampToggle are false (they should be false be default)
+        assert(!activity.getSmileToggle());
+        assert(!activity.getDayStampToggle());
+
+        ImageView smileyFace = Mockito.mock(ImageView.class);
+        ImageView sunday = Mockito.mock(ImageView.class);
+        ImageView monday = Mockito.mock(ImageView.class);
+        ImageView tuesday = Mockito.mock(ImageView.class);
+        ImageView wednesday = Mockito.mock(ImageView.class);
+        ImageView thursday = Mockito.mock(ImageView.class);
+        ImageView friday = Mockito.mock(ImageView.class);
+        ImageView saturday = Mockito.mock(ImageView.class);
+
+        //running the function under test
+        activity.enableDayStamp(smileyFace, sunday, monday, tuesday,
+                wednesday, thursday, friday, saturday);
+
+        //asserting that the SmileToggle IS false == not on screen
+        assert(!activity.getSmileToggle());
+        //asserting that the DayStampToggle IS true == on screen
+        assert(activity.getDayStampToggle());
+
+        Mockito.verify(smileyFace).setVisibility(View.GONE);
+
+        switch(dayofWeek) {
+            case 1:
+                Mockito.verify(sunday).setVisibility(View.VISIBLE);
+                break;
+            case 2:
+                Mockito.verify(monday).setVisibility(View.VISIBLE);
+                break;
+            case 3:
+                Mockito.verify(tuesday).setVisibility(View.VISIBLE);
+                break;
+            case 4:
+                Mockito.verify(wednesday).setVisibility(View.VISIBLE);
+                break;
+            case 5:
+                Mockito.verify(thursday).setVisibility(View.VISIBLE);
+                break;
+            case 6:
+                Mockito.verify(friday).setVisibility(View.VISIBLE);
+                break;
+            case 7:
+                Mockito.verify(saturday).setVisibility(View.VISIBLE);
+                break;
+        }
+
+    }
+
 
     @Test
     public void disableDayStampTest(){
@@ -165,6 +226,38 @@ public class StickerTests {
         Mockito.verify(smileyFace).setVisibility(View.GONE);
 
         //asserting that it is false after running the function
+        assert(!activity.getSmileToggle());
+
+    }
+
+    @Test
+    public void removeStickerTest(){
+
+        ImageView smileyFace = Mockito.mock(ImageView.class);
+        ImageView saturday = Mockito.mock(ImageView.class);
+        ImageView monday = Mockito.mock(ImageView.class);
+        ImageView tuesday = Mockito.mock(ImageView.class);
+        ImageView wednesday = Mockito.mock(ImageView.class);
+        ImageView thursday = Mockito.mock(ImageView.class);
+        ImageView friday = Mockito.mock(ImageView.class);
+        ImageView sunday = Mockito.mock(ImageView.class);
+
+        //asserting that the smileyFaceToggle is false (it should be false be default)
+        assert(!activity.getSmileToggle());
+
+        //calling the feature under test
+        activity.removeSticker(smileyFace,saturday, monday, tuesday, wednesday, thursday, friday, sunday);
+
+        //verifying that the values called are indeed gone
+        Mockito.verify(saturday).setVisibility(View.GONE);
+        Mockito.verify(monday).setVisibility(View.GONE);
+        Mockito.verify(tuesday).setVisibility(View.GONE);
+        Mockito.verify(wednesday).setVisibility(View.GONE);
+        Mockito.verify(thursday).setVisibility(View.GONE);
+        Mockito.verify(friday).setVisibility(View.GONE);
+        Mockito.verify(sunday).setVisibility(View.GONE);
+
+        //asserting that the smileyFaceToggle is false AFTER the function is called
         assert(!activity.getSmileToggle());
 
     }
