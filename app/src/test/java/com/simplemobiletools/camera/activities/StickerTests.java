@@ -77,7 +77,46 @@ public class StickerTests {
         Mockito.verify(bw).setVisibility(View.GONE);
         Mockito.verify(invert).setVisibility(View.GONE);
         Mockito.verify(no_filter).setVisibility(View.GONE);
-        Mockito.verify(btn_holder).setVisibility(View.GONE);
+        Mockito.verify(btn_holder).setVisibility(View.INVISIBLE);
+
+
+
+    }
+
+    @Test
+    public void makeAppearAllIconsTest(){
+
+        ImageView gridlines_icon = Mockito.mock(ImageView.class);
+        Switch seekbar_switch = Mockito.mock(Switch.class);
+        ImageView sticker = Mockito.mock(ImageView.class);
+        ImageView settings = Mockito.mock(ImageView.class);
+        ImageView toggle_photo_video = Mockito.mock(ImageView.class);
+        ImageView change_resolution = Mockito.mock(ImageView.class);
+        ImageView filter = Mockito.mock(ImageView.class);
+        ImageView toggle_camera = Mockito.mock(ImageView.class);
+        ImageView shutter = Mockito.mock(ImageView.class);
+        ImageView toggle_flash = Mockito.mock(ImageView.class);
+        LinearLayout btn_holder = Mockito.mock(LinearLayout.class);
+
+        //calling the function under test
+        activity.makeAppearAllIcons(gridlines_icon, seekbar_switch,
+                sticker, settings, toggle_photo_video,
+                change_resolution, filter, toggle_camera,
+                shutter, toggle_flash, btn_holder);
+
+
+        //verifying that the values called are indeed visible
+        Mockito.verify(gridlines_icon).setVisibility(View.VISIBLE);
+        Mockito.verify(seekbar_switch).setVisibility(View.VISIBLE);
+        Mockito.verify(sticker).setVisibility(View.VISIBLE);
+        Mockito.verify(settings).setVisibility(View.VISIBLE);
+        Mockito.verify(toggle_photo_video).setVisibility(View.VISIBLE);
+        Mockito.verify(change_resolution).setVisibility(View.VISIBLE);
+        Mockito.verify(filter).setVisibility(View.VISIBLE);
+        Mockito.verify(toggle_camera).setVisibility(View.VISIBLE);
+        Mockito.verify(shutter).setVisibility(View.VISIBLE);
+        Mockito.verify(toggle_flash).setVisibility(View.VISIBLE);
+        Mockito.verify(btn_holder).setVisibility(View.VISIBLE);
 
 
 

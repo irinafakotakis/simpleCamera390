@@ -319,7 +319,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
         else{
             hidingIconToggle = false
-            makeAppearAllIcons()
+            makeAppearAllIcons(gridlines_icon, seekbar_switch,
+                    sticker, settings, toggle_photo_video,
+                    change_resolution, filter, toggle_camera,
+                    shutter, toggle_flash, btn_holder)
         }
     }
     public fun makeDisappearAllIcons(gridlines_icon: ImageView, seekbar_switch: Switch,
@@ -349,7 +352,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         btn_holder.setVisibility(View.INVISIBLE)
     }
 
-    private fun makeAppearAllIcons(){
+    public fun makeAppearAllIcons(gridlines_icon: ImageView, seekbar_switch: Switch,
+                                   sticker: ImageView, settings: ImageView, toggle_photo_video: ImageView,
+                                   change_resolution: ImageView, filter: ImageView, toggle_camera: ImageView,
+                                   shutter: ImageView, toggle_flash: ImageView, btn_holder: LinearLayout){
         Log.i(TAG, "******************************************Enable ALL ICONS")
         gridlines_icon.setVisibility(View.VISIBLE)
         seekbar_switch.setVisibility(View.VISIBLE)
@@ -612,7 +618,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
                     val bitmap = loadBitmapFromView(findViewById(R.id.view_holder), width, height)
                     saveImage(bitmap)
 
-                    makeAppearAllIcons()
+                    makeAppearAllIcons(gridlines_icon, seekbar_switch,
+                            sticker, settings, toggle_photo_video,
+                            change_resolution, filter, toggle_camera,
+                            shutter, toggle_flash, btn_holder)
                     last_photo_video_preview2.setVisibility(View.INVISIBLE)
 
                 }
@@ -1070,6 +1079,10 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         return selfieFlashOn
     }
 
+    fun getSmileToggle(): Boolean{
+        return smileyFaceToggle
+    }
+
     companion object {
 
         fun saveImage(bitmap: Bitmap) {
@@ -1111,5 +1124,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             v.draw(c)
             return b
         }
+
     }
 }
