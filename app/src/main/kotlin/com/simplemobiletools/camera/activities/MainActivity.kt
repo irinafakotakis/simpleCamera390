@@ -40,7 +40,17 @@ import androidx.core.app.NotificationCompat.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_settings.*
 import java.util.*
-
+import android.util.Log
+import android.content.ContentValues
+import android.content.ContentValues.TAG
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import java.io.File
+import java.io.FileOutputStream
+import java.util.Random
+import android.os.Environment
+import android.util.DisplayMetrics
+import kotlin.collections.ArrayList
 
 class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val FADE_DELAY = 5000L
@@ -71,6 +81,11 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var mIsBurstMode = false
     private var shutterFlashOn = false
     private var selfieFlashOn = false
+    private var photoWithSticker = false
+
+
+
+    private val TAG = "MyActivity"
 
     lateinit var notificationManager : NotificationManager
     lateinit var notificationChannel : NotificationChannel
@@ -78,7 +93,11 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private val channelId = "com.simplemobiletools.camera.activities"
     private val description = "Test notification"
     private var cameraEffect = ""
-
+    private var stickerIn = false
+    private var smileyFaceToggle = false
+    private var dayStampToggle = false
+    private var hidingIconToggle = false
+    private var isUnderTest = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         window.addFlags(WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD or
@@ -282,15 +301,30 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         toggle_photo_video.setOnClickListener { handleTogglePhotoVideo() }
         change_resolution.setOnClickListener { mPreview?.showChangeResolutionDialog() }
         gridlines_icon.setOnClickListener { toggleGridlines() }
-        filter.setOnClickListener{ fadeInFilters() }
+        filter.setOnClickListener{ fadeInFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia) }
         gridlines_icon.tag = R.drawable.gridlines_white
         filter_icon.setOnClickListener{ enableFilter() }
         bw.setOnClickListener{ enable_BW_Filter() }
         solar.setOnClickListener{ enable_solarize_Filter() }
         no_filter.setOnClickListener{ disableFilter() }
         invert.setOnClickListener{ enable_invert_filter() }
-
+        sticker.setOnClickListener{ fadeInStickers() }
+        smiley.setOnClickListener{ enableSmiley() }
+        clockStamp.setOnClickListener{ enableDayStamp() }
+        no_sticker.setOnClickListener{ removeSticker() }
+        blackboard.setOnClickListener{ enable_blackboard_filter() }
+        sepia.setOnClickListener{ enable_sepia_filter() }
+        aqua.setOnClickListener{ enable_aqua_filter() }
+        posterize.setOnClickListener{ enable_posterize_filter() }
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
+        sunday.setOnClickListener{ hideAll() }
+        monday.setOnClickListener{ hideAll() }
+        tuesday.setOnClickListener{ hideAll() }
+        wednesday.setOnClickListener{ hideAll() }
+        thursday.setOnClickListener{ hideAll() }
+        friday.setOnClickListener{ hideAll() }
+        saturday.setOnClickListener{ hideAll() }
+        smileyFace.setOnClickListener{ hideAll() }
 
         color_seek_bar.setOnColorChangeListener(object: ColorSeekBar.OnColorChangeListener{
             override fun onColorChangeListener(color: Int) {
@@ -303,6 +337,53 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun savePreference(color: Int) {
         val myPreference = MyPreference(this)
         myPreference.setDockerColor(color)
+    }
+
+    private fun hideAll(){
+        if(!hidingIconToggle){
+            hidingIconToggle = true
+            makeDisappearAllIcons()
+        }
+        else{
+            hidingIconToggle = false
+            makeAppearAllIcons()
+        }
+    }
+    private fun makeDisappearAllIcons(){
+        Log.i(TAG, "******************************************Disable ALL ICONS")
+        gridlines_icon.setVisibility(View.GONE)
+        seekbar_switch.setVisibility(View.GONE)
+        sticker.setVisibility(View.GONE)
+        settings.setVisibility(View.GONE)
+        toggle_photo_video.setVisibility(View.GONE)
+        change_resolution.setVisibility(View.GONE)
+        filter.setVisibility(View.GONE)
+        toggle_camera.setVisibility(View.GONE)
+        shutter.setVisibility(View.GONE)
+        toggle_flash.setVisibility(View.GONE)
+        smiley.setVisibility(View.GONE)
+        clockStamp.setVisibility(View.GONE)
+        no_sticker.setVisibility(View.GONE)
+        solar.setVisibility(View.GONE)
+        bw.setVisibility(View.GONE)
+        invert.setVisibility(View.GONE)
+        no_filter.setVisibility(View.GONE)
+        btn_holder.setVisibility(View.INVISIBLE)
+    }
+
+    private fun makeAppearAllIcons(){
+        Log.i(TAG, "******************************************Enable ALL ICONS")
+        gridlines_icon.setVisibility(View.VISIBLE)
+        seekbar_switch.setVisibility(View.VISIBLE)
+        sticker.setVisibility(View.VISIBLE)
+        settings.setVisibility(View.VISIBLE)
+        toggle_photo_video.setVisibility(View.VISIBLE)
+        change_resolution.setVisibility(View.VISIBLE)
+        filter.setVisibility(View.VISIBLE)
+        toggle_camera.setVisibility(View.VISIBLE)
+        shutter.setVisibility(View.VISIBLE)
+        toggle_flash.setVisibility(View.VISIBLE)
+        btn_holder.setVisibility(View.VISIBLE)
     }
 
     private fun enableFilter() {
@@ -337,7 +418,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         mPreview?.setCameraEffect(cameraEffect)
     }
 
-    private fun enable_BW_Filter() {
+    open fun enable_BW_Filter() {
         // tap icon to disable filter
         if(!cameraEffect.equals("black_and_white")) {
             cameraEffect = "black_and_white"
@@ -350,6 +431,42 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         // tap icon to enable filter
         if(!cameraEffect.equals("invert")){
             cameraEffect = "invert"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_sepia_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("sepia")) {
+            cameraEffect = "sepia"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_posterize_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("posterize")) {
+            cameraEffect = "posterize"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_blackboard_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("blackboard")) {
+            cameraEffect = "blackboard"
+            currentFilter = true
+        }
+        mPreview?.setCameraEffect(cameraEffect)
+    }
+
+    open fun enable_aqua_filter() {
+        // tap icon to disable filter
+        if(!cameraEffect.equals("aqua")) {
+            cameraEffect = "aqua"
             currentFilter = true
         }
         mPreview?.setCameraEffect(cameraEffect)
@@ -368,7 +485,106 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         }
     }
 
+    private fun fadeOutStickers() {
+        fadeAnim(sticker, .5f)
+        fadeAnim(smiley, .0f)
+        fadeAnim(clockStamp, .0f)
+        fadeAnim(no_sticker, .0f)
+    }
+    private fun fadeInStickers() {
+        smiley.setVisibility(View.VISIBLE);
+        clockStamp.setVisibility(View.VISIBLE);
+        no_sticker.setVisibility(View.VISIBLE);
+        if(!stickerIn){
+            fadeAnim(sticker, 1f)
+            fadeAnim(smiley, 1f)
+            fadeAnim(clockStamp, 1f)
+            fadeAnim(no_sticker, 1f)
+            stickerIn = true
 
+        }else{
+            stickerIn = false
+            fadeOutStickers()
+        }
+
+    }
+    private fun enableDayStamp() {
+        Log.i(TAG, "******************************************Enable DayStamp")
+        disableSmiley()
+        val c = Calendar.getInstance()
+        val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
+        Log.i(TAG, "******************************************DAY value : "+ dayOfWeek)
+        when(dayOfWeek) {
+            1 -> Log.i(TAG, "******************************************DAY STAMP SUNDAY")
+            2 -> Log.i(TAG, "******************************************DAY STAMP MONDAY ")
+            3 -> Log.i(TAG, "******************************************DAY STAMP TUESDAY")
+            4 -> Log.i(TAG, "******************************************DAY STAMP WEDNESDAY")
+            5 -> Log.i(TAG, "******************************************DAY STAMP THURSDAY")
+            6 -> Log.i(TAG, "******************************************DAY STAMP FRIDAY")
+            7 -> Log.i(TAG, "******************************************DAY STAMP SATURDAY")
+        }
+        if(!dayStampToggle){
+            dayStampToggle = true
+
+            when(dayOfWeek) {
+                1 -> sunday.setVisibility(View.VISIBLE)
+                2 -> monday.setVisibility(View.VISIBLE)
+                3 -> tuesday.setVisibility(View.VISIBLE)
+                4 -> wednesday.setVisibility(View.VISIBLE)
+                5 -> thursday.setVisibility(View.VISIBLE)
+                6 -> friday.setVisibility(View.VISIBLE)
+                7 -> saturday.setVisibility(View.VISIBLE)
+            }
+
+            Log.i(TAG, "******************************************Enable DayStamp")
+        }
+        else{
+            disableDayStamp()
+            Log.i(TAG, "******************************************Disable DayStamp")
+        }
+
+    }
+
+    private fun disableDayStamp() {
+        dayStampToggle = false
+        saturday.setVisibility(View.GONE)
+        monday.setVisibility(View.GONE)
+        tuesday.setVisibility(View.GONE)
+        wednesday.setVisibility(View.GONE)
+        thursday.setVisibility(View.GONE)
+        friday.setVisibility(View.GONE)
+        sunday.setVisibility(View.GONE)
+    }
+
+    private fun disableSmiley(){
+        smileyFaceToggle = false
+        smileyFace.setVisibility(View.GONE)
+    }
+
+    private fun enableSmiley() {
+        Log.i(TAG, "******************************************Smiley LISTENER")
+        disableDayStamp()
+
+        if(!smileyFaceToggle){
+            smileyFaceToggle = true
+            smileyFace.setVisibility(View.VISIBLE)
+            fadeAnim(smileyFace, 1f)
+            Log.i(TAG, "******************************************Enable Smiley")
+        }
+        else{
+            smileyFaceToggle = false
+            smileyFace.setVisibility(View.GONE)
+            fadeAnim(smileyFace, 1f)
+            Log.i(TAG, "******************************************Disable Smiley")
+        }
+    }
+
+
+    private fun removeSticker() {
+        Log.i(TAG, "******************************************Remove Stickers")
+        disableDayStamp()
+        disableSmiley()
+    }
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
         if(gridline_state) {
@@ -429,7 +645,49 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     open fun shutterPressed() {
         if (checkCameraAvailable()) {
-            handleShutter()
+
+            if(smileyFaceToggle || dayStampToggle){
+                Log.i(TAG, "****************************************** CAPTURING WITH STICKER")
+                // makeDisappearAllIcons()
+
+                //get metrics of each system
+                val displayMetrics = DisplayMetrics()
+                getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+                val height = displayMetrics.heightPixels
+                val width = displayMetrics.widthPixels
+
+                Log.i(TAG, "****************************************** CAPTURING id = "+height +" " + width)
+                val bitmap = loadBitmapFromView(findViewById(R.id.camera_texture_view), width, height)
+                //Log.i(TAG, "****************************************** CAPTURING id = "+R.id.camera_texture_view + " "+findViewById(R.id.view_holder) )
+                saveImage(bitmap)
+
+                ///makeAppearAllIcons()
+            }
+            else{
+
+                Log.i(TAG, "****************************************** HANDLE SHUTTER")
+                handleShutter()
+
+                if(smileyFaceToggle || dayStampToggle){
+                    setupPreviewImage(true)
+
+                    val displayMetrics = DisplayMetrics()
+                    getWindowManager().getDefaultDisplay().getMetrics(displayMetrics)
+                    val height = displayMetrics.heightPixels
+                    val width = displayMetrics.widthPixels
+
+                    last_photo_video_preview2.setVisibility(View.VISIBLE)
+                    makeDisappearAllIcons()
+
+                    val bitmap = loadBitmapFromView(findViewById(R.id.view_holder), width, height)
+                    saveImage(bitmap)
+
+                    makeAppearAllIcons()
+                    last_photo_video_preview2.setVisibility(View.INVISIBLE)
+
+                }
+
+            }
         }
     }
 
@@ -602,6 +860,17 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
                         .apply(options)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .into(last_photo_video_preview)
+
+                last_photo_video_preview2.setVisibility(View.VISIBLE)
+                Glide.with(this)
+                        .load(mPreviewUri)
+                        .apply(options)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .into(last_photo_video_preview2)
+                last_photo_video_preview2.setVisibility(View.INVISIBLE)
+
+
+
             }
         }
     }
@@ -629,30 +898,46 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         scheduleFadeOut()
     }
 
-    private fun fadeOutFilters() {
+    open fun fadeOutFilters(filter : ImageView, aqua : ImageView, bw : ImageView, solar : ImageView, no_filter : ImageView,
+                            invert : ImageView, blackboard : ImageView, posterize : ImageView, sepia : ImageView) {
         fadeAnim(filter, .5f)
         fadeAnim(solar, .0f)
         fadeAnim(bw, .0f)
         fadeAnim(no_filter, .0f)
         fadeAnim(invert, .0f)
+        fadeAnim(sepia, .0f)
+        fadeAnim(aqua, .0f)
+        fadeAnim(blackboard, .0f)
+        fadeAnim(posterize, .0f)
     }
 
-    private fun fadeInFilters() {
+    open fun fadeInFilters(filter : ImageView, aqua : ImageView, bw : ImageView, solar : ImageView, no_filter : ImageView,
+                           invert : ImageView, blackboard : ImageView, posterize : ImageView, sepia : ImageView) {
         bw.setVisibility(View.VISIBLE)
         solar.setVisibility(View.VISIBLE)
         no_filter.setVisibility(View.VISIBLE)
         invert.setVisibility(View.VISIBLE)
-        if(!filterIn){
+        aqua.setVisibility(View.VISIBLE)
+        blackboard.setVisibility(View.VISIBLE)
+        posterize.setVisibility(View.VISIBLE)
+        sepia.setVisibility(View.VISIBLE)
+        if(!filterIn && !isUnderTest){
             fadeAnim(filter, 1f)
             fadeAnim(solar, 1f)
             fadeAnim(bw, 1f)
             fadeAnim(no_filter, 1f)
             fadeAnim(invert, 1f)
+            fadeAnim(sepia, 1f)
+            fadeAnim(aqua, 1f)
+            fadeAnim(blackboard, 1f)
+            fadeAnim(posterize, 1f)
             filterIn = true
 
         }else{
             filterIn = false
-            fadeOutFilters()
+            if(!isUnderTest) {
+                fadeOutFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia)
+            }
         }
 
     }
@@ -660,7 +945,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun FiltersScheduleFadeOut() {
         if (!config.keepSettingsVisible) {
             mFadeHandler.postDelayed({
-                fadeOutFilters()
+                fadeOutFilters(filter, aqua, bw, solar, no_filter, invert, blackboard, posterize, sepia)
             }, FADE_DELAY)
         }
     }
@@ -926,5 +1211,76 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
 
     fun getSelfieFlashOn(): Boolean{
         return selfieFlashOn
+    }
+
+    fun getFilters(): ArrayList<ImageView>{
+
+        val filters = ArrayList<ImageView>()
+
+        filters.add(bw)
+        filters.add(solar)
+        filters.add(no_filter)
+        filters.add(invert)
+        filters.add(aqua)
+        filters.add(blackboard)
+        filters.add(posterize)
+        filters.add(sepia)
+
+        return filters
+    }
+
+    fun getFilterToggle() : Boolean{
+        return filterIn
+    }
+
+    fun getTestToggle(): Boolean{
+        return isUnderTest
+    }
+
+    fun setTestToggle(bool : Boolean){
+        isUnderTest = bool
+    }
+
+    companion object {
+
+        fun saveImage(bitmap: Bitmap) {
+            val root = Environment.getExternalStorageDirectory().toString()
+
+            Log.i(TAG, "******************************************SAVING root = "+ root)
+            val myDir = File(root + "/req_images")
+            Log.i(TAG, "******************************************SAVING mydir= "+ myDir)
+            myDir.mkdirs()
+            val generator = Random()
+            var n = 10000
+            n = generator.nextInt(n)
+            Log.i(TAG, "******************************************SAVING random number= "+ n)
+            val fname = "Image-"+n+".jpg"
+            Log.i(TAG, "******************************************SAVING file name= "+ fname)
+            val file = File(myDir, fname)
+            Log.i(TAG, "******************************************SAVING file = "+ file.toString())
+            //  Log.i(TAG, "" + file);
+            if (file.exists())
+                file.delete()
+            try {
+                val out = FileOutputStream(file)
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                out.flush()
+                out.close()
+                Log.i(TAG, "******************************************SAVING CLOSE STREAM")
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+
+
+        }
+
+        fun loadBitmapFromView(v: View, width: Int, height: Int): Bitmap {
+            Log.i(TAG, "******************************************LOADING ")
+            val b = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            val c = Canvas(b)
+            v.layout(0, 0, v.layoutParams.width, v.layoutParams.height)
+            v.draw(c)
+            return b
+        }
     }
 }

@@ -29,33 +29,46 @@ public class BurstShotTests {
 
     @Test
     public void testSinglePictureDoesNotEnableBurstMode() {
+
         // burst mode should not be enabled initially
         Assert.assertEquals(false, activity.isBurstModeEnabled());
+
         // click shutter button to take single picture, should not enable burst mode
         activity.shutterPressed();
+
         Assert.assertEquals(false, activity.isBurstModeEnabled());
     }
 
     @Test
     public void testBurstMode() {
+
         // test that burst mode is enabled
         Handler mockBurstHandler = Mockito.mock(Handler.class);
+
         Runnable mockBurstRunnable = Mockito.mock(Runnable.class);
         // burst mode should not be enabled initially
+
         Assert.assertEquals(false, activity.isBurstModeEnabled());
+
         Assert.assertEquals(true, activity.isInPhotoMode());
+
         // enableBurstMode should enable burst mode
         activity.enableBurstMode(mockBurstHandler, mockBurstRunnable);
+
         Assert.assertEquals(true, activity.isBurstModeEnabled());
     }
 
     @Test
     public void testBurstFlash() {
+
         // mock burst image and burst handler
         ImageView mockBurst = Mockito.mock(ImageView.class);
+
         Handler mockBurstHandler = Mockito.mock(Handler.class);
+
         // call burstFlash method
         activity.burstFlash(mockBurst, mockBurstHandler);
+
         // verify that the burst flash visibility is properly set
         Mockito.verify(mockBurst).setVisibility(View.VISIBLE);
     }
