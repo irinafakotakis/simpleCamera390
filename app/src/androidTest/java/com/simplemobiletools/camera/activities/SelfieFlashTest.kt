@@ -5,17 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.ViewAction
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.doubleClick
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import androidx.test.ext.junit.runners.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import com.simplemobiletools.camera.R
 import org.hamcrest.Description
 import org.hamcrest.Matcher
@@ -28,11 +26,15 @@ import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ShutterNotificationTest {
+class SelfieFlashTest {
 
     @Rule
     @JvmField
-    var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
+    var mActivityTestRule = ActivityTestRule(SplashActivity::class.java)
+
+    @Rule
+    @JvmField
+    var mainActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Rule
     @JvmField
@@ -42,62 +44,43 @@ class ShutterNotificationTest {
                     "android.permission.WRITE_EXTERNAL_STORAGE")
 
     @Test
-    fun splashActivityTest() {
-
-        // Added a sleep statement to match the app's execution delay. ml
-        Thread.sleep(2000)
-
-        // ---------------- double-click shutter for notification to appear -------------
-        val appCompatImageView = onView(
-                allOf(withId(R.id.shutter),
-                        childAtPosition(
-                                allOf(withId(R.id.btn_holder),
-                                        childAtPosition(
-                                                withId(R.id.view_holder),
-                                                1)),
-                                1),
-                        isDisplayed()))
-        appCompatImageView.perform(doubleClick())
-        // ------------------------------------------------------------------------------
-
-        val appCompatImageView2 = Espresso.onView(Matchers.allOf(ViewMatchers.withId(R.id.gridlines)))
-
-        // ---------------- swipe up on screen to close notification --------------------
-        appCompatImageView2.perform(ViewActions.swipeUp())
-        // ------------------------------------------------------------------------------
-
+    fun selfieFlashTest() {
+        // Added a sleep statement to match the app's execution delay.
+        // The recommended way to handle such scenarios is to use Espresso idling resources:
+        // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
         Thread.sleep(5000)
 
-        // ---------------- toggle camera to test notification  -------------------------
-        val appCompatImageView3 = onView(
+        val appCompatImageView = onView(
                 allOf(withId(R.id.toggle_camera),
                         childAtPosition(
                                 allOf(withId(R.id.btn_holder),
                                         childAtPosition(
                                                 withId(R.id.view_holder),
-                                                1)),
+                                                6)),
                                 0),
                         isDisplayed()))
-        appCompatImageView3.perform(click())
-        // ------------------------------------------------------------------------------
+        appCompatImageView.perform(click())
 
-        Thread.sleep(2000)
+        Thread.sleep(5000)
 
-        // ---------------- double-click shutter for notification to appear -------------
-        val appCompatImageView4 = onView(
-                allOf(withId(R.id.shutter),
+        val appCompatImageView2 = onView(
+                allOf(withId(R.id.toggle_flash),
                         childAtPosition(
                                 allOf(withId(R.id.btn_holder),
                                         childAtPosition(
                                                 withId(R.id.view_holder),
-                                                1)),
-                                1),
+                                                6)),
+                                2),
                         isDisplayed()))
-        appCompatImageView4.perform(doubleClick())
-        // ------------------------------------------------------------------------------
+        appCompatImageView2.perform(click())
 
-        Thread.sleep(2000)
+        Thread.sleep(5000)
 
+        val shutter =
+                Espresso.onView(Matchers.allOf(ViewMatchers.withId(R.id.shutter)))
+
+
+        shutter.perform(ViewActions.click())
     }
 
     private fun childAtPosition(

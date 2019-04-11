@@ -1,35 +1,33 @@
 package com.simplemobiletools.camera.activities
 
-
 import android.view.View
 import android.view.ViewGroup
+import androidx.test.espresso.Espresso
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.action.ViewActions.click
-import androidx.test.espresso.action.ViewActions.doubleClick
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.action.ViewActions
+import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
-import androidx.test.runner.AndroidJUnit4
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.simplemobiletools.camera.R
+import com.simplemobiletools.commons.extensions.isVisible
+import kotlinx.android.synthetic.main.activity_main.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.allOf
+import org.hamcrest.Matchers
 import org.hamcrest.TypeSafeMatcher
-import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @LargeTest
 @RunWith(AndroidJUnit4::class)
-class ShutterNotificationsTest {
+class BurstShotUITest {
 
     @Rule
     @JvmField
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
-
 
     @Rule
     @JvmField
@@ -39,23 +37,15 @@ class ShutterNotificationsTest {
                     "android.permission.WRITE_EXTERNAL_STORAGE")
 
     @Test
-    fun shutterNotificationsTest() {
+    fun burstShotUITest() {
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
         // https://google.github.io/android-testing-support-library/docs/espresso/idling-resource/index.html
-        Thread.sleep(5000)
-        val appCompatImageView = onView(
-                allOf(withId(R.id.shutter),
-                        childAtPosition(
-                                allOf(withId(R.id.btn_holder),
-                                        childAtPosition(
-                                                withId(R.id.view_holder),
-                                                1)),
-                                1),
-                        isDisplayed()))
-        appCompatImageView.perform(doubleClick())
-        Thread.sleep(5000)
+        Thread.sleep(1000);
 
+        val burst_shot_shutter = Espresso.onView(Matchers.allOf(ViewMatchers.withId(R.id.shutter)))
+
+        burst_shot_shutter.perform(ViewActions.longClick())
     }
 
     private fun childAtPosition(
@@ -74,5 +64,4 @@ class ShutterNotificationsTest {
             }
         }
     }
-
 }
