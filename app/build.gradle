@@ -48,7 +48,6 @@ android {
        abortOnError false
        warningsAsErrors true
        check lintchecks
-        textReport = true
     }
 
     android.testOptions {

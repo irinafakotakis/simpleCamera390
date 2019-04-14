@@ -25,7 +25,7 @@ android:
 jobs:
   include:
     - stage: Build
-      script: ./gradlew -Plint.output.console=true build --stacktrace
+      script: ./gradlew build --stacktrace | tee file.txt
     - stage: Test
       script:
       - ./gradlew test
