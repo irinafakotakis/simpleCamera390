@@ -102,6 +102,9 @@ class StickerUITest {
                         isDisplayed()))
         appCompatImageView5.perform(click())
 
+        // Assert that the smile icon is gone
+        assert(!mActivityTestRule.activity.getSmileToggle())
+
         // click on daystamp icon to show the day of week
         val appCompatImageView6 = onView(
                 allOf(withId(R.id.clockStamp),
@@ -113,6 +116,9 @@ class StickerUITest {
                                 12),
                         isDisplayed()))
         appCompatImageView6.perform(click())
+
+        // Assert that the daystamp is visible
+        assert(mActivityTestRule.activity.getDayStampToggle())
 
         // click again on daystamp to remove its sticker from camera preview
         val appCompatImageView7 = onView(
@@ -126,6 +132,9 @@ class StickerUITest {
                         isDisplayed()))
         appCompatImageView7.perform(click())
 
+        // Assert that the daystamp is gone
+        assert(!mActivityTestRule.activity.getDayStampToggle())
+
         // click on smiley icon
         val appCompatImageView8 = onView(
                 allOf(withId(R.id.smiley),
@@ -137,6 +146,9 @@ class StickerUITest {
                                 11),
                         isDisplayed()))
         appCompatImageView8.perform(click())
+
+        // Assert that the smile icon is visible
+        assert(mActivityTestRule.activity.getSmileToggle())
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -154,7 +166,7 @@ class StickerUITest {
                                 12),
                         isDisplayed()))
         appCompatImageView9.perform(click())
-        
+
     }
 
     private fun childAtPosition(
