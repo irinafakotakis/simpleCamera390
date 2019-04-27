@@ -128,6 +128,72 @@
             app:srcCompat="@drawable/smileysticker" />
 
         <ImageView
+            android:id="@+id/crying_face"
+            android:layout_width="129dp"
+            android:layout_height="125dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="64dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/cringsnoop" />
+
+        <ImageView
+            android:id="@+id/angry_face"
+            android:layout_width="158dp"
+            android:layout_height="124dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="69dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/angrypng" />
+
+        <ImageView
+            android:id="@+id/love_heart"
+            android:layout_width="201dp"
+            android:layout_height="135dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-42dp"
+            android:layout_marginTop="305dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/heartpng" />
+
+        <ImageView
+            android:id="@+id/canada_flag"
+            android:layout_width="231dp"
+            android:layout_height="165dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="59dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/canadianflag" />
+
+        <ImageView
+            android:id="@+id/pride_flag"
+            android:layout_width="138dp"
+            android:layout_height="140dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="316dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/rainbowflag" />
+
+        <ImageView
+            android:id="@+id/laughing_message"
+            android:layout_width="158dp"
+            android:layout_height="188dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="173dp"
+            android:layout_marginTop="264dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/laughpng" />
+
+        <ImageView
             android:id="@+id/saturday"
             android:layout_width="231dp"
             android:layout_height="165dp"

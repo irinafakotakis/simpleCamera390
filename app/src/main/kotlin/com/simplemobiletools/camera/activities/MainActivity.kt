@@ -87,6 +87,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private var stickerIn = false
     private var smileyFaceToggle = false
     private var dayStampToggle = false
+    private var angryToggle = false
+    private var laughToggle = false
+    private var prideToggle = false
+    private var heartToggle = false
+    private var cryingToggle = false
+    private var canadaToggle = false
     private var hidingIconToggle = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -288,6 +294,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         sticker.setOnClickListener{ fadeInStickers() }
         smiley.setOnClickListener{ enableSmiley() }
         clockStamp.setOnClickListener{ enableDayStamp() }
+        cry.setOnClickListener{ enableCry() }
+        angry.setOnClickListener{ enableAngry() }
+        laugh.setOnClickListener{ enableLaugh() }
+        heart.setOnClickListener{ enableHeart() }
+        canada.setOnClickListener{ enableCanada() }
+        rainbow.setOnClickListener{ enablePride() }
         no_sticker.setOnClickListener{ removeSticker() }
         seekbar_switch.setOnClickListener{ enableColorSeekBar() }
         sunday.setOnClickListener{ hideAll() }
@@ -466,6 +478,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun enableDayStamp() {
         Log.i(TAG, "******************************************Enable DayStamp")
         disableSmiley()
+        disableCry()
+        disableLaugh()
+        disableAngry()
+        disableHeart()
+        disableCanada()
+        disablePride()
         val c = Calendar.getInstance()
         val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
         Log.i(TAG, "******************************************DAY value : "+ dayOfWeek)
@@ -519,7 +537,12 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
     private fun enableSmiley() {
         Log.i(TAG, "******************************************Smiley LISTENER")
         disableDayStamp()
-
+        disableCry()
+        disableLaugh()
+        disableAngry()
+        disableHeart()
+        disableCanada()
+        disablePride()
         if(!smileyFaceToggle){
             smileyFaceToggle = true
             smileyFace.setVisibility(View.VISIBLE)
@@ -533,13 +556,163 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             Log.i(TAG, "******************************************Disable Smiley")
         }
     }
+    private fun disableCry(){
+        cryingToggle = false
+        crying_face.setVisibility(View.GONE)
+    }
 
+    private fun enableCry() {
+        disableDayStamp()
+        disableSmiley()
+        disableLaugh()
+        disableAngry()
+        disableHeart()
+        disableCanada()
+        disablePride()
+        if(!cryingToggle){
+            cryingToggle = true
+            crying_face.setVisibility(View.VISIBLE)
+            fadeAnim(crying_face, 1f)
+        }
+        else{
+            cryingToggle = false
+            crying_face.setVisibility(View.GONE)
+            fadeAnim(crying_face, 1f)
+        }
+    }
+    private fun disableLaugh(){
+        laughToggle = false
+        laughing_message.setVisibility(View.GONE)
+    }
 
+    private fun enableLaugh() {
+        disableDayStamp()
+        disableSmiley()
+        disableCry()
+        disableAngry()
+        disableHeart()
+        disableCanada()
+        disablePride()
+        if(!laughToggle){
+            laughToggle = true
+            laughing_message.setVisibility(View.VISIBLE)
+            fadeAnim(laughing_message, 1f)
+        }
+        else{
+            laughToggle = false
+            laughing_message.setVisibility(View.GONE)
+            fadeAnim(laughing_message, 1f)
+        }
+    }
+    private fun disableAngry(){
+        angryToggle = false
+        angry_face.setVisibility(View.GONE)
+    }
+
+    private fun enableAngry() {
+        disableDayStamp()
+        disableSmiley()
+        disableCry()
+        disableLaugh()
+        disableHeart()
+        disableCanada()
+        disablePride()
+        if(!angryToggle){
+            angryToggle = true
+            angry_face.setVisibility(View.VISIBLE)
+            fadeAnim(angry_face, 1f)
+        }
+        else{
+            angryToggle = false
+            angry_face.setVisibility(View.GONE)
+            fadeAnim(angry_face, 1f)
+        }
+    }
+    private fun disableHeart(){
+        heartToggle = false
+        love_heart.setVisibility(View.GONE)
+    }
+
+    private fun enableHeart() {
+        disableDayStamp()
+        disableSmiley()
+        disableCry()
+        disableLaugh()
+        disableAngry()
+        disableCanada()
+        disablePride()
+        if(!heartToggle){
+            heartToggle = true
+            love_heart.setVisibility(View.VISIBLE)
+            fadeAnim(love_heart, 1f)
+        }
+        else{
+            heartToggle = false
+            love_heart.setVisibility(View.GONE)
+            fadeAnim(love_heart, 1f)
+        }
+    }
+    private fun disableCanada(){
+        canadaToggle = false
+        canada_flag.setVisibility(View.GONE)
+    }
+
+    private fun enableCanada() {
+        disableDayStamp()
+        disableSmiley()
+        disableCry()
+        disableLaugh()
+        disableAngry()
+        disableHeart()
+        disablePride()
+        if(!canadaToggle){
+            canadaToggle = true
+            canada_flag.setVisibility(View.VISIBLE)
+            fadeAnim(canada_flag, 1f)
+        }
+        else{
+            canadaToggle = false
+            canada_flag.setVisibility(View.GONE)
+            fadeAnim(canada_flag, 1f)
+        }
+    }
+
+    private fun disablePride(){
+        prideToggle = false
+        pride_flag.setVisibility(View.GONE)
+    }
+
+    private fun enablePride() {
+        disableDayStamp()
+        disableSmiley()
+        disableCry()
+        disableLaugh()
+        disableAngry()
+        disableHeart()
+        disableCanada()
+        if(!prideToggle){
+            prideToggle = true
+            pride_flag.setVisibility(View.VISIBLE)
+            fadeAnim(pride_flag, 1f)
+        }
+        else{
+            prideToggle = false
+            pride_flag.setVisibility(View.GONE)
+            fadeAnim(pride_flag, 1f)
+        }
+    }
     private fun removeSticker() {
         Log.i(TAG, "******************************************Remove Stickers")
         disableDayStamp()
         disableSmiley()
+        disableCry()
+        disableLaugh()
+        disableAngry()
+        disableHeart()
+        disableCanada()
+        disablePride()
         fadeOutStickers()
+
     }
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
