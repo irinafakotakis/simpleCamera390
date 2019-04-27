@@ -12,6 +12,7 @@ import androidx.test.rule.ActivityTestRule
 import androidx.test.rule.GrantPermissionRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.simplemobiletools.camera.R
+import kotlinx.android.synthetic.main.activity_main.view.*
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 import org.hamcrest.Matchers.allOf
@@ -89,10 +90,25 @@ class StickerUITest {
                                 11),
                         isDisplayed()))
         appCompatImageView4.perform(click())
+        
+        // Assert that the smile icon is gone
+        assert(!mActivityTestRule.activity.getSmileToggle())
 
-        // click on no sticker icon to remove smiley
-        val appCompatImageView5 = onView(
-                allOf(withId(R.id.no_sticker),
+        // click on LGBTQ flag
+        val appCompatImageView6 = onView(
+                allOf(withId(R.id.rainbow),
+                        childAtPosition(
+                                allOf(withId(R.id.view_holder),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                18),
+                        isDisplayed()))
+        appCompatImageView6.perform(click())
+
+        // click on cry emoji
+        val appCompatImageView7 = onView(
+                allOf(withId(R.id.cry),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
                                         childAtPosition(
@@ -100,13 +116,58 @@ class StickerUITest {
                                                 0)),
                                 13),
                         isDisplayed()))
-        appCompatImageView5.perform(click())
+        appCompatImageView7.perform(click())
 
-        // Assert that the smile icon is gone
-        assert(!mActivityTestRule.activity.getSmileToggle())
+        // click on canadian flag
+        val appCompatImageView8 = onView(
+                allOf(withId(R.id.canada),
+                        childAtPosition(
+                                allOf(withId(R.id.view_holder),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                17),
+                        isDisplayed()))
+        appCompatImageView8.perform(click())
+
+        // click on heart emoji
+        val appCompatImageView9 = onView(
+                allOf(withId(R.id.heart),
+                        childAtPosition(
+                                allOf(withId(R.id.view_holder),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                16),
+                        isDisplayed()))
+        appCompatImageView9.perform(click())
+
+        // click on laugh emoji
+        val appCompatImageView10 = onView(
+                allOf(withId(R.id.laugh),
+                        childAtPosition(
+                                allOf(withId(R.id.view_holder),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                15),
+                        isDisplayed()))
+        appCompatImageView10.perform(click())
+
+        // click on angry face emoji
+        val appCompatImageView11 = onView(
+                allOf(withId(R.id.angry),
+                        childAtPosition(
+                                allOf(withId(R.id.view_holder),
+                                        childAtPosition(
+                                                withId(android.R.id.content),
+                                                0)),
+                                14),
+                        isDisplayed()))
+        appCompatImageView11.perform(click())
 
         // click on daystamp icon to show the day of week
-        val appCompatImageView6 = onView(
+        val appCompatImageView12 = onView(
                 allOf(withId(R.id.clockStamp),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
@@ -115,13 +176,13 @@ class StickerUITest {
                                                 0)),
                                 12),
                         isDisplayed()))
-        appCompatImageView6.perform(click())
+        appCompatImageView12.perform(click())
 
         // Assert that the daystamp is visible
         assert(mActivityTestRule.activity.getDayStampToggle())
 
         // click again on daystamp to remove its sticker from camera preview
-        val appCompatImageView7 = onView(
+        val appCompatImageView13 = onView(
                 allOf(withId(R.id.clockStamp),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
@@ -130,13 +191,13 @@ class StickerUITest {
                                                 0)),
                                 12),
                         isDisplayed()))
-        appCompatImageView7.perform(click())
+        appCompatImageView13.perform(click())
 
         // Assert that the daystamp is gone
         assert(!mActivityTestRule.activity.getDayStampToggle())
 
         // click on smiley icon
-        val appCompatImageView8 = onView(
+        val appCompatImageView14 = onView(
                 allOf(withId(R.id.smiley),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
@@ -145,7 +206,7 @@ class StickerUITest {
                                                 0)),
                                 11),
                         isDisplayed()))
-        appCompatImageView8.perform(click())
+        appCompatImageView14.perform(click())
 
         // Assert that the smile icon is visible
         assert(mActivityTestRule.activity.getSmileToggle())
@@ -156,7 +217,7 @@ class StickerUITest {
         Thread.sleep(1500)
 
         // take picture with smiley icon
-        val appCompatImageView9 = onView(
+        val appCompatImageView15 = onView(
                 allOf(withId(R.id.shutter),
                         childAtPosition(
                                 allOf(withId(R.id.view_holder),
@@ -165,7 +226,7 @@ class StickerUITest {
                                                 0)),
                                 12),
                         isDisplayed()))
-        appCompatImageView9.perform(click())
+        appCompatImageView15.perform(click())
 
     }
 
