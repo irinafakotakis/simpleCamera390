@@ -90,7 +90,7 @@ class StickerUITest {
                                 11),
                         isDisplayed()))
         appCompatImageView4.perform(click())
-        
+
         // Assert that the smile icon is gone
         assert(!mActivityTestRule.activity.getSmileToggle())
 

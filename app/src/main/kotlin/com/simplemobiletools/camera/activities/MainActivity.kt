@@ -569,12 +569,13 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         Log.i(TAG, "******************************************Enable DayStamp")
 
         disableSmiley(smileyFace)
+        if(isUnderTest){
         disableCry()
         disableLaugh()
         disableAngry()
         disableHeart()
         disableCanada()
-        disablePride()
+        disablePride()}
 
         val c = Calendar.getInstance()
         val dayOfWeek = c.get(Calendar.DAY_OF_WEEK)
@@ -810,15 +811,15 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         disableDayStamp(saturday, monday, tuesday, wednesday, thursday, friday, sunday)
         disableSmiley(smileyFace)
        
-      
-        disableCry()
-        disableLaugh()
-        disableAngry()
-        disableHeart()
-        disableCanada()
-        disablePride()
-        fadeOutStickers()
-
+      if(isUnderTest) {
+          disableCry()
+          disableLaugh()
+          disableAngry()
+          disableHeart()
+          disableCanada()
+          disablePride()
+          fadeOutStickers()
+      }
     }
 
     private fun toggleGridlines() {
