@@ -426,16 +426,34 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         fadeAnim(sticker, .5f)
         fadeAnim(smiley, .0f)
         fadeAnim(clockStamp, .0f)
+        fadeAnim(cry, .0f)
+        fadeAnim(angry, .0f)
+        fadeAnim(laugh, .0f)
+        fadeAnim(heart, .0f)
+        fadeAnim(canada, .0f)
+        fadeAnim(rainbow, .0f)
         fadeAnim(no_sticker, .0f)
     }
     private fun fadeInStickers() {
         smiley.setVisibility(View.VISIBLE);
         clockStamp.setVisibility(View.VISIBLE);
+        cry.setVisibility(View.VISIBLE);
+        angry.setVisibility(View.VISIBLE);
+        laugh.setVisibility(View.VISIBLE);
+        heart.setVisibility(View.VISIBLE);
+        canada.setVisibility(View.VISIBLE);
+        rainbow.setVisibility(View.VISIBLE);
         no_sticker.setVisibility(View.VISIBLE);
         if(!stickerIn){
             fadeAnim(sticker, 1f)
             fadeAnim(smiley, 1f)
             fadeAnim(clockStamp, 1f)
+            fadeAnim(cry, 1f)
+            fadeAnim(angry, 1f)
+            fadeAnim(laugh, 1f)
+            fadeAnim(heart, 1f)
+            fadeAnim(canada, 1f)
+            fadeAnim(rainbow, 1f)
             fadeAnim(no_sticker, 1f)
             stickerIn = true
 
@@ -521,6 +539,7 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         Log.i(TAG, "******************************************Remove Stickers")
         disableDayStamp()
         disableSmiley()
+        fadeOutStickers()
     }
     private fun toggleGridlines(){
         // on toggle, gridlines are inserted to foreground and toggle icon color becomes black
