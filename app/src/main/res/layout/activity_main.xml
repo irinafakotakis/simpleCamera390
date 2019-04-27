@@ -443,10 +443,9 @@
         android:layout_height="77dp"
         android:layout_alignTop="@id/sticker"
         android:layout_alignRight="@id/sticker"
-        android:layout_marginLeft="-170dp"
-        android:layout_marginTop="61dp"
-        android:layout_marginRight="230dp"
-        android:layout_marginBottom="-457dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="193dp"
+        android:layout_marginBottom="0dp"
         android:src="@drawable/ic_rainbow"
         android:visibility="gone" />
 

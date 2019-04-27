@@ -444,7 +444,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         fadeAnim(heart, .0f)
         fadeAnim(canada, .0f)
         fadeAnim(rainbow, .0f)
-        fadeAnim(no_sticker, .0f)
     }
     private fun fadeInStickers() {
         smiley.setVisibility(View.VISIBLE);
@@ -455,7 +454,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
         heart.setVisibility(View.VISIBLE);
         canada.setVisibility(View.VISIBLE);
         rainbow.setVisibility(View.VISIBLE);
-        no_sticker.setVisibility(View.VISIBLE);
         if(!stickerIn){
             fadeAnim(sticker, 1f)
             fadeAnim(smiley, 1f)
@@ -466,7 +464,6 @@ class MainActivity : SimpleActivity(), PhotoProcessor.MediaSavedListener {
             fadeAnim(heart, 1f)
             fadeAnim(canada, 1f)
             fadeAnim(rainbow, 1f)
-            fadeAnim(no_sticker, 1f)
             stickerIn = true
 
         }else{
