@@ -12,7 +12,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
 
         <com.simplemobiletools.camera.views.AutoFitTextureView
             android:id="@+id/camera_texture_view"
@@ -29,8 +31,7 @@
             android:layout_height="@dimen/icon_size"
             android:layout_alignParentLeft="true"
             android:padding="@dimen/normal_margin"
-            android:src="@drawable/gridlines_white"
-            />
+            android:src="@drawable/gridlines_white" />
 
         <Switch
             android:id="@+id/seekbar_switch"
@@ -114,8 +115,8 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
-            android:visibility="gone"
-            android:padding="@dimen/medium_margin" />
+            android:padding="@dimen/medium_margin"
+            android:visibility="gone" />
 
         <com.divyanshu.colorseekbar.ColorSeekBar
             android:id="@+id/color_seek_bar"
@@ -135,6 +136,72 @@
             android:layout_marginTop="0dp"
             android:visibility="gone"
             app:srcCompat="@drawable/smileysticker" />
+
+        <ImageView
+            android:id="@+id/crying_face"
+            android:layout_width="129dp"
+            android:layout_height="125dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="64dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/cringsnoop" />
+
+        <ImageView
+            android:id="@+id/angry_face"
+            android:layout_width="158dp"
+            android:layout_height="124dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="130dp"
+            android:layout_marginTop="69dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/angrypng" />
+
+        <ImageView
+            android:id="@+id/love_heart"
+            android:layout_width="201dp"
+            android:layout_height="135dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-42dp"
+            android:layout_marginTop="305dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/heartpng" />
+
+        <ImageView
+            android:id="@+id/canada_flag"
+            android:layout_width="231dp"
+            android:layout_height="165dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="59dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/canadianflag" />
+
+        <ImageView
+            android:id="@+id/pride_flag"
+            android:layout_width="138dp"
+            android:layout_height="140dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="-50dp"
+            android:layout_marginTop="316dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/rainbowflag" />
+
+        <ImageView
+            android:id="@+id/laughing_message"
+            android:layout_width="158dp"
+            android:layout_height="188dp"
+            android:layout_alignStart="@+id/seekbar_switch"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="173dp"
+            android:layout_marginTop="264dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/laughpng" />
 
         <ImageView
             android:id="@+id/saturday"
@@ -221,8 +288,8 @@
         android:layout_width="wrap_content"
         android:layout_height="80dp"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="319dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginStart="308dp"
+        android:layout_marginTop="320dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="145dp"
         android:padding="@dimen/normal_margin"
@@ -331,8 +398,8 @@
         android:layout_height="39dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="322dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginStart="314dp"
+        android:layout_marginTop="230dp"
         android:layout_marginEnd="0dp"
         android:layout_marginRight="145dp"
         android:src="@drawable/ic_star_on" />
@@ -357,10 +424,88 @@
         android:layout_alignRight="@id/sticker"
         android:layout_marginLeft="-170dp"
         android:layout_marginTop="0dp"
-        android:layout_marginRight="112dp"
+        android:layout_marginRight="98dp"
         android:layout_marginBottom="-457dp"
         android:src="@drawable/ic_time"
-        android:visibility="gone"/>
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/cry"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
+        android:layout_alignTop="@id/sticker"
+        android:layout_alignRight="@id/sticker"
+        android:layout_marginLeft="-170dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="144dp"
+        android:layout_marginBottom="-457dp"
+        android:src="@drawable/ic_cry"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/angry"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
+        android:layout_alignTop="@id/sticker"
+        android:layout_alignRight="@id/sticker"
+        android:layout_marginLeft="-170dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="-457dp"
+        android:src="@drawable/ic_angry"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/laugh"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
+        android:layout_alignTop="@id/sticker"
+        android:layout_alignRight="@id/sticker"
+        android:layout_marginLeft="-170dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginRight="93dp"
+        android:layout_marginBottom="-457dp"
+        android:src="@drawable/ic_laugh"
+        android:visibility="gone"  />
+
+    <ImageView
+        android:id="@+id/heart"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
+        android:layout_alignTop="@id/sticker"
+        android:layout_alignRight="@id/sticker"
+        android:layout_marginLeft="-170dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginRight="138dp"
+        android:layout_marginBottom="-457dp"
+        android:src="@drawable/ic_heart"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/canada"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
+        android:layout_alignTop="@id/sticker"
+        android:layout_alignRight="@id/sticker"
+        android:layout_marginLeft="-170dp"
+        android:layout_marginTop="62dp"
+        android:layout_marginRight="182dp"
+        android:layout_marginBottom="-457dp"
+        android:src="@drawable/ic_canada"
+        android:visibility="gone" />
+
+
+    <ImageView
+        android:id="@+id/rainbow"
+        android:layout_width="39dp"
+        android:layout_height="77dp"
+        android:layout_alignTop="@id/sticker"
+        android:layout_alignRight="@id/sticker"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="193dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_rainbow"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/no_sticker"
@@ -368,10 +513,11 @@
         android:layout_height="77dp"
         android:layout_alignTop="@id/sticker"
         android:layout_alignRight="@id/sticker"
-        android:layout_marginTop="0dp"
-        android:layout_marginRight="171dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="193dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/ic_cancel"
+
         android:visibility="gone" />
     <LinearLayout
         android:id="@+id/btn_holder"
