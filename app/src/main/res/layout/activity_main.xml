@@ -62,6 +62,16 @@
             android:background="@color/white"
             android:visibility="invisible" />
 
+        <ImageView
+            android:id="@+id/burst_flash"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:background="@color/white"
+            android:visibility="invisible" />
 
         <ImageView
             android:id="@+id/settings"
@@ -295,6 +305,54 @@
         android:layout_marginRight="170dp"
         android:layout_marginBottom="0dp"
         android:src="@drawable/ic_shortcut_invert"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/aqua"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="230dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_aqua"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/sepia"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="110dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_sepia"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/blackboard"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_blackboard"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/posterize"
+        android:layout_width="59dp"
+        android:layout_height="97dp"
+        android:layout_alignTop="@id/filter"
+        android:layout_alignRight="@id/filter"
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="170dp"
+        android:layout_marginBottom="0dp"
+        android:src="@drawable/ic_shortcut_posterize"
         android:visibility="gone" />
 
     <ImageView
